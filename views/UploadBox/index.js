@@ -6,5 +6,6 @@ const UploadBox = () =>
   <ControlLabel>Upload</ControlLabel>
   <FormControl type="file"/>
   <HelpBlock>"Upload csv..."</HelpBlock>
+  
   </FormGroup>
 export default UploadBox;
