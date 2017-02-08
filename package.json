@@ -1,0 +1,16 @@
+{
+  "name": "visualpregel",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://valcol@bitbucket.org/auber/butterflies.git"
+  },
+  "author": "Valentin Colmant <valcol.nc@gmail.com>",
+  "license": "MIT",
+  "homepage": "https://bitbucket.org/auber/butterflies#readme"
+}
