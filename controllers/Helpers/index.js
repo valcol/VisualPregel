@@ -11,7 +11,7 @@ Helpers.prototype.stringToFunction = function(s) {
 };
 
 Helpers.prototype.functionToString = function(f) {
-  return f.toSting();
+  return f.toString();
 };
 
 export default new Helpers();
