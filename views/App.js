@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import {render} from 'react-dom';
+import SplitPane from 'react-split-pane';
 
 import css from './App.less';
 import { Grid, Col, Row } from 'react-bootstrap';
@@ -17,19 +18,30 @@ export default class App extends Component {
   render() {
     return (
       <Grid fluid>
-        <Row className="app-container">
-          <Col xs={12} md={2}>
+        <Row className="app-container no-padding no-margin">
+          <Col xs={12} md={3} className="left-col no-padding">
             <Panel/>
           </Col>
-          <Col xs={12} md={10}>
-            <Row className="top-row">
-              <Col xs={12} md={6}><CodeArea label='Initialize'/></Col>
-              <Col xs={12} md={6}><CodeArea label='Send'/></Col>
-            </Row>
-            <Row className="bottom-row">
-              <Col xs={12} md={6}><CodeArea label='Agregate'/></Col>
-              <Col xs={12} md={6}><Graph/></Col>
-            </Row>
+          <Col xs={12} md={9} className="right-col no-padding">
+            <SplitPane split="horizontal" defaultSize="40%">
+              <SplitPane split="vertical" defaultSize="50%">
+                  <CodeArea
+                    title='1. Initialization'
+                    baseCode = 'init() {}'
+                    />
+                  <CodeArea
+                    title='2. Dispatch'
+                    baseCode = 'dispatch() {}'
+                  />
+              </SplitPane>
+              <SplitPane split="vertical" defaultSize="45%">
+                <CodeArea
+                  title='3. Aggregation'
+                  baseCode = 'aggregate() {}'
+                  />
+                <Graph />
+              </SplitPane>
+            </SplitPane>
           </Col>
         </Row>
       </Grid>
