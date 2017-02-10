@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {render} from 'react-dom';
 import SplitPane from 'react-split-pane';
+import Pregel from '../controllers/Pregel';
 
 import css from './App.less';
 import { Grid, Col, Row } from 'react-bootstrap';
@@ -27,17 +28,17 @@ export default class App extends Component {
               <SplitPane split="vertical" defaultSize="50%">
                   <CodeArea
                     title='1. Initialization'
-                    baseCode = 'init() {}'
+                    baseCode = {Pregel.initialize.toString()}
                     />
                   <CodeArea
                     title='2. Dispatch'
-                    baseCode = 'dispatch() {}'
+                    baseCode = {Pregel.dispatch.toString()}
                   />
               </SplitPane>
               <SplitPane split="vertical" defaultSize="45%">
                 <CodeArea
                   title='3. Aggregation'
-                  baseCode = 'aggregate() {}'
+                  baseCode = {Pregel.aggregate.toString()}
                   />
                 <Graph />
               </SplitPane>
