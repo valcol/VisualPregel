@@ -1,9 +1,12 @@
 let Helpers = function() {};
 
-
 Helpers.prototype.stringToFunction = function(s) {
   let f;
-  eval('f = ' + s);
+  try {
+    eval('f = ' + s);
+  } catch (e) {
+    throw e;
+  }
   return f;
 };
 
