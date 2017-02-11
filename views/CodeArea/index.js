@@ -8,16 +8,8 @@ class CodeArea extends Component {
 
   constructor(props) {
     super(props);
-    this.state = {
-      code:props.baseCode
-    }
   }
 
-  updateCode(e){
-    this.setState({
-      code: e.target.value
-    });
-  }
 
   render() {
     return (
@@ -25,7 +17,7 @@ class CodeArea extends Component {
         <div className='code-area-header'>
           {this.props.title}
         </div>
-        <CodeMirror value={this.state.code} onChange={this.updateCode} options={{lineNumbers: true, mode: 'javascript'}} />
+        <CodeMirror value={this.props.code} onChange={this.props.handleCodeChange} options={{lineNumbers: true, mode: 'javascript'}} />
       </div>
     );
   }

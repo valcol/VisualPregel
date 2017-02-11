@@ -15,11 +15,11 @@ Pregel.prototype.aggregate = function(values) {
   return Math.min(...values);
 };
 
-Pregel.prototype.mock = function(values, initialize, dispatch, aggregate) {
-  let nodesValues = [1, 2, 3, 4, 5, 6];
-  nodesValues.map((v) => (initialize(v)));
-  nodesValues.map((v) => (dispatch(v)));
-  console.log(aggregate(nodesValues));
+Pregel.prototype.mock = function(initialize, dispatch, aggregate) {
+  let nodesValues = [10, 2, 3, 4, 5, 6];
+  nodesValues = nodesValues.map((v) => (initialize(v)));
+  nodesValues = nodesValues.map((v) => (dispatch(v)));
+  console.log('Result: '+aggregate(nodesValues));
 };
 
 Pregel = new Pregel();
