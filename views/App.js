@@ -9,6 +9,7 @@ import { Grid, Col, Row } from 'react-bootstrap';
 import CodeArea from './CodeArea';
 import Graph from './Graph';
 import Panel from './Panel';
+import FileProgressBar from './ProgressBar';
 
 
 export default class App extends Component {
