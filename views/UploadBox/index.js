@@ -1,14 +1,21 @@
-import React from 'react';
+import React, {Component} from 'react';
 import { FormGroup, ControlLabel, FormControl, HelpBlock } from 'react-bootstrap';
 
+class UploadBox extends Component {
 
-const UploadBox = () =>
-  <FormGroup controlId='formControlsFile'>
-  <ControlLabel>Upload</ControlLabel>
-  <FormControl type="file" onChange={(e) => fileToGraph(e.target.files[0])}/>
-  <HelpBlock>"Upload csv..."</HelpBlock>
-  </FormGroup>
-    
-  
-  
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <FormGroup controlId='formControlsFile'>
+      <ControlLabel>Upload</ControlLabel>
+      <FormControl type="file" onChange={this.props.upload}/>
+      <HelpBlock>"Upload csv..."</HelpBlock>
+      </FormGroup>
+    );
+  }
+}
+
 export default UploadBox;

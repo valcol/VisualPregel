@@ -1,29 +1,18 @@
-var listOfNodes = [];
 
-var now = 0;
 
-function Node(){
-	this.id = 0,
-	this.value = 0,
-	this.listOfNeighbours = []
-}  
+let FileHandler = function() {
+	this.listOfNodes = [];
+};
 
-function updateProgressBar(bar,state){
-	bar.setAttribute("style", "width: "+now+"%");
-	bar.setAttribute("class", "progress-bar progress-bar-"+state);
-	bar.innerHTML = now+"%";
-}
-
-function fileToGraph(file){
+FileHandler.prototype.fileToGraph = function(file, updateBar){
+	let now = 0;
 	if(file == undefined)
 		return;
-	var progressbar = document.getElementsByClassName("progress-bar")[0];
 	var filename = file.name.split('.');
 	var fileformat = filename[filename.length-1];
 	if(!fileformat.includes("csv")){
 		listOfNodes = [];
-		now = 0;
-		updateProgressBar(progressbar,"danger");
+		updateBar(now,"danger");
 		alert("Your file is not csv file");
 		file.value = '';
 		return;
@@ -41,27 +30,32 @@ function fileToGraph(file){
 					edges = true;
 					continue;
 				}
-				listOfNodes.push(new Node());
-				listOfNodes[i].id = parseInt(line[0]);
-				listOfNodes[i].value = parseInt(line[1]);
+				FileHandler.listOfNodes.push({
+					id: parseInt(line[0]),
+					value: parseInt(line[1]),
+					listOfNeighbours: []
+				});
 			}
 			else{
 				var nodeID = parseInt(line[0]);
 				for(var j = 1; j < line.length; j++){
-					var actualNode = listOfNodes[nodeID]
+					var actualNode = FileHandler.listOfNodes[nodeID]
 					if(actualNode != null)
 						actualNode.listOfNeighbours.push(parseInt(line[j]));
 					else{
 						alert("Fail to read csv file.\nAn error occurs line " + (i+1));
-						updateProgressBar(progressbar,"danger");
+						updateBar(now,"danger");
 						return;
 					}
 				}
 			}
 			now = 100/(lines.length - i);
-			updateProgressBar(progressbar,"info");
+			updateBar(now,"info");
 		}
-		updateProgressBar(progressbar,"success");
+		updateBar(now,"success");
 	}
 	reader.readAsText(file);
 }
+
+FileHandler = new FileHandler();
+export default FileHandler;

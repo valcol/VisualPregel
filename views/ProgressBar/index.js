@@ -1,9 +1,19 @@
-import React from 'react';
-import { FormGroup, ProgressBar } from 'react-bootstrap';
+import React, {Component} from 'react';
+import { FormGroup, ProgressBar, Button } from 'react-bootstrap';
 
+class FileProgressBar extends Component {
 
-const FileProgressBar = () =>
-   <ProgressBar now={now} bsStyle="success" label={`${now}%`} />
-  
-  
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <div>
+      <ProgressBar now={this.props.percent} bsStyle={this.props.bsStyle} label={this.props.percent+"%"} />
+      </div>
+    );
+  }
+}
+
 export default FileProgressBar;
