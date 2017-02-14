@@ -1,5 +1,17 @@
-import React from 'react';
+import React, {Component} from 'react';
+import FatumGraph from '../FatumGraph';
+import { Button } from 'react-bootstrap';
 
-const Graph = () =>
-  <div>Graph here ...</div>
+
+class Graph extends Component {
+
+  render(){
+    return(
+      <div>
+        <canvas id="fatum-demo" ></canvas>
+        <Button bsSize="large" onClick={FatumGraph.fatumgraph} block>Execute</Button>
+      </div>
+    );
+  }
+}
 export default Graph;
