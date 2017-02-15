@@ -48,6 +48,21 @@ export default class App extends Component {
   }
 
   render() {
+    let nodesMock = {
+      '1': {
+        listOfNeighbours: ['2', '3', '4']
+      },
+      '2': {
+        listOfNeighbours: ['3', '4', '1']
+      },
+      '3': {
+        listOfNeighbours: ['4']
+      },
+      '4': {
+        listOfNeighbours: ['1']
+      }
+    };
+
     return (
       <Grid fluid>
         <Row className="app-container no-padding no-margin">
@@ -81,7 +96,9 @@ export default class App extends Component {
                   handleCodeChange = {this.handleCodeChange('aggregate')}
                   handleCodeReset = {this.handleCodeReset('aggregate')}
                   />
-                <Graph />
+                <Graph
+                  nodes = {nodesMock}
+                  />
               </SplitPane>
             </SplitPane>
           </Col>

@@ -1,5 +1,3 @@
-import FatumGraph from '../../views/FatumGraph';
-
 let FileHandler = function() {
 	this.listOfNodes = {};
 };
@@ -62,7 +60,6 @@ FileHandler.prototype.fileToGraph = function(file, updateBar){
 	}
 
 	reader.readAsText(file);
-	FatumGraph.fatumgraph();
 }
 
 FileHandler = new FileHandler();
