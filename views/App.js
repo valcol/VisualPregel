@@ -31,6 +31,14 @@ export default class App extends Component {
     }.bind(this);
   }
 
+  handleCodeReset(key) {
+    return function() {
+      let state = {};
+      state[key] = Helpers.functionToString(Pregel[key]);
+      this.setState(state);
+    }.bind(this);
+  }
+
   handleExecute() {
     let initialize = Helpers.stringToFunction(this.state.initialize);
     let dispatch = Helpers.stringToFunction(this.state.dispatch);
@@ -57,11 +65,13 @@ export default class App extends Component {
                     title='1. Initialization'
                     code = {this.state.initialize}
                     handleCodeChange = {this.handleCodeChange('initialize')}
+                    handleCodeReset = {this.handleCodeReset('initialize')}
                     />
                   <CodeArea
                     title='2. Dispatch'
                     code = {this.state.dispatch}
                     handleCodeChange = {this.handleCodeChange('dispatch')}
+                    handleCodeReset = {this.handleCodeReset('dispatch')}
                   />
               </SplitPane>
               <SplitPane split="vertical" defaultSize="45%">
@@ -69,6 +79,7 @@ export default class App extends Component {
                   title='3. Aggregation'
                   code = {this.state.aggregate}
                   handleCodeChange = {this.handleCodeChange('aggregate')}
+                  handleCodeReset = {this.handleCodeReset('aggregate')}
                   />
                 <Graph />
               </SplitPane>
