@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Button } from 'react-bootstrap';
+import Dagre from 'dagre';
 
 
 class Graph extends Component {
@@ -16,7 +17,7 @@ class Graph extends Component {
 
   init() {
     let nodes = this.props.nodes;
-    let canvas = document.getElementById('fatum-demo');
+    let canvas = document.getElementById('fatum-canvas');
     window.fatum = Fatum.createFatumContext(canvas);
     Fatum.setRenderingObserver(fatum);
     Fatum.setMouseMoveHandler(canvas, fatum);
@@ -26,18 +27,16 @@ class Graph extends Component {
     let xVertex = 40;
     let yVertex = 40;
     let vertexSize = 30;
-    let tmp = 0;
 
     let listOfGraphNodes = {};
+    let layout = this.getLayout(vertexSize);
 
-    for (let nodeID in nodes) {
-      listOfGraphNodes[nodeID] = fatum.addMark().x(xVertex+tmp).y(yVertex+tmp).color(200,100,255).show().alpha(255).width(vertexSize).height(vertexSize);
-      tmp+=30;
+    for (let node of layout.nodes()) {
+      listOfGraphNodes[node] = fatum.addMark().x(layout.node(node).x).y(layout.node(node).y).color(200,100,255).show().alpha(255).width(vertexSize).height(vertexSize);
     }
 
-    for (let nodeID in nodes){
-      for (let neighbourID of nodes[nodeID].listOfNeighbours)
-          fatum.addConnection(listOfGraphNodes[nodeID],listOfGraphNodes[neighbourID]).sourceColor([0,0,0,128]).targetColor([0,0,0,128]);
+    for (let edge of layout.edges()){
+        fatum.addConnection(listOfGraphNodes[edge.v],listOfGraphNodes[edge.w]).sourceColor([0,0,0,128]).targetColor([0,0,0,128]);
     }
 
     fatum.camera().zoom(1 , [0, 0]);
@@ -45,14 +44,31 @@ class Graph extends Component {
     fatum.animate(2000);
   }
 
-  getLayout(){
+  getLayout(vertexSize){
+    let g = new Dagre.graphlib.Graph();
+    let nodes = this.props.nodes;
 
+    g.setGraph({});
+
+    g.setDefaultEdgeLabel(function() { return {}; });
+
+    for (let nodeID in nodes)
+      g.setNode(nodeID, {label:nodeID, width: vertexSize, height: vertexSize});
+
+    for (let nodeID in nodes){
+      for (let neighbourID of nodes[nodeID].listOfNeighbours)
+        g.setEdge(nodeID, neighbourID);
+    }
+
+    Dagre.layout(g);
+
+    return g;
   }
 
   render() {
-    return(
-      <div>
-        <canvas id="fatum-demo" ></canvas>
+    return (
+      <div class="graph-container">
+        <canvas id="fatum-canvas"></canvas>
       </div>
     );
   }
