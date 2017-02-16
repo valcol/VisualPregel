@@ -5,7 +5,7 @@ import Pregel from '../controllers/Pregel';
 import Helpers from '../controllers/Helpers';
 
 import css from './App.less';
-import { Grid, Col, Row } from 'react-bootstrap';
+import { Grid, Col, Row, Button } from 'react-bootstrap';
 import CodeArea from './CodeArea';
 import Graph from './Graph';
 import Panel from './Panel';
@@ -19,8 +19,10 @@ export default class App extends Component {
     this.state = {
       initialize: Helpers.functionToString(Pregel.initialize),
       dispatch: Helpers.functionToString(Pregel.dispatch),
-      aggregate: Helpers.functionToString(Pregel.aggregate)
+      aggregate: Helpers.functionToString(Pregel.aggregate),
+      nodes: {}
     };
+    this.generateRandomGraph = this.generateRandomGraph.bind(this);
   }
 
   handleCodeChange(key) {
@@ -47,7 +49,7 @@ export default class App extends Component {
     Pregel.mock(initialize, dispatch, aggregate);
   }
 
-  render() {
+  generateRandomGraph(){
     let nodesMock = {
       '1': {
         listOfNeighbours: ['2', '3', '4']
@@ -63,6 +65,23 @@ export default class App extends Component {
       }
     };
 
+    let nodes = {};
+    for (let i=1; i<11; i++){
+      let listOfNeighbours = [];
+      for (let i=1; i<Math.floor((Math.random() * 10) + 1); i++){
+        let n = Math.floor((Math.random() * 10) + 1);
+        if (listOfNeighbours.indexOf(n) == -1)
+          listOfNeighbours.push(n);
+      }
+      nodes[i] = {listOfNeighbours};
+    }
+    console.log('graph generated');
+    this.setState({nodes});
+  }
+
+
+  render() {
+
     return (
       <Grid fluid>
         <Row className="app-container no-padding no-margin">
@@ -72,6 +91,7 @@ export default class App extends Component {
               this.handleExecute();
             }
             }/>
+          <Button bsSize="large" onClick={this.generateRandomGraph} block>generateRandomGraph</Button>
           </Col>
           <Col xs={12} md={9} className="right-col no-padding">
             <SplitPane split="horizontal" defaultSize="40%">
@@ -97,7 +117,7 @@ export default class App extends Component {
                   handleCodeReset = {this.handleCodeReset('aggregate')}
                   />
                 <Graph
-                  nodes = {nodesMock}
+                  nodes = {this.state.nodes}
                   />
               </SplitPane>
             </SplitPane>

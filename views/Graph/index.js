@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { Button } from 'react-bootstrap';
+import Measure from 'react-measure';
 import Dagre from 'dagre';
 
 
@@ -7,6 +8,13 @@ class Graph extends Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      dimensions: {
+        width: -1,
+        height: -1
+      }
+    };
+    this.vertexSize = 30;
     this.init = this.init.bind(this);
   }
 
@@ -15,38 +23,48 @@ class Graph extends Component {
     Fatum.whenReady(this.init);
   }
 
+  componentWillReceiveProps(nextProps){
+    this.fatum.clear();
+    this.makeGraph(nextProps.nodes);
+    this.fatum.animate();
+     console.log('props!');
+  }
+
   init() {
     let nodes = this.props.nodes;
     let canvas = document.getElementById('fatum-canvas');
-    window.fatum = Fatum.createFatumContext(canvas);
-    Fatum.setRenderingObserver(fatum);
-    Fatum.setMouseMoveHandler(canvas, fatum);
-    fatum.layerOn(Fatum.MARKS | Fatum.TEXT | Fatum.CONNECTIONS);
+    this.fatum = Fatum.createFatumContext(canvas);
+    Fatum.setRenderingObserver(this.fatum);
+    Fatum.setMouseMoveHandler(canvas, this.fatum);
+  //  Fatum.setCanvasSize(500, 500, true);
+    this.fatum.layerOn(Fatum.MARKS | Fatum.TEXT | Fatum.CONNECTIONS);
     let vertices = [];
-    let fonts = fatum.fonts();
+    let fonts = this.fatum.fonts();
     let xVertex = 40;
     let yVertex = 40;
-    let vertexSize = 30;
+    this.makeGraph(nodes);
+    this.fatum.animate();
+  }
 
+  makeGraph(nodes){
     let listOfGraphNodes = {};
-    let layout = this.getLayout(vertexSize);
+    let layout = this.getLayout(this.vertexSize, nodes);
 
     for (let node of layout.nodes()) {
-      listOfGraphNodes[node] = fatum.addMark().x(layout.node(node).x).y(layout.node(node).y).color(200,100,255).show().alpha(255).width(vertexSize).height(vertexSize);
+      listOfGraphNodes[node] = this.fatum.addMark().x(layout.node(node).x).y(layout.node(node).y).color(200,100,255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
     }
 
     for (let edge of layout.edges()){
-        fatum.addConnection(listOfGraphNodes[edge.v],listOfGraphNodes[edge.w]).sourceColor([0,0,0,128]).targetColor([0,0,0,128]);
+        this.fatum.addConnection(listOfGraphNodes[edge.v],listOfGraphNodes[edge.w]).sourceColor([0,0,0,128]).targetColor([0,0,0,128]);
     }
 
-    fatum.camera().zoom(1 , [0, 0]);
-    fatum.camera().swap();
-    fatum.animate(2000);
+    this.fatum.camera().zoom(1 , [0, 0]);
+    this.fatum.camera().swap();
+    this.fatum.center();
   }
 
-  getLayout(vertexSize){
+  getLayout(vertexSize, nodes){
     let g = new Dagre.graphlib.Graph();
-    let nodes = this.props.nodes;
 
     g.setGraph({});
 
@@ -66,10 +84,18 @@ class Graph extends Component {
   }
 
   render() {
+    const { width, height } = this.state.dimensions;
     return (
-      <div class="graph-container">
-        <canvas id="fatum-canvas"></canvas>
+      <Measure
+        onMeasure={(dimensions) => {
+          this.setState({dimensions})
+        }
+      }
+      >
+      <div className="graph-container">
+          <canvas id="fatum-canvas" width={'500px'} height={'500px'}></canvas>
       </div>
+    </Measure>
     );
   }
 }
