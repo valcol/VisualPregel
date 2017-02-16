@@ -24,10 +24,11 @@ class Graph extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    this.fatum.clear();
-    this.makeGraph(nextProps.nodes);
-    this.fatum.animate();
-     console.log('props!');
+    if (this.props != nextProps && !this.fatum.isAnimating()){
+      this.fatum.clear();
+      this.makeGraph(nextProps.nodes);
+      this.fatum.animate();
+    }
   }
 
   init() {
@@ -83,6 +84,7 @@ class Graph extends Component {
     return g;
   }
 
+
   render() {
     const { width, height } = this.state.dimensions;
     return (
@@ -93,6 +95,9 @@ class Graph extends Component {
       }
       >
       <div className="graph-container">
+        <div className='graph-area-header'>
+          Graph
+        </div>
           <canvas id="fatum-canvas" width={'500px'} height={'500px'}></canvas>
       </div>
     </Measure>
