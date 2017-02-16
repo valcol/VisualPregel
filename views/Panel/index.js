@@ -30,7 +30,7 @@ class Panel extends Component {
     return (
     <div>
       <UploadBox upload={this.upload}/>
-	  <FileProgressBar percent={this.state.percent} bsStyle = {this.state.bsStyle}/>
+      <FileProgressBar percent={this.state.percent} bsStyle = {this.state.bsStyle}/>
       <Button bsSize="large" onClick={this.props.execute} block>Execute</Button>
     </div>
     );

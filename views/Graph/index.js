@@ -15,13 +15,14 @@ class Graph extends Component {
       }
     };
     this.vertexSize = 30;
-    this.fonts = this.fatum.fonts();
+    this.fonts = null;
     this.init = this.init.bind(this);
   }
 
   componentDidMount() {
     Fatum.init();
     Fatum.whenReady(this.init);
+    this.fonts = this.fatum.fonts();
   }
 
   componentWillReceiveProps(nextProps){
