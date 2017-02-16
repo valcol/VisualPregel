@@ -42,18 +42,19 @@ class Graph extends Component {
   //  Fatum.setCanvasSize(500, 500, true);
     this.fatum.layerOn(Fatum.MARKS | Fatum.TEXT | Fatum.CONNECTIONS);
     let vertices = [];
-
     this.makeGraph(nodes);
     this.fatum.animate();
   }
 
   makeGraph(nodes){
     let listOfGraphNodes = {};
+    let listOfGraphLabels = {};
     let layout = this.getLayout(this.vertexSize, nodes);
 
     for (let node of layout.nodes()) {
-    listOfGraphNodes[node] = this.fatum.addMark().x(layout.node(node).x).y(layout.node(node).y).color(200, 100, 255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
-  }
+      listOfGraphNodes[node] = this.fatum.addMark().x(layout.node(node).x).y(layout.node(node).y).color(200, 100, 255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
+      listOfGraphLabels[node] = this.fatum.addText().text(node).x(layout.node(node).x).y(layout.node(node).y).textColor(255, 255, 255, 255).font(0).size(13);
+    }
 
   for (let edge of layout.edges()) {
     this.fatum.addConnection(listOfGraphNodes[edge.v], listOfGraphNodes[edge.w]).sourceColor([0, 0, 0, 128]).targetColor([0, 0, 0, 128]);
