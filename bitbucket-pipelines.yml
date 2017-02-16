@@ -10,5 +10,6 @@ pipelines:
     - step:
         script: # Modify the commands below to build your repository.
           - npm install
+          - npm install -g webpack
           - webpack
           - npm run test
