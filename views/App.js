@@ -10,6 +10,7 @@ import CodeArea from './CodeArea';
 import Graph from './Graph';
 import Panel from './Panel';
 import FileProgressBar from './ProgressBar';
+import FileHandler from '../controllers/FileHandler';
 
 
 export default class App extends Component {
@@ -23,6 +24,7 @@ export default class App extends Component {
       nodes: {}
     };
     this.generateRandomGraph = this.generateRandomGraph.bind(this);
+    this.generateCSVGraph = this.generateCSVGraph.bind(this);
   }
 
   handleCodeChange(key) {
@@ -75,8 +77,11 @@ export default class App extends Component {
       }
       nodes[i] = {listOfNeighbours};
     }
-    console.log('graph generated');
     this.setState({nodes});
+  }
+
+  generateCSVGraph(){
+    this.setState({nodes: FileHandler.listOfNodes});
   }
 
 
@@ -87,27 +92,28 @@ export default class App extends Component {
         <Row className="app-container no-padding no-margin">
           <Col xs={12} md={3} className="left-col no-padding">
             <Panel
-            execute={() => {
-              this.handleExecute();
-            }
-            }/>
-          <Button bsSize="large" onClick={this.generateRandomGraph} block>generateRandomGraph</Button>
+              execute={() => {
+                this.handleExecute();
+              }
+              }/>
+            <Button bsSize="large" onClick={this.generateRandomGraph} block>generateRandomGraph</Button>
+            <Button bsSize="large" onClick={this.generateCSVGraph} block>generateCSVGraph</Button>
           </Col>
           <Col xs={12} md={9} className="right-col no-padding">
             <SplitPane split="horizontal" defaultSize="40%">
               <SplitPane split="vertical" defaultSize="50%">
-                  <CodeArea
-                    title='1. Initialization'
-                    code = {this.state.initialize}
-                    handleCodeChange = {this.handleCodeChange('initialize')}
-                    handleCodeReset = {this.handleCodeReset('initialize')}
-                    />
-                  <CodeArea
-                    title='2. Dispatch'
-                    code = {this.state.dispatch}
-                    handleCodeChange = {this.handleCodeChange('dispatch')}
-                    handleCodeReset = {this.handleCodeReset('dispatch')}
-                  />
+                <CodeArea
+                  title='1. Initialization'
+                  code = {this.state.initialize}
+                  handleCodeChange = {this.handleCodeChange('initialize')}
+                  handleCodeReset = {this.handleCodeReset('initialize')}
+                />
+                <CodeArea
+                  title='2. Dispatch'
+                  code = {this.state.dispatch}
+                  handleCodeChange = {this.handleCodeChange('dispatch')}
+                  handleCodeReset = {this.handleCodeReset('dispatch')}
+                />
               </SplitPane>
               <SplitPane split="vertical" defaultSize="45%">
                 <CodeArea
@@ -115,10 +121,10 @@ export default class App extends Component {
                   code = {this.state.aggregate}
                   handleCodeChange = {this.handleCodeChange('aggregate')}
                   handleCodeReset = {this.handleCodeReset('aggregate')}
-                  />
+                />
                 <Graph
                   nodes = {this.state.nodes}
-                  />
+                />
               </SplitPane>
             </SplitPane>
           </Col>

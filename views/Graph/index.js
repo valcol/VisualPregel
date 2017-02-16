@@ -15,6 +15,7 @@ class Graph extends Component {
       }
     };
     this.vertexSize = 30;
+    this.fonts = this.fatum.fonts();
     this.init = this.init.bind(this);
   }
 
@@ -24,7 +25,7 @@ class Graph extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if (this.props != nextProps && !this.fatum.isAnimating()){
+    if (this.props !== nextProps && !this.fatum.isAnimating()) {
       this.fatum.clear();
       this.makeGraph(nextProps.nodes);
       this.fatum.animate();
@@ -40,9 +41,7 @@ class Graph extends Component {
   //  Fatum.setCanvasSize(500, 500, true);
     this.fatum.layerOn(Fatum.MARKS | Fatum.TEXT | Fatum.CONNECTIONS);
     let vertices = [];
-    let fonts = this.fatum.fonts();
-    let xVertex = 40;
-    let yVertex = 40;
+
     this.makeGraph(nodes);
     this.fatum.animate();
   }
@@ -52,14 +51,14 @@ class Graph extends Component {
     let layout = this.getLayout(this.vertexSize, nodes);
 
     for (let node of layout.nodes()) {
-      listOfGraphNodes[node] = this.fatum.addMark().x(layout.node(node).x).y(layout.node(node).y).color(200,100,255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
-    }
+    listOfGraphNodes[node] = this.fatum.addMark().x(layout.node(node).x).y(layout.node(node).y).color(200, 100, 255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
+  }
 
-    for (let edge of layout.edges()){
-        this.fatum.addConnection(listOfGraphNodes[edge.v],listOfGraphNodes[edge.w]).sourceColor([0,0,0,128]).targetColor([0,0,0,128]);
-    }
+  for (let edge of layout.edges()) {
+    this.fatum.addConnection(listOfGraphNodes[edge.v], listOfGraphNodes[edge.w]).sourceColor([0, 0, 0, 128]).targetColor([0, 0, 0, 128]);
+  }
 
-    this.fatum.camera().zoom(1 , [0, 0]);
+    this.fatum.camera().zoom(1, [0, 0]);
     this.fatum.camera().swap();
     this.fatum.center();
   }
