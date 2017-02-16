@@ -9,28 +9,42 @@ class Panel extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      percent: 0,
-      bsStyle: 'success'
+      percentFileBar: 0,
+      bsStyleFileBar: 'success',
+      percentValuesBar: 0,
+      bsStyleValuesBar: 'success'
     };
-    this.upload = this.upload.bind(this);
-    this.updateBar = this.updateBar.bind(this);
+    this.uploadGraph = this.uploadGraph.bind(this);
+    this.uploadValues = this.uploadValues.bind(this);
+    this.updateFileBar = this.updateFileBar.bind(this);
+    this.updateValuesBar = this.updateValuesBar.bind(this);
   }
 
-  updateBar(percent, bsStyle){
-    console.log(percent);
-    this.setState({percent,
-    bsStyle});
+  updateFileBar(percentFileBar, bsStyleFileBar,){
+    this.setState({percentFileBar,
+    bsStyleFileBar});
   }
 
-  upload(e){
-    FileHandler.fileToGraph(e.target.files[0], this.updateBar);
+  updateValuesBar(percentValuesBar, bsStyleValuesBar){
+    this.setState({percentValuesBar,
+    bsStyleValuesBar});
+  }
+
+  uploadGraph(e){
+    FileHandler.fileToGraph(e.target.files[0], this.updateFileBar, this.updateValuesBar);
+  }
+
+  uploadValues(e){
+    FileHandler.initValuesFromFile(e.target.files[0], this.updateValuesBar);
   }
 
   render() {
     return (
     <div>
-      <UploadBox upload={this.upload}/>
-      <FileProgressBar percent={this.state.percent} bsStyle = {this.state.bsStyle}/>
+    <UploadBox idName = "graph" goal = "Upload graph file" help = "Upload csv file" upload={this.uploadGraph}/>
+	  <FileProgressBar percent={this.state.percentFileBar} bsStyle = {this.state.bsStyleFileBar}/>
+    <UploadBox idName = "values" goal = "Upload values file" help = "Upload csv file" upload={this.uploadValues}/>
+  <FileProgressBar percent={this.state.percentValuesBar} bsStyle = {this.state.bsStyleValuesBar}/>
       <Button bsSize="large" onClick={this.props.execute} block>Execute</Button>
     </div>
     );

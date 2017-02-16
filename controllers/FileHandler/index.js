@@ -2,65 +2,128 @@ let FileHandler = function() {
 	this.listOfNodes = {};
 };
 
-FileHandler.prototype.fileToGraph = function(file, updateBar){
+
+FileHandler.prototype.resetInputFile = function(id){
+	let form = document.getElementById(id);
+	form.value = "";
+}
+
+
+
+/**
+* Get a graph object from csv file representing adjacency matrix of this graph
+*
+* @param {File} comments the csv file to be parse.
+* @param {Function} comments function to call for update the progress bar.
+* @return {void} update the property listOfNodes
+*/
+FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBar){
 	let now = 0;
 	FileHandler.listOfNodes = {};
-	if(file == undefined)
-	return;
-	var filename = file.name.split(".");
-	var fileformat = filename[filename.length-1];
+
+	updateFileBar(now,"info");
+	updateValuesBar(now,"info");
+
+
+	//If the user choose cancel
+	if(file == undefined){
+		FileHandler.resetInputFile("values");
+		return;
+	}
+	let filename = file.name.split(".");
+	let fileformat = filename[filename.length-1];
+
+	//If the file is not in csv format
+	if(!fileformat.includes("csv")){
+		FileHandler.resetInputFile("graph");
+		FileHandler.resetInputFile("values");
+		alert("Your file is not csv file");
+		return;
+	}
+
+	//Parse the file and create the graph
+	let reader = new FileReader();
+	let line = "";
+	let lines = [];
+	reader.onload = function(evt){
+		lines = this.result.split("\n");
+		for(let i = 0; i < lines.length; i++){
+			line = lines[i].split(/,| |\t/);
+			let nodeID = parseInt(line[0]);
+			FileHandler.listOfNodes[nodeID] = {
+				id: nodeID,
+				listOfNeighbours: []
+			};
+			for(let j = 1; j < line.length; j++){
+				let neighbourID = parseInt(line[j]);
+				if(FileHandler.listOfNodes[neighbourID] == undefined)
+				FileHandler.listOfNodes[neighbourID] = {
+					id: neighbourID,
+					listOfNeighbours: []
+				};
+				FileHandler.listOfNodes[nodeID].listOfNeighbours.push(neighbourID);
+			}
+			now = 100/(lines.length - i);
+			updateFileBar(now,"info");
+		}
+		updateFileBar(now,"success");
+	}
+	reader.readAsText(file);
+}
+
+/**
+* Initiate values of graph's nodes from csv file.
+*
+* @param {File} comments the csv file to be parse.
+* @param {Function} comments function to call for update the progress bar.
+* @return {void} update the values of nodes
+*/
+
+
+FileHandler.prototype.initValuesFromFile = function(file, updateBar){
+	let now = 0;
+
+	//If the user choose cancel
+	if(file == undefined){
+		updateBar(now,"info");
+		return;
+	}
+	//If there is no initiate graph.
+	if(Object.keys(FileHandler.listOfNodes).length == 0){
+		updateBar(now,"info");
+		alert("There is no graph to initiate.");
+		let form = document.getElementById("values");
+		form.value = "";
+		return;
+	}
+	let filename = file.name.split(".");
+	let fileformat = filename[filename.length-1];
+	//If the file is not in csv format
 	if(!fileformat.includes("csv")){
 		updateBar(now,"danger");
 		alert("Your file is not csv file");
-		file.value = "";
+		let form = document.getElementById("values");
+		form.value = "";
 		return;
 	}
-	var reader = new FileReader();
-	var edges = false;
-	var line = "";
-	var lines = [];
+	//Parse the file and update graph values
+	let reader = new FileReader();
+	let line = "";
+	let lines = [];
 	reader.onload = function(evt){
 		lines = this.result.split("\n");
-		for(var i = 0; i < lines.length; i++){
+		for(let i = 0; i < lines.length; i++){
 			line = lines[i].split(/,| |\t/);
-			if(!edges){
-				if(lines[i].includes("EDGES")){
-					edges = true;
-					continue;
-				}
-				FileHandler.listOfNodes[parseInt(line[0])] = {
-					id: parseInt(line[0]),
-					value: parseInt(line[1]),
-					listOfNeighbours: []
-				};
-			}
-			else{
-				let nodeID = parseInt(line[0]);
-				if(FileHandler.listOfNodes[nodeID] != null)
-				for(var j = 1; j < line.length; j++){
-					let neighbourNode = parseInt(line[j]);
-					if(FileHandler.listOfNodes[neighbourNode] != null )
-					FileHandler.listOfNodes[nodeID].listOfNeighbours.push(neighbourNode);
-					else{
-						updateBar(now,"danger");
-						alert("Fail to read csv file.\nAn error occurs line " + (i+1));
-						return;
-					}
-				}
-				else{
-					updateBar(now,"danger");
-					alert("Fail to read csv file.\nAn error occurs line " + (i+1));
-					return;
-				}
-			}
+			let nodeID = parseInt(line[0]);
+			FileHandler.listOfNodes[nodeID].value = parseInt(line[1]);
 			now = 100/(lines.length - i);
 			updateBar(now,"info");
 		}
 		updateBar(now,"success");
 	}
-
 	reader.readAsText(file);
 }
+
 
 FileHandler = new FileHandler();
 export default FileHandler;

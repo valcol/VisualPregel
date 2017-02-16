@@ -9,10 +9,10 @@ class UploadBox extends Component {
 
   render() {
     return (
-      <FormGroup controlId='formControlsFile'>
-      <ControlLabel>Upload</ControlLabel>
-      <FormControl type="file" onChange={this.props.upload}/>
-      <HelpBlock>"Upload csv..."</HelpBlock>
+      <FormGroup >
+      <ControlLabel>{this.props.goal}</ControlLabel>
+      <FormControl id = {this.props.idName} type="file" onChange={this.props.upload}/>
+      <HelpBlock>{this.props.help}</HelpBlock>
       </FormGroup>
     );
   }
