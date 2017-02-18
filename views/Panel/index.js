@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import UploadBox from '../UploadBox';
 import FileProgressBar from '../ProgressBar';
 import { Button } from 'react-bootstrap';
+import { ButtonToolbar, DropdownButton , MenuItem  } from 'react-bootstrap';
 import FileHandler from '../../controllers/FileHandler';
 
 class Panel extends Component {
@@ -38,9 +39,31 @@ class Panel extends Component {
     FileHandler.initValuesFromFile(e.target.files[0], this.updateValuesBar);
   }
 
+  _comma() {
+   window.alert('You have choosen the , seperator');
+ }
+  _colon() {
+   window.alert('You have choosen the : seperator');
+ }
+  _semi() {
+   window.alert('You have choosen the ; seperator');
+ }
+
+
+
   render() {
     return (
+
     <div>
+    <p>Please choose your CSV Seperator : </p>
+     <ButtonToolbar>
+      <DropdownButton bsStyle="Primary" title="CSV Seperator" id="dropdown-size-medium" onSelect={function(evt){console.log(evt)}}>
+    <MenuItem eventKey="," onClick={this._comma} active>Comma Seperator ','</MenuItem>
+    <MenuItem eventKey=":" onClick={this._colon}>Colon Seperator ':'</MenuItem>
+    <MenuItem eventKey=";" onClick={this._semi}>Semi-colon Seperator ';'</MenuItem>
+      </DropdownButton>
+     </ButtonToolbar>
+     <br/>
     <UploadBox idName = "graph" goal = "Upload graph file" help = "Upload csv file" upload={this.uploadGraph}/>
 	  <FileProgressBar percent={this.state.percentFileBar} bsStyle = {this.state.bsStyleFileBar}/>
     <UploadBox idName = "values" goal = "Upload values file" help = "Upload csv file" upload={this.uploadValues}/>
