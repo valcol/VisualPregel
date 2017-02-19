@@ -53,7 +53,9 @@ class Graph extends Component {
 
     for (let node of layout.nodes()) {
       listOfGraphNodes[node] = this.fatum.addMark().x(layout.node(node).x).y(layout.node(node).y).color(200, 100, 255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
-      listOfGraphLabels[node] = this.fatum.addText().text(node).x(layout.node(node).x).y(layout.node(node).y).textColor(255, 255, 255, 255).font(0).size(13);
+      if(this.props.nodes[node] !== undefined && this.props.nodes[node].value !== undefined){
+       listOfGraphLabels[node] = this.fatum.addText().text(this.props.nodes[node].value.toString()).x(layout.node(node).x).y(layout.node(node).y).textColor(255, 255, 255, 255).font(0).size(13);
+      }
     }
 
   for (let edge of layout.edges()) {
@@ -62,7 +64,7 @@ class Graph extends Component {
 
     this.fatum.camera().zoom(1, [0, 0]);
     this.fatum.camera().swap();
-    this.fatum.center();
+    //this.fatum.center();
   }
 
   getLayout(vertexSize, nodes){
