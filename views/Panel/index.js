@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import UploadBox from '../UploadBox';
 import FileProgressBar from '../ProgressBar';
 import { Button } from 'react-bootstrap';
-import { ButtonToolbar, DropdownButton , MenuItem  } from 'react-bootstrap';
+import { ButtonToolbar, DropdownButton , MenuItem, HelpBlock  } from 'react-bootstrap';
 import FileHandler from '../../controllers/FileHandler';
 
 class Panel extends Component {
@@ -13,12 +13,14 @@ class Panel extends Component {
       percentFileBar: 0,
       bsStyleFileBar: 'success',
       percentValuesBar: 0,
-      bsStyleValuesBar: 'success'
+      bsStyleValuesBar: 'success',
+      separator: ','
     };
     this.uploadGraph = this.uploadGraph.bind(this);
     this.uploadValues = this.uploadValues.bind(this);
     this.updateFileBar = this.updateFileBar.bind(this);
     this.updateValuesBar = this.updateValuesBar.bind(this);
+    this.setSeparator = this.setSeparator.bind(this);
   }
 
   updateFileBar(percentFileBar, bsStyleFileBar,){
@@ -39,15 +41,11 @@ class Panel extends Component {
     FileHandler.initValuesFromFile(e.target.files[0], this.updateValuesBar);
   }
 
-  _comma() {
-   window.alert('You have choosen the , seperator');
- }
-  _colon() {
-   window.alert('You have choosen the : seperator');
- }
-  _semi() {
-   window.alert('You have choosen the ; seperator');
- }
+  setSeparator(e){
+      this.setState({separator: e});
+      FileHandler.separator = e;
+
+  }
 
 
 
@@ -57,17 +55,18 @@ class Panel extends Component {
     <div>
     <p>Please choose your CSV Seperator : </p>
      <ButtonToolbar>
-      <DropdownButton bsStyle="Primary" title="CSV Seperator" id="dropdown-size-medium" onSelect={function(evt){console.log(evt)}}>
-    <MenuItem eventKey="," onClick={this._comma} active>Comma Seperator ','</MenuItem>
-    <MenuItem eventKey=":" onClick={this._colon}>Colon Seperator ':'</MenuItem>
-    <MenuItem eventKey=";" onClick={this._semi}>Semi-colon Seperator ';'</MenuItem>
+      <DropdownButton bsStyle="primary" title="CSV Seperator" id="dropdown-size-medium" onSelect={this.setSeparator}>
+        <MenuItem eventKey=',' >Comma Seperator ','</MenuItem>
+        <MenuItem eventKey='\t' >Colon Seperator '\t'</MenuItem>
+        <MenuItem eventKey=';' >Semi-colon Seperator ';'</MenuItem>
       </DropdownButton>
      </ButtonToolbar>
+     <HelpBlock> '{this.state.separator}' is the selected separator</HelpBlock>
      <br/>
     <UploadBox idName = "graph" goal = "Upload graph file" help = "Upload csv file" upload={this.uploadGraph}/>
 	  <FileProgressBar percent={this.state.percentFileBar} bsStyle = {this.state.bsStyleFileBar}/>
     <UploadBox idName = "values" goal = "Upload values file" help = "Upload csv file" upload={this.uploadValues}/>
-  <FileProgressBar percent={this.state.percentValuesBar} bsStyle = {this.state.bsStyleValuesBar}/>
+    <FileProgressBar percent={this.state.percentValuesBar} bsStyle = {this.state.bsStyleValuesBar}/>
       <Button bsSize="large" onClick={this.props.execute} block>Execute</Button>
     </div>
     );

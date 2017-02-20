@@ -1,5 +1,6 @@
 let FileHandler = function() {
 	this.listOfNodes = {};
+	this.separator = ',';
 };
 
 FileHandler.prototype.resetInputFile = function(id){
@@ -20,11 +21,11 @@ FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBa
 
 	updateFileBar(now,"info");
 	updateValuesBar(now,"info");
+	FileHandler.resetInputFile("values");
 
 
 	//If the user choose cancel
 	if(file == undefined){
-		FileHandler.resetInputFile("values");
 		return;
 	}
 	let filename = file.name.split(".");
@@ -33,7 +34,6 @@ FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBa
 	//If the file is not in csv format
 	if(!fileformat.includes("csv")){
 		FileHandler.resetInputFile("graph");
-		FileHandler.resetInputFile("values");
 		alert("Your file is not csv file");
 		return;
 	}
@@ -45,17 +45,17 @@ FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBa
 	reader.onload = function(evt){
 		lines = this.result.split("\n");
 		for(let i = 0; i < lines.length; i++){
-			line = lines[i].split(/,| |\t/);
+			line = lines[i].split(new RegExp(FileHandler.separator));
 			let nodeID = parseInt(line[0]);
 			FileHandler.listOfNodes[nodeID] = {
-				id: nodeID,
+				id: line[0],
 				listOfNeighbours: []
 			};
 			for(let j = 1; j < line.length; j++){
 				let neighbourID = parseInt(line[j]);
 				if(FileHandler.listOfNodes[neighbourID] == undefined)
 				FileHandler.listOfNodes[neighbourID] = {
-					id: neighbourID,
+					id: line[j],
 					listOfNeighbours: []
 				};
 				FileHandler.listOfNodes[nodeID].listOfNeighbours.push(neighbourID);
@@ -65,7 +65,6 @@ FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBa
 		}
 		updateFileBar(now,"success");
 	}
-	console.log(FileHandler.listOfNodes);
 	reader.readAsText(file);
 }
 
@@ -111,7 +110,7 @@ FileHandler.prototype.initValuesFromFile = function(file, updateBar){
 	reader.onload = function(evt){
 		lines = this.result.split("\n");
 		for(let i = 0; i < lines.length; i++){
-			line = lines[i].split(/,| |\t/);
+			line = lines[i].split(new RegExp(FileHandler.separator));
 			let nodeID = parseInt(line[0]);
 			FileHandler.listOfNodes[nodeID].value = parseInt(line[1]);
 			now = 100/(lines.length - i);
