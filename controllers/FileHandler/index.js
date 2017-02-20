@@ -2,13 +2,10 @@ let FileHandler = function() {
 	this.listOfNodes = {};
 };
 
-
 FileHandler.prototype.resetInputFile = function(id){
 	let form = document.getElementById(id);
 	form.value = "";
 }
-
-
 
 /**
 * Get a graph object from csv file representing adjacency matrix of this graph
@@ -68,6 +65,7 @@ FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBa
 		}
 		updateFileBar(now,"success");
 	}
+	console.log(FileHandler.listOfNodes);
 	reader.readAsText(file);
 }
 
@@ -122,6 +120,34 @@ FileHandler.prototype.initValuesFromFile = function(file, updateBar){
 		updateBar(now,"success");
 	}
 	reader.readAsText(file);
+}
+
+// fileToGraph function but without input file. To test just the parsing.
+
+FileHandler.prototype.fileToGraphForTest = function(values){
+	FileHandler.listOfNodes = {};
+
+	//Parse the values content and create the graph
+		let line = "";
+		let lines = [];
+		lines = values.split("\n");
+		for(let i = 0; i < lines.length; i++){
+			line = lines[i].split(/,| |\t/);
+			let nodeID = parseInt(line[0]);
+			FileHandler.listOfNodes[nodeID] = {
+				id: nodeID,
+				listOfNeighbours: []
+			};
+			for(let j = 1; j < line.length; j++){
+				let neighbourID = parseInt(line[j]);
+				if(FileHandler.listOfNodes[neighbourID] == undefined)
+				FileHandler.listOfNodes[neighbourID] = {
+					id: neighbourID,
+					listOfNeighbours: []
+				};
+				FileHandler.listOfNodes[nodeID].listOfNeighbours.push(neighbourID);
+			}
+		}
 }
 
 

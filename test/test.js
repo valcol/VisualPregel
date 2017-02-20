@@ -4,6 +4,7 @@ let assert = require('assert');
 let fs = require('fs');
 
 import Helpers from '../controllers/Helpers/index.js';
+import FileHandler from '../controllers/FileHandler/index.js';
 
 describe('stringToFunction()', function () {
     it('should convert a string into a function', function () {
@@ -21,22 +22,20 @@ describe('functionToString()', function () {
     });
 });
 
-/**
-function to create 2 test files
----- To modify: content of goodValues and badValues. ----
-**/
-
-describe('CreateTextFile',function(){
-  let goodValues = '0,3 \n3,2\n';
-  let badValues = '4,1 \n4,9\n';
-  let values= [goodValues,badValues];
-  console.log(values);
-  it('create file ',function(){
-    for (var i = 0; i < 2; i++) {
-      fs.writeFile('testFile'+i+'.csv',values[i]+'\n', function (err) {
-          if (err) throw err;
-          console.log('Files created');
-      });
-    }
+// parsing test of fileToGraph function.
+describe('parsingTest()',function(){
+  let values= "8,4,5\n7,1,2\n1,2,3\n2,5,4";
+  let nodes = {
+  '1': { id: 1, listOfNeighbours: [ 2, 3 ] },
+  '2': { id: 2, listOfNeighbours: [ 5, 4 ] },
+  '3': { id: 3, listOfNeighbours: [] },
+  '4': { id: 4, listOfNeighbours: [] },
+  '5': { id: 5, listOfNeighbours: [] },
+  '7': { id: 7, listOfNeighbours: [ 1, 2 ] },
+  '8': { id: 8, listOfNeighbours: [ 4, 5 ] }
+};
+  it('test the output of parsing',function(){
+      FileHandler.fileToGraphForTest(values);
+      assert.deepEqual(FileHandler.listOfNodes, nodes);
   });
 });
