@@ -35,8 +35,10 @@ describe('parsingTest()',function(){
   '8': { id: 8, listOfNeighbours: [ 4, 5 ] }
 };
   it('test the output of parsing',function(){
+      let updateFileBar = function(val1,val2){};
+      let updateValueBar = function(val1,val2){};
       fs.writeFileSync('file.csv',values);
-      FileHandler.fileToGraphForTest(values);
+      FileHandler.parsingValues(values,updateFileBar,updateValueBar);
       assert.deepEqual(FileHandler.listOfNodes, nodes);
   });
 });

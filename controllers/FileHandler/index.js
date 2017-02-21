@@ -16,14 +16,8 @@ FileHandler.prototype.resetInputFile = function(id){
 * @return {void} update the property listOfNodes
 */
 FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBar){
-	let now = 0;
-	FileHandler.listOfNodes = {};
 
-	updateFileBar(now,"info");
-	updateValuesBar(now,"info");
 	FileHandler.resetInputFile("values");
-
-
 	//If the user choose cancel
 	if(file == undefined){
 		return;
@@ -37,13 +31,33 @@ FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBa
 		alert("Your file is not csv file");
 		return;
 	}
-
 	//Parse the file and create the graph
 	let reader = new FileReader();
-	let line = "";
-	let lines = [];
 	reader.onload = function(evt){
-		lines = this.result.split("\n");
+		FileHandler.parsingValues(this.result,updateFileBar, updateValuesBar);
+	}
+	reader.readAsText(file);
+}
+
+/**
+* Get a graph object from values of csv file.
+*
+* @param {values} comments content of the csv file to be parse
+* @param {Function} comments function to call for update the progress bar.
+* @return {void} update the property listOfNodes
+*/
+
+FileHandler.prototype.parsingValues = function(values, updateFileBar, updateValuesBar){
+	let now = 0;
+	FileHandler.listOfNodes = {};
+
+	updateFileBar(now,"info");
+	updateValuesBar(now,"info");
+
+	//Parse the values content and create the graph
+		let line = "";
+		let lines = [];
+		lines = values.split("\n");
 		for(let i = 0; i < lines.length; i++){
 			line = lines[i].split(new RegExp(FileHandler.separator));
 			let nodeID = parseInt(line[0]);
@@ -64,8 +78,6 @@ FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBa
 			updateFileBar(now,"info");
 		}
 		updateFileBar(now,"success");
-	}
-	reader.readAsText(file);
 }
 
 /**
@@ -120,35 +132,6 @@ FileHandler.prototype.initValuesFromFile = function(file, updateBar){
 	}
 	reader.readAsText(file);
 }
-
-// fileToGraph function but without input file. To test just the parsing.
-
-FileHandler.prototype.fileToGraphForTest = function(values){
-	FileHandler.listOfNodes = {};
-
-	//Parse the values content and create the graph
-		let line = "";
-		let lines = [];
-		lines = values.split("\n");
-		for(let i = 0; i < lines.length; i++){
-			line = lines[i].split(/,| |\t/);
-			let nodeID = parseInt(line[0]);
-			FileHandler.listOfNodes[nodeID] = {
-				id: nodeID,
-				listOfNeighbours: []
-			};
-			for(let j = 1; j < line.length; j++){
-				let neighbourID = parseInt(line[j]);
-				if(FileHandler.listOfNodes[neighbourID] == undefined)
-				FileHandler.listOfNodes[neighbourID] = {
-					id: neighbourID,
-					listOfNeighbours: []
-				};
-				FileHandler.listOfNodes[nodeID].listOfNeighbours.push(neighbourID);
-			}
-		}
-}
-
 
 FileHandler = new FileHandler();
 export default FileHandler;
