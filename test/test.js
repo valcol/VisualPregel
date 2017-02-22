@@ -7,38 +7,38 @@ import Helpers from '../controllers/Helpers/index.js';
 import FileHandler from '../controllers/FileHandler/index.js';
 
 describe('stringToFunction()', function () {
-    it('should convert a string into a function', function () {
-      let s = 'function (value) {return value * 2;}';
-      let f = Helpers.stringToFunction(s);
-      assert.ok(f(2), 4);
-    });
+  it('should convert a string into a function', function () {
+    let s = 'function (value) {return value * 2;}';
+    let f = Helpers.stringToFunction(s);
+    assert.ok(f(2), 4);
+  });
 });
 
 describe('functionToString()', function () {
-    it('should convert a function into a string', function () {
-      let f = function(value) {return value * 2;};
-      let s = Helpers.functionToString(f);
-      assert.ok(s, 'function f(value) {return value * 2;}');
-    });
+  it('should convert a function into a string', function () {
+    let f = function(value) {return value * 2;};
+    let s = Helpers.functionToString(f);
+    assert.ok(s, 'function f(value) {return value * 2;}');
+  });
 });
 
 // parsing test of fileToGraph function.
-describe('parsingValues()',function(){
+describe('parsingGraph()',function(){
   let values= "8,4,5\n7,1,2\n1,2,3\n2,5,4";
   let nodes = {
-  '1': { id: 1, listOfNeighbours: [ 2, 3 ] },
-  '2': { id: 2, listOfNeighbours: [ 5, 4 ] },
-  '3': { id: 3, listOfNeighbours: [] },
-  '4': { id: 4, listOfNeighbours: [] },
-  '5': { id: 5, listOfNeighbours: [] },
-  '7': { id: 7, listOfNeighbours: [ 1, 2 ] },
-  '8': { id: 8, listOfNeighbours: [ 4, 5 ] }
-};
+    '1': { listOfNeighbours: [ 2, 3 ], value: ''},
+    '2': { listOfNeighbours: [ 5, 4 ], value: '' },
+    '3': { listOfNeighbours: [], value: '' },
+    '4': { listOfNeighbours: [], value: '' },
+    '5': { listOfNeighbours: [], value: '' },
+    '7': { listOfNeighbours: [ 1, 2 ], value: '' },
+    '8': { listOfNeighbours: [ 4, 5 ], value: '' }
+  };
   it('should parse a CSV file an output a graph object',function(){
-      let updateFileBar = function(val1,val2){};
-      let updateValueBar = function(val1,val2){};
-      fs.writeFileSync('file.csv',values);
-      FileHandler.parsingValues(values,updateFileBar,updateValueBar);
-      assert.deepEqual(FileHandler.listOfNodes, nodes);
+    let updateFileBar = function(val1,val2){};
+    let updateValueBar = function(val1,val2){};
+    fs.writeFileSync('file.csv',values);
+    FileHandler.parsingGraph(values,updateFileBar,updateValueBar);
+    assert.deepEqual(FileHandler.listOfNodes, nodes);
   });
 });

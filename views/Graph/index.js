@@ -25,8 +25,8 @@ class Graph extends Component {
     this.fonts = this.fatum.fonts();
   }
 
-  componentWillReceiveProps(nextProps){
-    if (this.props.nodes !== nextProps.nodes && !this.fatum.isAnimating()) {
+  componentWillReceiveProps(nextProps) {
+    if (!this.fatum.isAnimating()) {
       this.fatum.clear();
       this.makeGraph(nextProps.nodes);
       this.fatum.animate();
@@ -53,14 +53,12 @@ class Graph extends Component {
 
     for (let node of layout.nodes()) {
       listOfGraphNodes[node] = this.fatum.addMark().x(layout.node(node).x).y(layout.node(node).y).color(200, 100, 255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
-      if(this.props.nodes[node] !== undefined && this.props.nodes[node].value !== undefined){
-       listOfGraphLabels[node] = this.fatum.addText().text(this.props.nodes[node].value.toString()).x(layout.node(node).x).y(layout.node(node).y).textColor(255, 255, 255, 255).font(0).size(13);
-      }
+      listOfGraphLabels[node] = this.fatum.addText().text(layout.node(node).label.toString()).x(layout.node(node).x).y(layout.node(node).y).textColor(255, 255, 255, 255).font(0).size(13);
     }
 
-  for (let edge of layout.edges()) {
-    this.fatum.addConnection(listOfGraphNodes[edge.v], listOfGraphNodes[edge.w]).sourceColor([0, 0, 0, 128]).targetColor([0, 0, 0, 128]);
-  }
+    for (let edge of layout.edges()) {
+      this.fatum.addConnection(listOfGraphNodes[edge.v], listOfGraphNodes[edge.w]).sourceColor([0, 0, 0, 128]).targetColor([0, 0, 0, 128]);
+    }
 
     this.fatum.camera().zoom(1, [0, 0]);
     this.fatum.camera().swap();
@@ -75,7 +73,7 @@ class Graph extends Component {
     g.setDefaultEdgeLabel(function() { return {}; });
 
     for (let nodeID in nodes)
-      g.setNode(nodeID, {label:nodeID, width: vertexSize, height: vertexSize});
+      g.setNode(nodeID, {label:nodes[nodeID].value, width: vertexSize, height: vertexSize});
 
     for (let nodeID in nodes){
       for (let neighbourID of nodes[nodeID].listOfNeighbours)
