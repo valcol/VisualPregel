@@ -11982,7 +11982,7 @@ FileHandler.prototype.resetInputFile = function(id){
 * @param {Function} comments function to call for update the progress bar.
 * @return {void} update the property listOfNodes
 */
-FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBar){
+FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateGraph){
 
 	FileHandler.resetInputFile("values");
 	//If the user choose cancel
@@ -12001,7 +12001,7 @@ FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBa
 	//Parse the file and create the graph
 	let reader = new FileReader();
 	reader.onload = function(evt){
-		FileHandler.parsingValues(this.result,updateFileBar, updateValuesBar);
+		FileHandler.parsingValues(this.result, updateFileBar, updateGraph);
 	}
 	reader.readAsText(file);
 }
@@ -12014,37 +12014,37 @@ FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBa
 * @return {void} update the property listOfNodes
 */
 
-FileHandler.prototype.parsingValues = function(values, updateFileBar, updateValuesBar){
+FileHandler.prototype.parsingValues = function(values, updateFileBar, updateGraph){
 	let now = 0;
 	FileHandler.listOfNodes = {};
 
 	updateFileBar(now,"info");
-	updateValuesBar(now,"info");
 
 	//Parse the values content and create the graph
-		let line = "";
-		let lines = [];
-		lines = values.split("\n");
-		for(let i = 0; i < lines.length; i++){
-			line = lines[i].split(new RegExp(FileHandler.separator));
-			let nodeID = parseInt(line[0]);
-			FileHandler.listOfNodes[nodeID] = {
-				id: line[0],
+	let line = "";
+	let lines = [];
+	lines = values.split("\n");
+	for(let i = 0; i < lines.length; i++){
+		line = lines[i].split(new RegExp(FileHandler.separator));
+		let nodeID = parseInt(line[0]);
+		FileHandler.listOfNodes[nodeID] = {
+			id: line[0],
+			listOfNeighbours: []
+		};
+		for(let j = 1; j < line.length; j++){
+			let neighbourID = parseInt(line[j]);
+			if(FileHandler.listOfNodes[neighbourID] == undefined)
+			FileHandler.listOfNodes[neighbourID] = {
+				id: line[j],
 				listOfNeighbours: []
 			};
-			for(let j = 1; j < line.length; j++){
-				let neighbourID = parseInt(line[j]);
-				if(FileHandler.listOfNodes[neighbourID] == undefined)
-				FileHandler.listOfNodes[neighbourID] = {
-					id: line[j],
-					listOfNeighbours: []
-				};
-				FileHandler.listOfNodes[nodeID].listOfNeighbours.push(neighbourID);
-			}
-			now = 100/(lines.length - i);
-			updateFileBar(now,"info");
+			FileHandler.listOfNodes[nodeID].listOfNeighbours.push(neighbourID);
 		}
-		updateFileBar(now,"success");
+		now = 100/(lines.length - i);
+		updateFileBar(now,"info");
+	}
+	updateFileBar(now,"success");
+	updateGraph(this.listOfNodes);
 }
 
 /**
@@ -12056,7 +12056,7 @@ FileHandler.prototype.parsingValues = function(values, updateFileBar, updateValu
 */
 
 
-FileHandler.prototype.initValuesFromFile = function(file, updateBar){
+FileHandler.prototype.initValuesFromFile = function(file, updateBar, updateGraph){
 	let now = 0;
 
 	//If the user choose cancel
@@ -12098,6 +12098,7 @@ FileHandler.prototype.initValuesFromFile = function(file, updateBar){
 		updateBar(now,"success");
 	}
 	reader.readAsText(file);
+	updateGraph(this.listOfNodes);
 }
 
 FileHandler = new FileHandler();
@@ -40767,12 +40768,12 @@ var Panel = function (_Component) {
   }, {
     key: 'uploadGraph',
     value: function uploadGraph(e) {
-      _FileHandler2.default.fileToGraph(e.target.files[0], this.updateFileBar, this.updateValuesBar);
+      _FileHandler2.default.fileToGraph(e.target.files[0], this.updateFileBar, this.props.updateGraph);
     }
   }, {
     key: 'uploadValues',
     value: function uploadValues(e) {
-      _FileHandler2.default.initValuesFromFile(e.target.files[0], this.updateValuesBar);
+      _FileHandler2.default.initValuesFromFile(e.target.files[0], this.updateValuesBar, this.props.updateGraph);
     }
   }, {
     key: 'setSeparator',
@@ -73876,13 +73877,13 @@ var App = function (_Component) {
       nodes: {}
     };
     _this.generateRandomGraph = _this.generateRandomGraph.bind(_this);
-    _this.generateCSVGraph = _this.generateCSVGraph.bind(_this);
+    _this.updateGraph = _this.updateGraph.bind(_this);
     return _this;
   }
 
   _createClass(App, [{
-    key: 'handleCodeChange',
-    value: function handleCodeChange(key) {
+    key: 'handleChange',
+    value: function handleChange(key) {
       return function (code) {
         var state = {};
         state[key] = code;
@@ -73937,9 +73938,9 @@ var App = function (_Component) {
       this.setState({ nodes: nodes });
     }
   }, {
-    key: 'generateCSVGraph',
-    value: function generateCSVGraph() {
-      this.setState({ nodes: _FileHandler2.default.listOfNodes });
+    key: 'updateGraph',
+    value: function updateGraph(nodes) {
+      this.setState({ nodes: nodes });
     }
   }, {
     key: 'render',
@@ -73958,7 +73959,8 @@ var App = function (_Component) {
             _react2.default.createElement(_Panel2.default, {
               execute: function execute() {
                 _this2.handleExecute();
-              } }),
+              },
+              updateGraph: this.updateGraph }),
             _react2.default.createElement(
               _reactBootstrap.Button,
               { bsSize: 'large', onClick: this.generateRandomGraph, block: true },
@@ -73982,13 +73984,13 @@ var App = function (_Component) {
                 _react2.default.createElement(_CodeArea2.default, {
                   title: '1. Initialization',
                   code: this.state.initialize,
-                  handleCodeChange: this.handleCodeChange('initialize'),
+                  handleCodeChange: this.handleChange('initialize'),
                   handleCodeReset: this.handleCodeReset('initialize')
                 }),
                 _react2.default.createElement(_CodeArea2.default, {
                   title: '2. Dispatch',
                   code: this.state.dispatch,
-                  handleCodeChange: this.handleCodeChange('dispatch'),
+                  handleCodeChange: this.handleChange('dispatch'),
                   handleCodeReset: this.handleCodeReset('dispatch')
                 })
               ),
@@ -73998,7 +74000,7 @@ var App = function (_Component) {
                 _react2.default.createElement(_CodeArea2.default, {
                   title: '3. Aggregation',
                   code: this.state.aggregate,
-                  handleCodeChange: this.handleCodeChange('aggregate'),
+                  handleCodeChange: this.handleChange('aggregate'),
                   handleCodeReset: this.handleCodeReset('aggregate')
                 }),
                 _react2.default.createElement(_Graph2.default, {

@@ -15,7 +15,7 @@ FileHandler.prototype.resetInputFile = function(id){
 * @param {Function} comments function to call for update the progress bar.
 * @return {void} update the property listOfNodes
 */
-FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBar){
+FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateGraph){
 
 	FileHandler.resetInputFile("values");
 	//If the user choose cancel
@@ -34,7 +34,7 @@ FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBa
 	//Parse the file and create the graph
 	let reader = new FileReader();
 	reader.onload = function(evt){
-		FileHandler.parsingValues(this.result,updateFileBar, updateValuesBar);
+		FileHandler.parsingValues(this.result, updateFileBar, updateGraph);
 	}
 	reader.readAsText(file);
 }
@@ -47,37 +47,37 @@ FileHandler.prototype.fileToGraph = function(file, updateFileBar, updateValuesBa
 * @return {void} update the property listOfNodes
 */
 
-FileHandler.prototype.parsingValues = function(values, updateFileBar, updateValuesBar){
+FileHandler.prototype.parsingValues = function(values, updateFileBar, updateGraph){
 	let now = 0;
 	FileHandler.listOfNodes = {};
 
 	updateFileBar(now,"info");
-	updateValuesBar(now,"info");
 
 	//Parse the values content and create the graph
-		let line = "";
-		let lines = [];
-		lines = values.split("\n");
-		for(let i = 0; i < lines.length; i++){
-			line = lines[i].split(new RegExp(FileHandler.separator));
-			let nodeID = parseInt(line[0]);
-			FileHandler.listOfNodes[nodeID] = {
-				id: line[0],
+	let line = "";
+	let lines = [];
+	lines = values.split("\n");
+	for(let i = 0; i < lines.length; i++){
+		line = lines[i].split(new RegExp(FileHandler.separator));
+		let nodeID = parseInt(line[0]);
+		FileHandler.listOfNodes[nodeID] = {
+			id: line[0],
+			listOfNeighbours: []
+		};
+		for(let j = 1; j < line.length; j++){
+			let neighbourID = parseInt(line[j]);
+			if(FileHandler.listOfNodes[neighbourID] == undefined)
+			FileHandler.listOfNodes[neighbourID] = {
+				id: line[j],
 				listOfNeighbours: []
 			};
-			for(let j = 1; j < line.length; j++){
-				let neighbourID = parseInt(line[j]);
-				if(FileHandler.listOfNodes[neighbourID] == undefined)
-				FileHandler.listOfNodes[neighbourID] = {
-					id: line[j],
-					listOfNeighbours: []
-				};
-				FileHandler.listOfNodes[nodeID].listOfNeighbours.push(neighbourID);
-			}
-			now = 100/(lines.length - i);
-			updateFileBar(now,"info");
+			FileHandler.listOfNodes[nodeID].listOfNeighbours.push(neighbourID);
 		}
-		updateFileBar(now,"success");
+		now = 100/(lines.length - i);
+		updateFileBar(now,"info");
+	}
+	updateFileBar(now,"success");
+	updateGraph(this.listOfNodes);
 }
 
 /**
@@ -89,7 +89,7 @@ FileHandler.prototype.parsingValues = function(values, updateFileBar, updateValu
 */
 
 
-FileHandler.prototype.initValuesFromFile = function(file, updateBar){
+FileHandler.prototype.initValuesFromFile = function(file, updateBar, updateGraph){
 	let now = 0;
 
 	//If the user choose cancel
@@ -131,6 +131,7 @@ FileHandler.prototype.initValuesFromFile = function(file, updateBar){
 		updateBar(now,"success");
 	}
 	reader.readAsText(file);
+	updateGraph(this.listOfNodes);
 }
 
 FileHandler = new FileHandler();

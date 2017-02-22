@@ -24,10 +24,10 @@ export default class App extends Component {
       nodes: {}
     };
     this.generateRandomGraph = this.generateRandomGraph.bind(this);
-    this.generateCSVGraph = this.generateCSVGraph.bind(this);
+    this.updateGraph = this.updateGraph.bind(this);
   }
 
-  handleCodeChange(key) {
+  handleChange(key) {
     return function(code) {
       let state = {};
       state[key] = code;
@@ -80,21 +80,21 @@ export default class App extends Component {
     this.setState({nodes});
   }
 
-  generateCSVGraph(){
-    this.setState({nodes: FileHandler.listOfNodes});
+  updateGraph(nodes){
+    this.setState({nodes});
   }
 
-
   render() {
-
     return (
       <Grid fluid>
         <Row className="app-container no-padding no-margin">
           <Col xs={12} md={3} className="left-col no-padding">
             <Panel
               execute={() => {
-                this.handleExecute();
+                this.handleExecute();}
               }
+              updateGraph={
+                this.updateGraph
               }/>
             <Button bsSize="large" onClick={this.generateRandomGraph} block>generateRandomGraph</Button>
             <Button bsSize="large" onClick={this.generateCSVGraph} block>generateCSVGraph</Button>
@@ -105,13 +105,13 @@ export default class App extends Component {
                 <CodeArea
                   title='1. Initialization'
                   code = {this.state.initialize}
-                  handleCodeChange = {this.handleCodeChange('initialize')}
+                  handleCodeChange = {this.handleChange('initialize')}
                   handleCodeReset = {this.handleCodeReset('initialize')}
                 />
                 <CodeArea
                   title='2. Dispatch'
                   code = {this.state.dispatch}
-                  handleCodeChange = {this.handleCodeChange('dispatch')}
+                  handleCodeChange = {this.handleChange('dispatch')}
                   handleCodeReset = {this.handleCodeReset('dispatch')}
                 />
               </SplitPane>
@@ -119,7 +119,7 @@ export default class App extends Component {
                 <CodeArea
                   title='3. Aggregation'
                   code = {this.state.aggregate}
-                  handleCodeChange = {this.handleCodeChange('aggregate')}
+                  handleCodeChange = {this.handleChange('aggregate')}
                   handleCodeReset = {this.handleCodeReset('aggregate')}
                 />
                 <Graph
