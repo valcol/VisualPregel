@@ -26,7 +26,7 @@ class Graph extends Component {
   }
 
   componentWillReceiveProps(nextProps){
-    if (this.props !== nextProps && !this.fatum.isAnimating()) {
+    if (this.props.nodes !== nextProps.nodes && !this.fatum.isAnimating()) {
       this.fatum.clear();
       this.makeGraph(nextProps.nodes);
       this.fatum.animate();
