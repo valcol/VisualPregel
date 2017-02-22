@@ -23,7 +23,7 @@ describe('functionToString()', function () {
 });
 
 // parsing test of fileToGraph function.
-describe('parsingTest()',function(){
+describe('parsingValues()',function(){
   let values= "8,4,5\n7,1,2\n1,2,3\n2,5,4";
   let nodes = {
   '1': { id: 1, listOfNeighbours: [ 2, 3 ] },
@@ -34,7 +34,7 @@ describe('parsingTest()',function(){
   '7': { id: 7, listOfNeighbours: [ 1, 2 ] },
   '8': { id: 8, listOfNeighbours: [ 4, 5 ] }
 };
-  it('test the output of parsing',function(){
+  it('should parse a CSV file an output a graph object',function(){
       let updateFileBar = function(val1,val2){};
       let updateValueBar = function(val1,val2){};
       fs.writeFileSync('file.csv',values);
