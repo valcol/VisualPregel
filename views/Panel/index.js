@@ -23,7 +23,7 @@ class Panel extends Component {
     this.setSeparator = this.setSeparator.bind(this);
   }
 
-  updateFileBar(percentFileBar, bsStyleFileBar,){
+  updateFileBar(percentFileBar, bsStyleFileBar,) {
     this.setState({percentFileBar,
     bsStyleFileBar});
   }
@@ -35,6 +35,7 @@ class Panel extends Component {
 
   uploadGraph(e){
     FileHandler.fileToGraph(e.target.files[0], this.updateFileBar, this.props.updateGraph);
+    this.updateValuesBar(0, 'info');
   }
 
   uploadValues(e){

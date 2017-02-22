@@ -40777,6 +40777,7 @@ var Panel = function (_Component) {
     key: 'uploadGraph',
     value: function uploadGraph(e) {
       _FileHandler2.default.fileToGraph(e.target.files[0], this.updateFileBar, this.props.updateGraph);
+      this.updateValuesBar(0, 'info');
     }
   }, {
     key: 'uploadValues',
