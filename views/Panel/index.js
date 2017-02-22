@@ -34,12 +34,14 @@ class Panel extends Component {
   }
 
   uploadGraph(e){
-    FileHandler.fileToGraph(e.target.files[0], this.updateFileBar, this.props.updateGraph);
+    FileHandler.fileToGraph(e.target.files[0], this.state.separator,
+       this.updateFileBar, this.props.updateGraph);
     this.updateValuesBar(0, 'info');
   }
 
   uploadValues(e){
-    FileHandler.initValuesFromFile(e.target.files[0], this.updateValuesBar, this.props.updateGraph);
+    FileHandler.initValuesFromFile(e.target.files[0], this.state.separator,
+       this.props.nodes, this.updateValuesBar, this.props.updateGraph);
   }
 
   setSeparator(e){

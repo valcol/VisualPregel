@@ -1,6 +1,4 @@
 let FileHandler = function() {
-	this.listOfNodes = {};
-	this.separator = ',';
 };
 
 FileHandler.prototype.resetInputFile = function(id){
@@ -15,7 +13,7 @@ FileHandler.prototype.resetInputFile = function(id){
 * @param {Function} comments function to call for update the progress bar.
 * @return {void} update the property listOfNodes
 */
-FileHandler.prototype.fileToGraph = function(file, update, callback){
+FileHandler.prototype.fileToGraph = function(file, separator, update, callback){
 
 	FileHandler.resetInputFile("values");
 	//If the user choose cancel
@@ -34,7 +32,7 @@ FileHandler.prototype.fileToGraph = function(file, update, callback){
 	//Parse the file and create the graph
 	let reader = new FileReader();
 	reader.onload = function(evt){
-		FileHandler.parsingGraph(this.result, update, callback);
+		FileHandler.parsingGraph(this.result, separator, update, callback);
 	}
 	reader.readAsText(file);
 }
@@ -47,9 +45,9 @@ FileHandler.prototype.fileToGraph = function(file, update, callback){
 * @return {void} update the property listOfNodes
 */
 
-FileHandler.prototype.parsingGraph = function(values, update, callback){
+FileHandler.prototype.parsingGraph = function(values, separator, update, callback){
 	let now = 0;
-	FileHandler.listOfNodes = {};
+	let listOfNodes = {};
 
 	update(now,"info");
 
@@ -59,26 +57,26 @@ FileHandler.prototype.parsingGraph = function(values, update, callback){
 	lines = values.split("\n");
 	lines.pop();
 	for(let i = 0; i < lines.length; i++){
-		line = lines[i].split(new RegExp(FileHandler.separator));
+		line = lines[i].split(new RegExp(separator));
 		let nodeID = parseInt(line[0]);
-		FileHandler.listOfNodes[nodeID] = {
+		listOfNodes[nodeID] = {
 			listOfNeighbours: [],
 			value: ''
 		};
 		for(let j = 1; j < line.length; j++){
 			let neighbourID = parseInt(line[j]);
-			if(FileHandler.listOfNodes[neighbourID] == undefined)
-			FileHandler.listOfNodes[neighbourID] = {
+			if(listOfNodes[neighbourID] == undefined)
+			listOfNodes[neighbourID] = {
 				listOfNeighbours: [],
 				value: ''
 			};
-			FileHandler.listOfNodes[nodeID].listOfNeighbours.push(neighbourID);
+			listOfNodes[nodeID].listOfNeighbours.push(neighbourID);
 		}
 		now = 100/(lines.length - i);
 		update(now,"info");
 	}
 	update(now,"success");
-	callback(FileHandler.listOfNodes);
+	callback(listOfNodes);
 }
 
 /**
@@ -90,7 +88,7 @@ FileHandler.prototype.parsingGraph = function(values, update, callback){
 */
 
 
-FileHandler.prototype.initValuesFromFile = function(file, update, callback){
+FileHandler.prototype.initValuesFromFile = function(file, separator, nodes, update, callback){
 	let now = 0;
 
 	//If the user choose cancel
@@ -99,7 +97,7 @@ FileHandler.prototype.initValuesFromFile = function(file, update, callback){
 		return;
 	}
 	//If there is no initiate graph.
-	if(Object.keys(FileHandler.listOfNodes).length == 0){
+	if(Object.keys(nodes).length == 0){
 		update(now,"info");
 		alert("There is no graph to initiate.");
 		let form = document.getElementById("values");
@@ -121,26 +119,24 @@ FileHandler.prototype.initValuesFromFile = function(file, update, callback){
 	let line = "";
 	let lines = [];
 	reader.onload = function(evt){
-			FileHandler.parsingValues(this.result, update, callback);
+			FileHandler.parsingValues(this.result, separator, nodes, update, callback);
 		}
 	reader.readAsText(file);
 }
 
-FileHandler.prototype.parsingValues = function(values, update, callback){
+FileHandler.prototype.parsingValues = function(values, separator, nodes, update, callback){
 	let now = 0;
 	let	lines = values.split("\n");
 	lines.pop();
-	console.log('parse value for ln : '+lines.length);
 	for(let i = 0; i < lines.length; i++){
-		let line = lines[i].split(new RegExp(FileHandler.separator));
+		let line = lines[i].split(new RegExp(separator));
 		let nodeID = parseInt(line[0]);
-		FileHandler.listOfNodes[nodeID].value = parseInt(line[1]);
-		console.log('set :'+line[1]+' for '+nodeID);
+		nodes[nodeID].value = parseInt(line[1]);
 		now = 100/(lines.length - i);
 		update(now,"info");
 	}
 	update(now,"success");
-	callback(FileHandler.listOfNodes);
+	callback(nodes);
 }
 
 

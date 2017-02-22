@@ -95,7 +95,9 @@ export default class App extends Component {
               }
               updateGraph={
                 this.updateGraph
-              }/>
+              }
+              nodes = {this.state.nodes}
+              />
             <Button bsSize="large" onClick={this.generateRandomGraph} block>generateRandomGraph</Button>
             <Button bsSize="large" onClick={this.generateCSVGraph} block>generateCSVGraph</Button>
           </Col>
