@@ -57,6 +57,7 @@ FileHandler.prototype.parsingGraph = function(values, update, callback){
 	let line = "";
 	let lines = [];
 	lines = values.split("\n");
+	lines.pop();
 	for(let i = 0; i < lines.length; i++){
 		line = lines[i].split(new RegExp(FileHandler.separator));
 		let nodeID = parseInt(line[0]);
