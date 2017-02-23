@@ -99,7 +99,6 @@ export default class App extends Component {
               nodes = {this.state.nodes}
               />
             <Button bsSize="large" onClick={this.generateRandomGraph} block>generateRandomGraph</Button>
-            <Button bsSize="large" onClick={this.generateCSVGraph} block>generateCSVGraph</Button>
           </Col>
           <Col xs={12} md={9} className="right-col no-padding">
             <SplitPane split="horizontal" defaultSize="40%">

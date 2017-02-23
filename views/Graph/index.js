@@ -60,9 +60,8 @@ class Graph extends Component {
       this.fatum.addConnection(listOfGraphNodes[edge.v], listOfGraphNodes[edge.w]).sourceColor([0, 0, 0, 128]).targetColor([0, 0, 0, 128]);
     }
 
-    this.fatum.camera().zoom(1, [0, 0]);
-    this.fatum.camera().swap();
-    //this.fatum.center();
+    this.fatum.camera().centerBox([0,0,this.state.dimensions.width/2,this.state.dimensions.height/2],0);
+    this.fatum.camera().swap();   
   }
 
   getLayout(vertexSize, nodes){
