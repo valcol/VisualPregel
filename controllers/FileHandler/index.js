@@ -18,6 +18,7 @@ FileHandler.prototype.fileToGraph = function(file, separator, update, callback){
 	FileHandler.resetInputFile("values");
 	//If the user choose cancel
 	if(file == undefined){
+		update(0,"success");
 		return;
 	}
 	let filename = file.name.split(".");
@@ -26,6 +27,7 @@ FileHandler.prototype.fileToGraph = function(file, separator, update, callback){
 	//If the file is not in csv format
 	if(!fileformat.includes("csv")){
 		FileHandler.resetInputFile("graph");
+		update(0,"success");
 		alert("Your file is not csv file");
 		return;
 	}
@@ -52,13 +54,25 @@ FileHandler.prototype.parsingGraph = function(values, separator, update, callbac
 	update(now,"info");
 
 	//Parse the values content and create the graph
+	let error = "";
 	let line = "";
 	let lines = [];
 	lines = values.split("\n");
-	lines.pop();
 	for(let i = 0; i < lines.length; i++){
 		line = lines[i].split(new RegExp(separator));
 		let nodeID = parseInt(line[0]);
+
+		//Test if the line is readable (at least 2 elements) and if the user try to initiate an already initiated Neighborhood
+		let alreadyDefinedNeighborhood = (listOfNodes[nodeID] != undefined && listOfNodes[nodeID].listOfNeighbours.length != 0);
+		if(line.length < 2 || alreadyDefinedNeighborhood ){
+			if(i + 1 != lines.length && line.length < 2)
+				error = "".concat(error,"\nError at line " + (i+1) + ", there is not enough elements");
+			if(alreadyDefinedNeighborhood)
+				error = "".concat(error,"\nError at line " + (i+1) + ", you try to recreate a neighborhood of a node");
+			now = Math.ceil(100/(lines.length - i));
+			continue;
+		}
+
 		listOfNodes[nodeID] = {
 			listOfNeighbours: [],
 			value: ''
@@ -66,13 +80,13 @@ FileHandler.prototype.parsingGraph = function(values, separator, update, callbac
 		for(let j = 1; j < line.length; j++){
 			let neighbourID = parseInt(line[j]);
 			if(listOfNodes[neighbourID] == undefined)
-			listOfNodes[neighbourID] = {
-				listOfNeighbours: [],
-				value: ''
-			};
+				listOfNodes[neighbourID] = {
+					listOfNeighbours: [],
+					value: ''
+				};
 			listOfNodes[nodeID].listOfNeighbours.push(neighbourID);
 		}
-		now = 100/(lines.length - i);
+		now = Math.ceil(100/(lines.length - i));
 		update(now,"info");
 	}
 	update(now,"success");

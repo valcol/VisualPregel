@@ -24,7 +24,7 @@ describe('functionToString()', function () {
 
 // parsing test of fileToGraph function.
 describe('parsingGraph()',function(){
-  let values= "8,4,5\n7,1,2\n1,2,3\n2,5,4\n";
+  let values = "8,4,5\n7,1,2\n1,2,3\n2,5,4\n";
   let nodesFinal = {
     '1': { listOfNeighbours: [ 2, 3 ], value: ''},
     '2': { listOfNeighbours: [ 5, 4 ], value: '' },
@@ -34,13 +34,49 @@ describe('parsingGraph()',function(){
     '7': { listOfNeighbours: [ 1, 2 ], value: '' },
     '8': { listOfNeighbours: [ 4, 5 ], value: '' }
   };
-  it('should parse a CSV file and output a graph object',function(){
+  it('should parse a CSV file and output a graph object in the best case',function(){
     let update = function(val1,val2){};
     let callback = function(val1,val2){};
     FileHandler.parsingGraph(values, ',', update,
       (n) => {assert.deepEqual(n, nodesFinal);}
     );
   });
+
+  values = "8,4,5\n\n1\n1,2,3\n2,5,4\n\n1\n\n";
+  nodesFinal = {
+    '1': { listOfNeighbours: [ 2, 3 ], value: ''},
+    '2': { listOfNeighbours: [ 5, 4 ], value: '' },
+    '3': { listOfNeighbours: [], value: '' },
+    '4': { listOfNeighbours: [], value: '' },
+    '5': { listOfNeighbours: [], value: '' },
+    '8': { listOfNeighbours: [ 4, 5 ], value: '' }
+  };
+  it('should parse a CSV file and output a graph object with mistakes',function(){
+    let update = function(val1,val2){};
+    let callback = function(val1,val2){};
+    FileHandler.parsingGraph(values, ',', update,
+      (n) => {assert.deepEqual(n, nodesFinal);}
+    );
+  });
+
+  values = "8,4,5\n7,1,2\n1,2,3\n2,5,4\n1,8,5\n7,5,6,9";
+  nodesFinal = {
+    '1': { listOfNeighbours: [ 2, 3 ], value: ''},
+    '2': { listOfNeighbours: [ 5, 4 ], value: '' },
+    '3': { listOfNeighbours: [], value: '' },
+    '4': { listOfNeighbours: [], value: '' },
+    '5': { listOfNeighbours: [], value: '' },
+    '7': { listOfNeighbours: [ 1, 2 ], value: '' },
+    '8': { listOfNeighbours: [ 4, 5 ], value: '' }
+  };
+  it('should parse a CSV file and output a graph object with redefinition of a node\'s neighborhood',function(){
+    let update = function(val1,val2){};
+    let callback = function(val1,val2){};
+    FileHandler.parsingGraph(values, ',', update,
+      (n) => {assert.deepEqual(n, nodesFinal);}
+    );
+  });
+
 });
 
 // parsing test of fileToGraph function.
