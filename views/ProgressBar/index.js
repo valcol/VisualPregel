@@ -9,9 +9,7 @@ class FileProgressBar extends Component {
 
   render() {
     return (
-      <div>
-        <ProgressBar now={this.props.percent} bsStyle={this.props.bsStyle} label={this.props.percent + '%' } />
-      </div>
+      <ProgressBar active now={this.props.percent} bsStyle={this.props.bsStyle} label={this.props.percent + '%' } />
     );
   }
 }

@@ -1,8 +1,7 @@
 import React, {Component} from 'react';
 import { Button } from 'react-bootstrap';
 import Measure from 'react-measure';
-import Dagre from 'dagre';
-
+import GraphHelpers from '../../controllers/GraphHelpers';
 
 class Graph extends Component {
 
@@ -12,7 +11,9 @@ class Graph extends Component {
       dimensions: {
         width: -1,
         height: -1
-      }
+      },
+      listOfGraphLabels: {},
+      listOfGraphNodes: {}
     };
     this.vertexSize = 30;
     this.fonts = null;
@@ -26,10 +27,19 @@ class Graph extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
+
     if (!this.fatum.isAnimating()) {
-      this.fatum.clear();
-      this.makeGraph(nextProps.nodes);
-      this.fatum.animate();
+      if (nextProps.nodes !== this.props.nodes) {
+        this.fatum.clear();
+        this.makeGraph(nextProps.nodes);
+        this.fatum.animate();
+      } else if (nextProps.values !== this.props.values){
+        console.log('values:')
+        console.log(nextProps.values)
+        if (Object.keys(nextProps.values).length > 0)
+        this.makeValues(nextProps.values);
+        this.fatum.animate();
+      }
     }
   }
 
@@ -46,14 +56,15 @@ class Graph extends Component {
     this.fatum.animate();
   }
 
-  makeGraph(nodes){
+  makeGraph(nodes) {
     let listOfGraphNodes = {};
     let listOfGraphLabels = {};
-    let layout = this.getLayout(this.vertexSize, nodes);
+
+    let layout = GraphHelpers.getLayout(this.vertexSize, nodes);
 
     for (let node of layout.nodes()) {
       listOfGraphNodes[node] = this.fatum.addMark().x(layout.node(node).x).y(layout.node(node).y).color(200, 100, 255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
-      listOfGraphLabels[node] = this.fatum.addText().text(layout.node(node).label.toString()).x(layout.node(node).x).y(layout.node(node).y).textColor(255, 255, 255, 255).font(0).size(13);
+      listOfGraphLabels[node] = this.fatum.addText().text('').x(layout.node(node).x).y(layout.node(node).y).textColor(255, 255, 255, 255).font(0).size(13);
     }
 
     for (let edge of layout.edges()) {
@@ -62,27 +73,17 @@ class Graph extends Component {
 
     this.fatum.camera().zoom(1, [0, 0]);
     this.fatum.camera().swap();
-    //this.fatum.center();
+    this.setState({listOfGraphNodes, listOfGraphLabels});
   }
 
-  getLayout(vertexSize, nodes){
-    let g = new Dagre.graphlib.Graph();
-
-    g.setGraph({});
-
-    g.setDefaultEdgeLabel(function() { return {}; });
-
-    for (let nodeID in nodes)
-      g.setNode(nodeID, {label:nodes[nodeID].value, width: vertexSize, height: vertexSize});
-
-    for (let nodeID in nodes){
-      for (let neighbourID of nodes[nodeID].listOfNeighbours)
-        g.setEdge(nodeID, neighbourID);
+  makeValues(values){
+    let listOfGraphLabels = this.state.listOfGraphLabels;
+    for (let node in values) {
+      if (values.hasOwnProperty(node)) {
+        if (listOfGraphLabels.hasOwnProperty(node))
+        listOfGraphLabels[node].text(values[node].toString());
+      }
     }
-
-    Dagre.layout(g);
-
-    return g;
   }
 
 

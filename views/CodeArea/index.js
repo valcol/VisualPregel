@@ -10,7 +10,6 @@ class CodeArea extends Component {
     super(props);
   }
 
-
   render() {
     return (
       <div className="code-container">

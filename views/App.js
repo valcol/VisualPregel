@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
 import {render} from 'react-dom';
+import { Provider, connect } from 'react-redux';
+import { createStore } from 'redux';
 import SplitPane from 'react-split-pane';
 import Pregel from '../controllers/Pregel';
 import Helpers from '../controllers/Helpers';
+import GraphHelpers from '../controllers/GraphHelpers';
+import Reducers from '../reducers';
+import { setNodes, setValues, setInitializeFunction, setAggregateFunction, setDispatchFunction,
+resetInitializeFunction, resetAggregateFunction, resetDispatchFunction, setNodesId } from '../actions';
 
 import css from './App.less';
 import { Grid, Col, Row, Button } from 'react-bootstrap';
@@ -12,128 +18,56 @@ import Panel from './Panel';
 import FileProgressBar from './ProgressBar';
 import FileHandler from '../controllers/FileHandler';
 
+const mapStateToProps = (state) => {
+  return { state };
+}
 
-export default class App extends Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      initialize: Helpers.functionToString(Pregel.initialize),
-      dispatch: Helpers.functionToString(Pregel.dispatch),
-      aggregate: Helpers.functionToString(Pregel.aggregate),
-      nodes: {}
-    };
-    this.generateRandomGraph = this.generateRandomGraph.bind(this);
-    this.updateGraph = this.updateGraph.bind(this);
-  }
-
-  handleChange(key) {
-    return function(code) {
-      let state = {};
-      state[key] = code;
-      this.setState(state);
-    }.bind(this);
-  }
-
-  handleCodeReset(key) {
-    return function() {
-      let state = {};
-      state[key] = Helpers.functionToString(Pregel[key]);
-      this.setState(state);
-    }.bind(this);
-  }
-
-  handleExecute() {
-    let initialize = Helpers.stringToFunction(this.state.initialize);
-    let dispatch = Helpers.stringToFunction(this.state.dispatch);
-    let aggregate = Helpers.stringToFunction(this.state.aggregate);
-
-    Pregel.mock(initialize, dispatch, aggregate);
-  }
-
-  generateRandomGraph(){
-    let nodesMock = {
-      '1': {
-        listOfNeighbours: ['2', '3', '4']
-      },
-      '2': {
-        listOfNeighbours: ['3', '4', '1']
-      },
-      '3': {
-        listOfNeighbours: ['4']
-      },
-      '4': {
-        listOfNeighbours: ['1']
-      }
-    };
-
-    let nodes = {};
-    for (let i=1; i<11; i++){
-      let listOfNeighbours = [];
-      for (let i=1; i<Math.floor((Math.random() * 10) + 1); i++){
-        let n = Math.floor((Math.random() * 10) + 1);
-        if (listOfNeighbours.indexOf(n) == -1)
-          listOfNeighbours.push(n);
-      }
-      nodes[i] = {listOfNeighbours};
-    }
-    this.setState({nodes});
-  }
-
-  updateGraph(nodes){
-    this.setState({nodes});
-  }
-
-  render() {
+let App = ({dispatch, state}) => {
     return (
       <Grid fluid>
         <Row className="app-container no-padding no-margin">
-          <Col xs={12} md={3} className="left-col no-padding">
-            <Panel
-              execute={() => {
-                this.handleExecute();}
-              }
-              updateGraph={
-                this.updateGraph
-              }
-              nodes = {this.state.nodes}
-              />
-            <Button bsSize="large" onClick={this.generateRandomGraph} block>generateRandomGraph</Button>
-            <Button bsSize="large" onClick={this.generateCSVGraph} block>generateCSVGraph</Button>
-          </Col>
-          <Col xs={12} md={9} className="right-col no-padding">
-            <SplitPane split="horizontal" defaultSize="40%">
-              <SplitPane split="vertical" defaultSize="50%">
-                <CodeArea
-                  title='1. Initialization'
-                  code = {this.state.initialize}
-                  handleCodeChange = {this.handleChange('initialize')}
-                  handleCodeReset = {this.handleCodeReset('initialize')}
+            <SplitPane split="vertical" defaultSize="20%">
+              <Panel
+                execute={() => {dispatch(setNodes(GraphHelpers.generateRandomGraph()))}}
+                updateGraph={(nodes) => {dispatch(setNodes(nodes))}}
+                updateValues={(values) => {dispatch(setValues(values))}}
+                nodes = {state.nodes}
                 />
-                <CodeArea
-                  title='2. Dispatch'
-                  code = {this.state.dispatch}
-                  handleCodeChange = {this.handleChange('dispatch')}
-                  handleCodeReset = {this.handleCodeReset('dispatch')}
-                />
-              </SplitPane>
-              <SplitPane split="vertical" defaultSize="45%">
-                <CodeArea
-                  title='3. Aggregation'
-                  code = {this.state.aggregate}
-                  handleCodeChange = {this.handleChange('aggregate')}
-                  handleCodeReset = {this.handleCodeReset('aggregate')}
-                />
-                <Graph
-                  nodes = {this.state.nodes}
-                />
+              <SplitPane split="horizontal" defaultSize="40%">
+                <SplitPane split="vertical" defaultSize="50%">
+                  <CodeArea
+                    title='1. Initialization'
+                    code = {state.initialize}
+                    handleCodeChange = {(c) => {dispatch(setInitializeFunction(c))}}
+                    handleCodeReset = {() => {dispatch(resetInitializeFunction())}}
+                  />
+                  <CodeArea
+                    title='2. Dispatch'
+                    code = {state.dispatch}
+                    handleCodeChange = {(c) => {dispatch(setDispatchFunction(c))}}
+                    handleCodeReset = {() => {dispatch(resetDispatchFunction())}}
+                  />
+                </SplitPane>
+                <SplitPane split="vertical" defaultSize="45%">
+                  <CodeArea
+                    title='3. Aggregation'
+                    code = {state.aggregate}
+                    handleCodeChange = {(c) => {dispatch(setAggregateFunction(c))}}
+                    handleCodeReset = {() => {dispatch(resetAggregateFunction())}}
+                  />
+                  <Graph
+                    nodes = {state.nodes}
+                    values = {state.values}
+                    id = {state.nodesId}
+                  />
+                </SplitPane>
               </SplitPane>
             </SplitPane>
-          </Col>
         </Row>
       </Grid>
     );
   }
-}
 
-render(<App/>, document.getElementById('app'));
+App = connect(mapStateToProps)(App);
+
+export default App;
