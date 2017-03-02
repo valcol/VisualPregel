@@ -96287,7 +96287,9 @@ var setGraphFromFile = function setGraphFromFile(e) {
       dispatch((0, _actions.resetUploadValues)());
       var reader = new FileReader();
       reader.onload = function (evt) {
-        _FileHandler2.default.parsingGraph(this.result, getState().uploadGraph.separator, function () {}, function (graph) {
+        _FileHandler2.default.parsingGraph(this.result, getState().uploadGraph.separator, function (percent, style) {
+          dispatch((0, _actions.setUploadGraphBar)(style, percent));
+        }, function (graph) {
           dispatch((0, _actions.setNodes)(graph));
         });
       };
@@ -96390,7 +96392,9 @@ var setValuesFromFile = function setValuesFromFile(e) {
       }
       var reader = new FileReader();
       reader.onload = function (evt) {
-        _FileHandler2.default.parsingValues(this.result, getState().uploadValues.separator, function () {}, function (values) {
+        _FileHandler2.default.parsingValues(this.result, getState().uploadValues.separator, function (percent, style) {
+          dispatch((0, _actions.setUploadValuesBar)(style, percent));
+        }, function (values) {
           dispatch((0, _actions.setValues)(values));
         });
       };

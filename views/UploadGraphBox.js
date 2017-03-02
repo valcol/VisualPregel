@@ -15,8 +15,11 @@ const setGraphFromFile = (e) => {
       dispatch(resetUploadValues());
       let reader = new FileReader();
       reader.onload = function(evt){
-        FileHandler.parsingGraph(this.result, getState().uploadGraph.separator,
-           () => {}, (graph) => {dispatch(setNodes(graph))});
+        FileHandler.parsingGraph(this.result,
+           getState().uploadGraph.separator,
+           (percent, style) => {dispatch(setUploadGraphBar(style, percent))},
+           (graph) => {dispatch(setNodes(graph))}
+         );
       };
       reader.readAsText(file);
     }

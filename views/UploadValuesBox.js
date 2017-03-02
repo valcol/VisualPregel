@@ -19,8 +19,10 @@ const setValuesFromFile = (e) => {
       }
       let reader = new FileReader();
       reader.onload = function(evt){
-        FileHandler.parsingValues(this.result, getState().uploadValues.separator,
-           () => {}, (values) => {dispatch(setValues(values))});
+        FileHandler.parsingValues(this.result,
+        getState().uploadValues.separator,
+        (percent, style) => {dispatch(setUploadValuesBar(style, percent))},
+        (values) => {dispatch(setValues(values))});
       };
       reader.readAsText(file);
     }
