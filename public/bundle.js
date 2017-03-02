@@ -32799,8 +32799,6 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
@@ -32821,49 +32819,21 @@ var _FileHandler2 = _interopRequireDefault(_FileHandler);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var Panel = function Panel(_ref) {
+  var execute = _ref.execute;
 
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Panel = function (_Component) {
-  _inherits(Panel, _Component);
-
-  function Panel(props) {
-    _classCallCheck(this, Panel);
-
-    var _this = _possibleConstructorReturn(this, (Panel.__proto__ || Object.getPrototypeOf(Panel)).call(this, props));
-
-    _this.uploadGraph = _this.uploadGraph.bind(_this);
-    return _this;
-  }
-
-  _createClass(Panel, [{
-    key: 'uploadGraph',
-    value: function uploadGraph(file, separator, update) {
-      console.log(this.props.updateGraph);
-      _FileHandler2.default.fileToGraph(file, separator, update, this.props.updateGraph);
-    }
-  }, {
-    key: 'render',
-    value: function render() {
-      return _react2.default.createElement(
-        'div',
-        { className: 'panel' },
-        _react2.default.createElement(_UploadGraphBox2.default, { idName: 'graph', label: 'Upload graph file :', upload: this.uploadGraph }),
-        _react2.default.createElement(_UploadValuesBox2.default, { idName: 'values', label: 'Upload values file :' }),
-        _react2.default.createElement(
-          _reactBootstrap.Button,
-          { bsSize: 'large', onClick: this.props.execute, block: true },
-          'Generate random graph'
-        )
-      );
-    }
-  }]);
-
-  return Panel;
-}(_react.Component);
+  return _react2.default.createElement(
+    'div',
+    { className: 'panel' },
+    _react2.default.createElement(_UploadGraphBox2.default, { idName: 'graph', label: 'Upload graph file :' }),
+    _react2.default.createElement(_UploadValuesBox2.default, { idName: 'values', label: 'Upload values file :' }),
+    _react2.default.createElement(
+      _reactBootstrap.Button,
+      { bsSize: 'large', onClick: execute, block: true },
+      'Generate random graph'
+    )
+  );
+};
 
 exports.default = Panel;
 
