@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import ProgressBar from './ProgressBar';
-import Dropdown from './Dropdown';
-import FileSelector from './FileSelector';
+import ProgressBar from '../components/ProgressBar';
+import Dropdown from '../components/Dropdown';
+import FileSelector from '../components/FileSelector';
 import { Form, FormGroup, ControlLabel, Button, FormControl, HelpBlock, InputGroup } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
 import { setUploadValuesSeparator, setUploadValuesFile, setUploadValuesBar, setValues, resetUploadValues } from '../actions';
 import FileHandler from '../controllers/FileHandler';
+import UploadBoxComponent from '../components/UploadBox';
 
 const setValuesFromFile = (e) => {
   return (dispatch, getState) => {
@@ -44,26 +45,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     setBar: (style, percent) => {
       dispatch(setUploadValuesBar(percent, style))
     },
-    setValues: (e) => {
-        console.log('testsdsjd')
+    handleUpload: (e) => {
       dispatch(setValuesFromFile(e));
     }
   };
 }
 
-let UploadValuesBox = ({label, file, setValues, separator, setSeparator, percent, style }) => {
-  return (
-    <div>
-    <FileSelector label={label} file={file} handleUpload={setValues}/>
-    <Dropdown setSeparator={setSeparator} separator={separator}/>
-    <ProgressBar percent={percent} bsStyle={style}/>
-    </div>
-  );
-}
-
-UploadValuesBox = connect(
+const UploadValuesBox = connect(
   mapStateToProps,
   mapDispatchToProps
-)(UploadValuesBox);
+)(UploadBoxComponent);
 
 export default UploadValuesBox;

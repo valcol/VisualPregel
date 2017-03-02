@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
-import ProgressBar from './ProgressBar';
-import Dropdown from './Dropdown';
-import FileSelector from './FileSelector';
+import ProgressBar from '../components/ProgressBar';
+import Dropdown from '../components/Dropdown';
+import FileSelector from '../components/FileSelector';
 import { Form, FormGroup, ControlLabel, Button, FormControl, HelpBlock, InputGroup } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
 import { setUploadGraphSeparator, setUploadGraphFile, setUploadGraphBar, setNodes, resetUploadValues } from '../actions';
 import FileHandler from '../controllers/FileHandler';
+import UploadBoxComponent from '../components/UploadBox';
 
 const setGraphFromFile = (e) => {
   return (dispatch, getState) => {
@@ -41,25 +42,15 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     setBar: (style, percent) => {
       dispatch(setUploadGraphBar(percent, style))
     },
-    setNodes: (e) => {
+    handleUpload: (e) => {
       dispatch(setGraphFromFile(e));
     }
   };
 }
 
-let UploadGraphBox = ({label, file, setNodes, separator, setSeparator, percent, style }) => {
-  return (
-    <div>
-    <FileSelector label={label} file={file} handleUpload={setNodes}/>
-    <Dropdown setSeparator={setSeparator} separator={separator}/>
-    <ProgressBar percent={percent} bsStyle={style}/>
-    </div>
-  );
-}
-
-UploadGraphBox = connect(
+const UploadGraphBox = connect(
   mapStateToProps,
   mapDispatchToProps
-)(UploadGraphBox);
+)(UploadBoxComponent);
 
 export default UploadGraphBox;

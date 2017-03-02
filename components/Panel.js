@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
-import UploadGraphBox from './UploadGraphBox';
-import UploadValuesBox from './UploadValuesBox';
+import UploadGraphBox from '../containers/UploadGraphBox';
+import UploadValuesBox from '../containers/UploadValuesBox';
 import { Button } from 'react-bootstrap';
 import { ButtonToolbar, DropdownButton , MenuItem, HelpBlock  } from 'react-bootstrap';
 import FileHandler from '../controllers/FileHandler';
