@@ -34,8 +34,6 @@ class Graph extends Component {
         this.makeGraph(nextProps.nodes);
         this.fatum.animate();
       } else if (nextProps.values !== this.props.values){
-        console.log('values:')
-        console.log(nextProps.values)
         if (Object.keys(nextProps.values).length > 0)
         this.makeValues(nextProps.values);
         this.fatum.animate();

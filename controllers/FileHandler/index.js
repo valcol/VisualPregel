@@ -12,7 +12,6 @@ let FileHandler = function() {
 FileHandler.prototype.parsingGraph = function(values, separator, update, callback){
 	let now = 0;
 	let listOfNodes = {};
-	console.log('test')
 	update(now,"info");
 
 	//Parse the values content and create the graph
