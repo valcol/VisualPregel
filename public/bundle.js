@@ -31797,8 +31797,8 @@ const uploadGraph = (state = {
       });
     case 'RESET_UPLOADGRAPH_FIELDS':
       return {
-        percentBar: 0,
-        styleBar: 'success',
+        percent: 0,
+        style: 'success',
         separator: ',',
         file: ''
       };
@@ -31829,8 +31829,8 @@ const uploadValues = (state = {
       });
     case 'RESET_UPLOADVALUES_FIELDS':
       return {
-        percentBar: 0,
-        styleBar: 'success',
+        percent: 0,
+        style: 'success',
         separator: ',',
         file: ''
       };
