@@ -45,7 +45,7 @@ FileHandler.prototype.fileToGraph = function(file, separator, update, callback){
 FileHandler.prototype.parsingGraph = function(values, separator, update, callback){
 	let now = 0;
 	let listOfNodes = {};
-
+	console.log('test')
 	update(now,"info");
 
 	//Parse the values content and create the graph
@@ -85,7 +85,7 @@ FileHandler.prototype.parsingGraph = function(values, separator, update, callbac
 */
 
 
-FileHandler.prototype.initValuesFromFile = function(file, separator,  update, callback){
+FileHandler.prototype.initValuesFromFile = function(file, separator, update, callback){
 	let now = 0;
 	//If there is no initiate graph.
 	/*if(Object.keys(nodes).length == 0){

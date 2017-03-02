@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Button } from 'react-bootstrap';
 import Measure from 'react-measure';
-import GraphHelpers from '../../controllers/GraphHelpers';
+import GraphHelpers from '../controllers/GraphHelpers';
 
 class Graph extends Component {
 
@@ -64,7 +64,7 @@ class Graph extends Component {
 
     for (let node of layout.nodes()) {
       listOfGraphNodes[node] = this.fatum.addMark().x(layout.node(node).x).y(layout.node(node).y).color(200, 100, 255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
-      listOfGraphLabels[node] = this.fatum.addText().text('').x(layout.node(node).x).y(layout.node(node).y).textColor(255, 255, 255, 255).font(0).size(13);
+      listOfGraphLabels[node] = this.fatum.addText().text('').x(layout.node(node).x).y(layout.node(node).y).textColor(0, 0, 0, 255).font(0).size(13);
     }
 
     for (let edge of layout.edges()) {

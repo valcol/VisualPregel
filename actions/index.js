@@ -6,7 +6,6 @@ export const setNodes = (nodes) => {
 };
 
 export const setValues = (values) => {
-  console.log(values)
   return {
     type: 'SET_VALUES',
     values

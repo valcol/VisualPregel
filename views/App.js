@@ -19,18 +19,53 @@ import FileProgressBar from './ProgressBar';
 import FileHandler from '../controllers/FileHandler';
 
 const mapStateToProps = (state) => {
-  return { state };
+  return {
+    nodes: state.nodes,
+    values: state.values,
+    initialize: state.initialize,
+    dispatch: state.dispatch,
+    aggregate: state.aggregate
+  };
 }
 
-let App = ({dispatch, state}) => {
+const mapDispatchToProps = (dispatch) => {
+  return {
+    setNodes: (nodes) => {
+      dispatch(setNodes(nodes));
+    },
+    setRandomNodes: () => {
+      dispatch(setNodes(GraphHelpers.generateRandomGraph()));
+    },
+    setInitializeFunction: (c) => {
+      dispatch(setInitializeFunction(c));
+    },
+    setDispatchFunction: (c) => {
+      dispatch(setDispatchFunction(c));
+    },
+    setAggregateFunction: (c) => {
+      dispatch(setAggregateFunction(c));
+    },
+    resetInitializeFunction: () => {
+      dispatch(resetInitializeFunction());
+    },
+    resetDispatchFunction: () => {
+      dispatch(resetDispatchFunction());
+    },
+    resetAggregateFunction: () => {
+      dispatch(resetAggregateFunction());
+    }
+  };
+}
+
+let App = (state) => {
     return (
       <Grid fluid>
         <Row className="app-container no-padding no-margin">
             <SplitPane split="vertical" defaultSize="20%">
               <Panel
-                execute={() => {dispatch(setNodes(GraphHelpers.generateRandomGraph()))}}
-                updateGraph={(nodes) => {dispatch(setNodes(nodes))}}
-                updateValues={(values) => {dispatch(setValues(values))}}
+                execute={state.setRandomNodes}
+                updateGraph={state.setNodes}
+                updateValues={state.setValues}
                 nodes = {state.nodes}
                 />
               <SplitPane split="horizontal" defaultSize="40%">
@@ -38,27 +73,26 @@ let App = ({dispatch, state}) => {
                   <CodeArea
                     title='1. Initialization'
                     code = {state.initialize}
-                    handleCodeChange = {(c) => {dispatch(setInitializeFunction(c))}}
-                    handleCodeReset = {() => {dispatch(resetInitializeFunction())}}
+                    handleCodeChange = {state.setInitializeFunction}
+                    handleCodeReset = {state.resetInitializeFunction}
                   />
                   <CodeArea
                     title='2. Dispatch'
                     code = {state.dispatch}
-                    handleCodeChange = {(c) => {dispatch(setDispatchFunction(c))}}
-                    handleCodeReset = {() => {dispatch(resetDispatchFunction())}}
+                    handleCodeChange = {state.setDispatchFunction}
+                    handleCodeReset = {state.resetDispatchFunction}
                   />
                 </SplitPane>
                 <SplitPane split="vertical" defaultSize="45%">
                   <CodeArea
                     title='3. Aggregation'
                     code = {state.aggregate}
-                    handleCodeChange = {(c) => {dispatch(setAggregateFunction(c))}}
-                    handleCodeReset = {() => {dispatch(resetAggregateFunction())}}
+                    handleCodeChange = {state.setAggregateFunction}
+                    handleCodeReset = {state.resetAggregateFunction}
                   />
                   <Graph
                     nodes = {state.nodes}
                     values = {state.values}
-                    id = {state.nodesId}
                   />
                 </SplitPane>
               </SplitPane>
@@ -68,6 +102,9 @@ let App = ({dispatch, state}) => {
     );
   }
 
-App = connect(mapStateToProps)(App);
+App = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
 
 export default App;
