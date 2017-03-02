@@ -1,39 +1,6 @@
 let FileHandler = function() {
 };
 
-FileHandler.prototype.resetInputFile = function(id){
-	let form = document.getElementById(id);
-	form.value = "";
-}
-
-/*
-* Get a graph object from csv file representing adjacency matrix of this graph
-*
-* @param {File} comments the csv file to be parse.
-* @param {Function} comments function to call for update the progress bar.
-* @return {void} update the property listOfNodes
-*/
-FileHandler.prototype.fileToGraph = function(file, separator, update, callback){
-
-	//FileHandler.resetInputFile("values");
-	//If the user choose cancel
-	let filename = file.name.split(".");
-	let fileformat = filename[filename.length-1];
-
-	//If the file is not in csv format
-	if(!fileformat.includes("csv")){
-		//FileHandler.resetInputFile("graph");
-		alert("Your file is not csv file");
-		return;
-	}
-	//Parse the file and create the graph
-	let reader = new FileReader();
-	reader.onload = function(evt){
-		FileHandler.parsingGraph(this.result, separator, update, callback);
-	}
-	reader.readAsText(file);
-}
-
 /**
 * Get a graph object from values of csv file.
 *
@@ -84,37 +51,6 @@ FileHandler.prototype.parsingGraph = function(values, separator, update, callbac
 * @return {void} update the values of nodes
 */
 
-
-FileHandler.prototype.initValuesFromFile = function(file, separator, update, callback){
-	let now = 0;
-	//If there is no initiate graph.
-	/*if(Object.keys(nodes).length == 0){
-		update(now,"info");
-		alert("There is no graph to initiate.");
-		let form = document.getElementById("values");
-		form.value = "";
-		return;
-	}*/
-	let filename = file.name.split(".");
-	let fileformat = filename[filename.length-1];
-	//If the file is not in csv format
-	if(!fileformat.includes("csv")){
-		update(now,"danger");
-		alert("Your file is not csv file");
-		//let form = document.getElementById("values");
-		//form.value = "";
-		return;
-	}
-	//Parse the file and update graph values
-	let reader = new FileReader();
-	let line = "";
-	let lines = [];
-	reader.onload = function(evt){
-			FileHandler.parsingValues(this.result, separator,  update, callback);
-		}
-	reader.readAsText(file);
-}
-
 FileHandler.prototype.parsingValues = function(values, separator, update, callback){
 	let now = 0;
 	let	lines = values.split("\n");
@@ -129,7 +65,6 @@ FileHandler.prototype.parsingValues = function(values, separator, update, callba
 	}
 	update(now,"success");
 	let id = 0;
-	console.log('dsd'+JSON.stringify(listOfNodes))
 	callback(listOfNodes);
 }
 
