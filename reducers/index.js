@@ -1,11 +1,14 @@
 import { combineReducers } from 'redux';
 import Helpers from '../controllers/Helpers';
 import Pregel from '../controllers/Pregel';
+import GraphHelpers from '../controllers/GraphHelpers';
 
-const nodes = (state = {}, action) => {
+const nodes = (state = GraphHelpers.generateRandomGraph(), action) => {
   switch (action.type) {
     case 'SET_NODES':
       return action.nodes;
+    case 'SET_RANDOM_NODES':
+      return GraphHelpers.generateRandomGraph();
     default:
       return state;
   }
@@ -14,17 +17,7 @@ const nodes = (state = {}, action) => {
 const values = (state = {}, action) => {
   switch (action.type) {
     case 'SET_VALUES':
-    console.log('valueset')
       return action.values;
-    default:
-      return state;
-  }
-};
-
-const nodesId = (state = '000-000-000-000', action) => {
-  switch (action.type) {
-    case 'SET_NODES_ID':
-      return Helpers.generateId();
     default:
       return state;
   }
@@ -133,7 +126,6 @@ const uploadValues = (state = {
 
 export default combineReducers({
   nodes,
-  nodesId,
   values,
   initialize,
   aggregate,

@@ -5,16 +5,16 @@ export const setNodes = (nodes) => {
   };
 };
 
+export const setRandomNodes = (nodes) => {
+  return {
+    type: 'SET_RANDOM_NODES'
+  };
+};
+
 export const setValues = (values) => {
   return {
     type: 'SET_VALUES',
     values
-  };
-};
-
-export const setNodesId = () => {
-  return {
-    type: 'SET_NODES_ID'
   };
 };
 

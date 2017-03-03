@@ -1,8 +1,3 @@
-import React, {Component} from 'react';
-import ProgressBar from '../components/ProgressBar';
-import Dropdown from '../components/Dropdown';
-import FileSelector from '../components/FileSelector';
-import { Form, FormGroup, ControlLabel, Button, FormControl, HelpBlock, InputGroup } from 'react-bootstrap';
 import { Provider, connect } from 'react-redux';
 import { setUploadGraphSeparator, setUploadGraphFile, setUploadGraphBar, setNodes, resetUploadValues } from '../actions';
 import FileHandler from '../controllers/FileHandler';
