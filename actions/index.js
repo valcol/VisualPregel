@@ -25,6 +25,12 @@ export const setInitializeFunction = (f) => {
   };
 };
 
+export const setPregelMockFunction = () => {
+  return {
+    type: 'SET_PREGEL_MOCK_FUNCTION'
+  };
+};
+
 export const resetInitializeFunction = () => {
   return {
     type: 'RESET_INITIALIZE_FUNCTION'

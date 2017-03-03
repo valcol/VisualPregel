@@ -8,7 +8,7 @@ import Helpers from '../controllers/Helpers';
 import GraphHelpers from '../controllers/GraphHelpers';
 import Reducers from '../reducers';
 import { setNodes, setValues, setInitializeFunction, setAggregateFunction, setDispatchFunction,
-resetInitializeFunction, resetAggregateFunction, resetDispatchFunction, setNodesId } from '../actions';
+resetInitializeFunction, resetAggregateFunction, resetDispatchFunction, setNodesId, setPregelMockFunction } from '../actions';
 
 import css from '../components/App.less';
 import { Grid, Col, Row, Button } from 'react-bootstrap';
@@ -54,6 +54,9 @@ const mapDispatchToProps = (dispatch) => {
     },
     resetAggregateFunction: () => {
       dispatch(resetAggregateFunction());
+    },
+    setPregelMockFunction: () => {
+      dispatch(setPregelMockFunction());
     }
   };
 }

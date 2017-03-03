@@ -8,7 +8,7 @@ import Helpers from '../controllers/Helpers';
 import GraphHelpers from '../controllers/GraphHelpers';
 import Reducers from '../reducers';
 import { setNodes, setValues, setInitializeFunction, setAggregateFunction, setDispatchFunction,
-resetInitializeFunction, resetAggregateFunction, resetDispatchFunction, setNodesId } from '../actions';
+resetInitializeFunction, resetAggregateFunction, resetDispatchFunction, setNodesId, setPregelMockFunction } from '../actions';
 
 import css from './App.less';
 import { Grid, Col, Row, Button } from 'react-bootstrap';
@@ -28,6 +28,7 @@ const App = (state) => {
               updateGraph={state.setNodes}
               updateValues={state.setValues}
               nodes = {state.nodes}
+              pregelMock={state.setPregelMockFunction}
               />
             <SplitPane split="horizontal" defaultSize="40%">
               <SplitPane split="vertical" defaultSize="50%">
