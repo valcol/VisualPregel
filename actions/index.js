@@ -5,7 +5,7 @@ export const setNodes = (nodes) => {
   };
 };
 
-export const setRandomNodes = (nodes) => {
+export const setRandomNodes = () => {
   return {
     type: 'SET_RANDOM_NODES'
   };
@@ -22,6 +22,12 @@ export const setInitializeFunction = (f) => {
   return {
     type: 'SET_INITIALIZE_FUNCTION',
     f
+  };
+};
+
+export const setPregelMockFunction = () => {
+  return {
+    type: 'SET_PREGEL_MOCK_FUNCTION'
   };
 };
 

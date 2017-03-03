@@ -35,4 +35,12 @@ GraphHelpers.prototype.getLayout = function(vertexSize, nodes){
   return g;
 }
 
+GraphHelpers.prototype.getMidpoint = function(x1, x2, y1, y2) {
+  let x = (x1 + x2) / 2;
+  let y = (y1 + y2) / 2;
+  x = (x1 < x2) ? x+10 : x-10;
+  y = (y1 < y2) ? y+10 : y-10;
+  return {x, y};
+}
+
 export default new GraphHelpers();

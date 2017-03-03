@@ -24,7 +24,7 @@ const values = (state = {}, action) => {
 };
 
 const initialize = (state = Helpers.functionToString(Pregel.initialize),
- action) => {
+  action) => {
   switch (action.type) {
     case 'SET_INITIALIZE_FUNCTION':
       return action.f;
@@ -35,8 +35,19 @@ const initialize = (state = Helpers.functionToString(Pregel.initialize),
   }
 };
 
+const pregelMock = (state = {},
+  action) => {
+  switch (action.type) {
+    case 'SET_PREGEL_MOCK_FUNCTION':
+      Pregel.pregelMock();
+      return state;
+    default:
+      return state;
+  }
+};
+
 const aggregate = (state = Helpers.functionToString(Pregel.aggregate),
- action) => {
+  action) => {
   switch (action.type) {
     case 'SET_AGGREGATE_FUNCTION':
       return action.f;
@@ -48,7 +59,7 @@ const aggregate = (state = Helpers.functionToString(Pregel.aggregate),
 };
 
 const dispatch = (state = Helpers.functionToString(Pregel.dispatch),
- action) => {
+  action) => {
   switch (action.type) {
     case 'SET_DISPATCH_FUNCTION':
       return action.f;
@@ -76,7 +87,7 @@ const uploadGraph = (state = {
         separator: action.separator
       });
     case 'SET_UPLOADGRAPH_FILE':
-          console.log(state);
+      console.log(state);
       return Object.assign({}, state, {
         file: action.file
       });
@@ -131,5 +142,6 @@ export default combineReducers({
   aggregate,
   dispatch,
   uploadGraph,
-  uploadValues
+  uploadValues,
+  pregelMock
 });
