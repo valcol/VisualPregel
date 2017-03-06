@@ -49,6 +49,9 @@ Pregel.prototype.start = function(edges, nodes, setNodes, setEdgesMessages) {
     for (let node in nodes)
       if ((node in messages))
         newNodes2[node] = this.aggregate(node, newNodes[node], messages[node]);
+      else
+        newNodes2[node] = newNodes[node];
+
     setNodes(newNodes2);
 
     newNodes = newNodes2;

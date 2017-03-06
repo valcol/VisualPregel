@@ -29,8 +29,9 @@ class Graph extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-      if (!this.fatum.isAnimating() && (nextProps.edges !== this.props.edges)) {
-        this.fatum.clear();
+    if (!this.fatum.isAnimating())
+      if ((nextProps.edges !== this.props.edges)) {
+        this.reset();
         this.updateEdges(nextProps.edges);
         this.fatum.animate();
       }
@@ -110,7 +111,7 @@ class Graph extends Component {
       this.layout.node(this.props.edges[edge].from).y, this.layout.node(this.props.edges[edge].to).y);
       if (values.hasOwnProperty(edge)) {
         if (fatumEdgesLabels.hasOwnProperty(edge))
-          fatumEdgesLabels[edge].text(JSON.stringify(values[edge]));
+          fatumEdgesLabels[edge].text(JSON.stringify(values[edge])+"woop");
       }
     }
     this.fatum.refresh();
