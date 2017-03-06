@@ -96,11 +96,17 @@ class Graph extends Component {
 
   updateNodesValues(values){
     let fatumNodesLabels = this.state.fatumNodesLabels;
+    let fatumNodes = this.state.fatumNodes;
     for (let node in values) {
       if (values.hasOwnProperty(node)) {
         if (fatumNodesLabels.hasOwnProperty(node))
           fatumNodesLabels[node].text(JSON.stringify(values[node].value)+
           '('+JSON.stringify(values[node].initialValue)+')');
+        if (fatumNodes.hasOwnProperty(node))
+          if ((values[node].value === values[node].initialValue))
+            fatumNodes[node].color(30, 150, 50).show();
+          else
+            fatumNodes[node].color(200, 100, 255).show();
       }
     }
   }
