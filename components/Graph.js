@@ -77,12 +77,12 @@ class Graph extends Component {
 
     for (let edge in edges) {
       if (!(edges[edge].to in fatumNodes)) {
-        fatumNodes[edges[edge].to] = this.fatum.addMark().x(this.layout.node(edges[edge].to).x).y(this.layout.node(edges[edge].to).y).color(200, 100, 255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
-        fatumNodesLabels[edges[edge].to] = this.fatum.addText().text('').x(this.layout.node(edges[edge].to).x).y(this.layout.node(edges[edge].to).y).textColor(0, 0, 0, 255).font(0).size(13);
+        fatumNodes[edges[edge].to] = this.fatum.addMark().x(this.layout.node(edges[edge].to).x).y(this.layout.node(edges[edge].to).y).color(217,83,79).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
+        fatumNodesLabels[edges[edge].to] = this.fatum.addText().text('').x(this.layout.node(edges[edge].to).x).y(this.layout.node(edges[edge].to).y).textColor(255, 255, 255, 255).font(0).size(13);
       }
       if (!(edges[edge].from in fatumNodes)) {
-        fatumNodes[edges[edge].from] = this.fatum.addMark().x(this.layout.node(edges[edge].from).x).y(this.layout.node(edges[edge].from).y).color(200, 100, 255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
-        fatumNodesLabels[edges[edge].from] = this.fatum.addText().text('').x(this.layout.node(edges[edge].from).x).y(this.layout.node(edges[edge].from).y).textColor(0, 0, 0, 255).font(0).size(13);
+        fatumNodes[edges[edge].from] = this.fatum.addMark().x(this.layout.node(edges[edge].from).x).y(this.layout.node(edges[edge].from).y).color(217,83,79).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
+        fatumNodesLabels[edges[edge].from] = this.fatum.addText().text('').x(this.layout.node(edges[edge].from).x).y(this.layout.node(edges[edge].from).y).textColor(255, 255, 255, 255).font(0).size(13);
       }
       let point = GraphHelpers.getMidpoint(this.layout.node(edges[edge].from).x, this.layout.node(edges[edge].to).x, this.layout.node(edges[edge].from).y, this.layout.node(edges[edge].to).y);
       fatumEdges[edge] = this.fatum.addConnection(fatumNodes[edges[edge].from], fatumNodes[edges[edge].to]).sourceColor([0, 0, 0, 128]).targetColor([0, 0, 0, 128]);
@@ -104,9 +104,9 @@ class Graph extends Component {
           '('+JSON.stringify(values[node].initialValue)+')');
         if (fatumNodes.hasOwnProperty(node))
           if ((values[node].value === values[node].initialValue))
-            fatumNodes[node].color(30, 150, 50).show();
+            fatumNodes[node].color(92,184,92).show();
           else
-            fatumNodes[node].color(200, 100, 255).show();
+            fatumNodes[node].color(217,83,79).show();
       }
     }
   }

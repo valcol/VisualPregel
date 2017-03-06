@@ -55,27 +55,26 @@ Pregel.prototype.start = async function(edges, nodes, setNodes, setEdgesMessages
     }
     setEdgesMessages(newEdgesMessages);
     await sleep(1000);
-    if (Object.keys(messages).length > 0){
-      for (let node in nodes){
-        if ((node in messages)) {
-          newNodes2[node] = {};
-          newNodes2[node].initialValue = newNodes[node].value;
-          newNodes2[node].value = this.aggregate(node, newNodes[node].value, messages[node]);
-        }
-        else {
-          newNodes2[node] = {};
-          newNodes2[node].initialValue = newNodes[node].value;
-          newNodes2[node].value = newNodes[node].value;
-        }
+    for (let node in nodes){
+      if ((node in messages)) {
+        newNodes2[node] = {};
+        newNodes2[node].initialValue = newNodes[node].value;
+        newNodes2[node].value = this.aggregate(node, newNodes[node].value, messages[node]);
       }
-      setNodes(newNodes2);
-      await sleep(1000);
-      newNodes = newNodes2;
-      maxIterations--;
+      else {
+        newNodes2[node] = {};
+        newNodes2[node].initialValue = newNodes[node].value;
+        newNodes2[node].value = newNodes[node].value;
+      }
     }
+    setNodes(newNodes2);
+    await sleep(1000);
+    newNodes = newNodes2;
+
+    if (Object.keys(messages).length > 0)
+        maxIterations--;
     else
       maxIterations = 0;
-
   }
 };
 
