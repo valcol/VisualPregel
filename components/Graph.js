@@ -99,19 +99,21 @@ class Graph extends Component {
     for (let node in values) {
       if (values.hasOwnProperty(node)) {
         if (fatumNodesLabels.hasOwnProperty(node))
-          fatumNodesLabels[node].text(JSON.stringify(values[node]));
+          fatumNodesLabels[node].text(JSON.stringify(values[node].value)+
+          '('+JSON.stringify(values[node].initialValue)+')');
       }
     }
   }
 
   updateEdgesValues(values){
     let fatumEdgesLabels = this.state.fatumEdgesLabels;
-    for (let edge in values) {
-      let point = GraphHelpers.getMidpoint(this.layout.node(this.props.edges[edge].from).x, this.layout.node(this.props.edges[edge].to).x,
-      this.layout.node(this.props.edges[edge].from).y, this.layout.node(this.props.edges[edge].to).y);
+    for (let edge in fatumEdgesLabels) {
       if (values.hasOwnProperty(edge)) {
         if (fatumEdgesLabels.hasOwnProperty(edge))
-          fatumEdgesLabels[edge].text(JSON.stringify(values[edge])+"woop");
+          fatumEdgesLabels[edge].text(JSON.stringify(values[edge]));
+      }
+      else {
+        fatumEdgesLabels[edge].text('');
       }
     }
     this.fatum.refresh();

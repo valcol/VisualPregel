@@ -24,7 +24,9 @@ FileHandler.prototype.parsingGraph = function(values, separator, update, callbac
 	for(let i = 0; i < lines.length; i++){
 		line = lines[i].split(new RegExp(separator));
 		let nodeID = parseInt(line[0]);
-		nodes[nodeID] = nodeID;
+		nodes[nodeID] = {};
+		nodes[nodeID].value = nodeID;
+		nodes[nodeID].initialValue = -1;
 		//Test if the line is readable (at least 2 elements) and if the user try to initiate an already initiated Neighborhood
 		/*let alreadyDefinedNeighborhood = (listOfNodes[nodeID] != undefined && listOfNodes[nodeID].listOfNeighbours.length != 0);
 		if(line.length < 2 || alreadyDefinedNeighborhood ){
@@ -37,7 +39,9 @@ FileHandler.prototype.parsingGraph = function(values, separator, update, callbac
 		}*/
 		for(let j = 1; j < line.length; j++){
 				let nodeIDbis = parseInt(line[j]);
-				nodes[nodeIDbis] = nodeIDbis;
+				nodes[nodeIDbis] = {};
+				nodes[nodeIDbis].value = nodeIDbis;
+				nodes[nodeIDbis].initialValue = -1;
 				edges[i] = {from: nodeID, to:nodeIDbis};
 				edgesMessages[i] = '';
 		}
@@ -64,7 +68,9 @@ FileHandler.prototype.parsingValues = function(values, separator, update, callba
 	for(let i = 0; i < lines.length; i++) {
 		let line = lines[i].split(new RegExp(separator));
 		let nodeID = parseInt(line[0]);
-		nodes[nodeID] = parseInt(line[1]);
+		nodes[nodeID] = {};
+		nodes[nodeID].value = parseInt(line[1]);
+		nodes[nodeID].initialValue = -1;
 		now = 100/(lines.length - i);
 		update(now,"info");
 	}
