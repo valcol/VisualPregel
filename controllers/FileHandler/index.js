@@ -35,15 +35,13 @@ FileHandler.prototype.parsingGraph = function(values, separator, update, callbac
 		}
 
 		listOfNodes[nodeID] = {
-			listOfNeighbours: [],
-			value: ''
+			listOfNeighbours: []
 		};
 		for(let j = 1; j < line.length; j++){
 			let neighbourID = parseInt(line[j]);
 			if(listOfNodes[neighbourID] == undefined)
 				listOfNodes[neighbourID] = {
-					listOfNeighbours: [],
-					value: ''
+					listOfNeighbours: []
 				};
 			listOfNodes[nodeID].listOfNeighbours.push(neighbourID);
 		}

@@ -13,7 +13,6 @@ GraphHelpers.prototype.generateRandomGraph = function() {
       listOfNeighbours.push(n);
     }
     nodes[i] = {listOfNeighbours};
-    nodes[i].value = i;
   }
   return nodes;
 }
@@ -22,13 +21,12 @@ GraphHelpers.prototype.generateRandomGraph = function() {
 GraphHelpers.prototype.getLayout = function(vertexSize, nodes){
   let g = new Dagre.graphlib.Graph();
   g.setGraph({});
-  g.setDefaultEdgeLabel(function() { return {}; });
   for (let nodeID in nodes) {
     g.setNode(nodeID, {width: vertexSize, height: vertexSize});
   }
   for (let nodeID in nodes){
     for (let neighbourID of nodes[nodeID].listOfNeighbours)
-    g.setEdge(nodeID, neighbourID);
+    g.setEdge(nodeID, neighbourID, {label:nodeID, width:10, height:10});
   }
   Dagre.layout(g);
 

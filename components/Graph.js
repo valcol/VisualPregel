@@ -63,16 +63,16 @@ class Graph extends Component {
 
     let layout = GraphHelpers.getLayout(this.vertexSize, nodes);
 
-    for (let node of layout.nodes()) {
-      fatumNodes[node] = this.fatum.addMark().x(layout.node(node).x).y(layout.node(node).y).color(200, 100, 255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
-      fatumNodesLabels[node] = this.fatum.addText().text('').x(layout.node(node).x).y(layout.node(node).y).textColor(0, 0, 0, 255).font(0).size(13);
+    for (let nodeID of layout.nodes()) {
+      fatumNodes[nodeID] = this.fatum.addMark().x(layout.node(nodeID).x).y(layout.node(nodeID).y).color(200, 100, 255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
+      fatumNodesLabels[nodeID] = this.fatum.addText().text('').x(layout.node(nodeID).x).y(layout.node(nodeID).y).textColor(0, 0, 0, 255).font(0).size(13);
     }
 
     for (let edge of layout.edges()) {
-      let edgeO = layout.edge(edge);
+      let edgeProps = layout.edge(edge);
       let point = GraphHelpers.getMidpoint(layout.node(edge.v).x, layout.node(edge.w).x, layout.node(edge.v).y, layout.node(edge.w).y);
       fatumEdges[edge] = this.fatum.addConnection(fatumNodes[edge.v], fatumNodes[edge.w]).sourceColor([0, 0, 0, 128]).targetColor([0, 0, 0, 128]);
-      fatumEdgesLabels[edge] = this.fatum.addText().text("2").x(point.x).y(point.y).textColor(0, 0, 0, 255).font(0).size(13);
+      fatumEdgesLabels[edge] = this.fatum.addText().text("2").x(edgeProps.x).y(edgeProps.y).textColor(0, 0, 0, 255).font(0).size(13);
     }
 
     this.fatum.camera().zoom(1, [0, 0]);
