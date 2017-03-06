@@ -9,13 +9,12 @@ let FileHandler = function() {
 * @return {void} update the property listOfNodes
 */
 
-FileHandler.prototype.parsingGraph = function(values, separator, update, callback){
+FileHandler.prototype.parsingGraph = function(values, separator, update, callback, setError){
 	let now = 0;
 	let edges = {};
 	let nodes = {};
 	let edgesMessages = {};
 	update(now,"info");
-
 	//Parse the values content and create the graph
 	let error = "";
 	let line = "";
@@ -28,15 +27,11 @@ FileHandler.prototype.parsingGraph = function(values, separator, update, callbac
 		nodes[nodeID].value = nodeID;
 		nodes[nodeID].initialValue = -1;
 		//Test if the line is readable (at least 2 elements) and if the user try to initiate an already initiated Neighborhood
-		/*let alreadyDefinedNeighborhood = (listOfNodes[nodeID] != undefined && listOfNodes[nodeID].listOfNeighbours.length != 0);
-		if(line.length < 2 || alreadyDefinedNeighborhood ){
-			if(i + 1 != lines.length && line.length < 2)
-				error = "".concat(error,"\nError at line " + (i+1) + ", there is not enough elements");
-			if(alreadyDefinedNeighborhood)
-				error = "".concat(error,"\nError at line " + (i+1) + ", you try to recreate a neighborhood of a node");
+		if(line.length != 2){
+			setError("".concat(error,"\nError at line " + (i+1) + ", there is not exactly two elements"));
 			now = Math.ceil(100/(lines.length - i));
 			continue;
-		}*/
+		}
 		for(let j = 1; j < line.length; j++){
 				let nodeIDbis = parseInt(line[j]);
 				nodes[nodeIDbis] = {};
@@ -49,6 +44,7 @@ FileHandler.prototype.parsingGraph = function(values, separator, update, callbac
 		update(now,"info");
 	}
 	update(now,"success");
+
 	callback(edges, nodes, edgesMessages);
 }
 

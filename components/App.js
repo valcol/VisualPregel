@@ -10,10 +10,12 @@ import CodeAreaDispatch from '../containers/CodeAreaDispatch';
 import CodeAreaAggregate from '../containers/CodeAreaAggregate';
 import Graph from '../containers/Graph';
 import Panel from '../containers/Panel';
+import ModuleError from '../containers/ModuleError';
 
 const App = () => {
   return (
     <Grid fluid>
+      <ModuleError/>
       <Row className="app-container no-padding no-margin">
           <SplitPane split="vertical" defaultSize="20%">
             <Panel/>

@@ -1,20 +1,23 @@
 import React, {Component} from 'react';
-import ToastMessage from 'node_modules.react-toastr';
+import {ToastMessage,ToastContainer} from 'react-toastr';
 
 const Alert = React.createFactory(ToastMessage.animation);
 
-const Message = ({ msg }) => {
-  return msg;
-};
 
-export default class ModuleError extends Component {
+class ModuleError extends Component {
 
-  addAlert() {
-    this.refs.container.danger(Message, {
-      closeButton: true
-    });
+  constructor(props) {
+    super(props);
   }
 
+  addAlert(error) {
+    this.refs.container.warning(error);
+  }
+
+
+  componentWillReceiveProps(nextProps) {
+    this.addAlert(nextProps.error);
+  }
 
   render() {
     return (
@@ -24,15 +27,10 @@ export default class ModuleError extends Component {
           ref="container"
           className="toast-top-right"
         />
-
-        <div className="btn-container">
-          <button className="primary" onClick={this.addAlert}>
-              Alert
-          </button>
-
-         </div>
         </div>
 
     );
   }
 }
+
+export default ModuleError;
