@@ -42,13 +42,13 @@ const edgesMessages = (state = {}, action) => {
   }
 };
 
-const initialize = (state = Helpers.functionToString(Pregel.initialize),
+const initialize = (state = Helpers.functionToString(Pregel.initializeBase),
   action) => {
   switch (action.type) {
     case 'SET_INITIALIZE_FUNCTION':
       return action.f;
     case 'RESET_INITIALIZE_FUNCTION':
-      return Helpers.functionToString(Pregel.initialize);
+      return Helpers.functionToString(Pregel.initializeBase);
     default:
       return state;
   }
@@ -65,25 +65,25 @@ const pregelMock = (state = {},
   }
 };
 
-const aggregate = (state = Helpers.functionToString(Pregel.aggregate),
+const aggregate = (state = Helpers.functionToString(Pregel.aggregateBase),
   action) => {
   switch (action.type) {
     case 'SET_AGGREGATE_FUNCTION':
       return action.f;
     case 'RESET_AGGREGATE_FUNCTION':
-      return Helpers.functionToString(Pregel.aggregate);
+      return Helpers.functionToString(Pregel.aggregateBaseBase);
     default:
       return state;
   }
 };
 
-const dispatch = (state = Helpers.functionToString(Pregel.dispatch),
+const dispatch = (state = Helpers.functionToString(Pregel.dispatchBase),
   action) => {
   switch (action.type) {
     case 'SET_DISPATCH_FUNCTION':
       return action.f;
     case 'RESET_DISPATCH_FUNCTION':
-      return Helpers.functionToString(Pregel.dispatch);
+      return Helpers.functionToString(Pregel.dispatchBase);
     default:
       return state;
   }

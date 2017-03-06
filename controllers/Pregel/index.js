@@ -1,14 +1,14 @@
 let Pregel = function() {};
 
-Pregel.prototype.initialize = function(id, attr, initialAttr) {
+Pregel.prototype.initializeBase = function(id, attr, initialAttr) {
   return [attr, initialAttr];
 };
 
-Pregel.prototype.dispatch = function(srcId, srcAttr, dstId, dstAttr) {
+Pregel.prototype.dispatchBase = function(srcId, srcAttr, dstId, dstAttr) {
   return srcAttr;
 };
 
-Pregel.prototype.aggregate = function(id, attr, messages) {
+Pregel.prototype.aggregateBase = function(id, attr, messages) {
   let current = attr;
   for (let message of messages) {
     if (message < attr)
