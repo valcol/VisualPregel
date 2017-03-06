@@ -12,4 +12,3 @@ pipelines:
           - npm install
           - npm install -g webpack
           - webpack
-          - npm run test

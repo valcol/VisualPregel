@@ -1,5 +1,5 @@
 import { Provider, connect } from 'react-redux';
-import { setUploadGraphSeparator, setUploadGraphFile, setUploadGraphBar, setNodes, resetUploadValues } from '../actions';
+import { setUploadGraphSeparator, setUploadGraphFile, setUploadGraphBar, setNodes, setEdges, setEdgesMessages, resetUploadValues } from '../actions';
 import FileHandler from '../controllers/FileHandler';
 import UploadBoxComponent from '../components/UploadBox';
 
@@ -14,7 +14,11 @@ const setGraphFromFile = (e) => {
         FileHandler.parsingGraph(this.result,
            getState().uploadGraph.separator,
            (percent, style) => {dispatch(setUploadGraphBar(style, percent))},
-           (graph) => {dispatch(setNodes(graph))}
+           (edges, nodes, edgesMessages) => {
+             dispatch(setEdges(edges));
+             dispatch(setNodes(nodes));
+             dispatch(setEdgesMessages(edgesMessages));
+           }
          );
       };
       reader.readAsText(file);

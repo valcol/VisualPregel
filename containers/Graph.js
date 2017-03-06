@@ -4,8 +4,9 @@ import { Provider, connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
   return {
+    edges: state.edges,
     nodes: state.nodes,
-    values: state.values
+    edgesMessages: state.edgesMessages
   };
 }
 

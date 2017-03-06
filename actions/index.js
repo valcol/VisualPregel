@@ -1,3 +1,10 @@
+export const setEdgesMessages = (edgesMessages) => {
+  return {
+    type: 'SET_EDGES_MESSAGES',
+    edgesMessages
+  };
+};
+
 export const setNodes = (nodes) => {
   return {
     type: 'SET_NODES',
@@ -11,10 +18,10 @@ export const setRandomNodes = () => {
   };
 };
 
-export const setValues = (values) => {
+export const setEdges = (edges) => {
   return {
-    type: 'SET_VALUES',
-    values
+    type: 'SET_EDGES',
+    edges
   };
 };
 

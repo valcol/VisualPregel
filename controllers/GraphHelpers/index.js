@@ -18,15 +18,13 @@ GraphHelpers.prototype.generateRandomGraph = function() {
 }
 
 
-GraphHelpers.prototype.getLayout = function(vertexSize, nodes){
+GraphHelpers.prototype.getLayout = function(vertexSize, edges){
   let g = new Dagre.graphlib.Graph();
   g.setGraph({});
-  for (let nodeID in nodes) {
-    g.setNode(nodeID, {width: vertexSize, height: vertexSize});
-  }
-  for (let nodeID in nodes){
-    for (let neighbourID of nodes[nodeID].listOfNeighbours)
-    g.setEdge(nodeID, neighbourID, {label:nodeID, width:10, height:10});
+  for (let edgeID in edges) {
+    g.setNode(edges[edgeID].from, {width: vertexSize, height: vertexSize});
+    g.setNode(edges[edgeID].to, {width: vertexSize, height: vertexSize});
+    g.setEdge(edges[edgeID].from, edges[edgeID].to, {label:'', width:10, height:10});
   }
   Dagre.layout(g);
 

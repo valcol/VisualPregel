@@ -11,7 +11,9 @@ let FileHandler = function() {
 
 FileHandler.prototype.parsingGraph = function(values, separator, update, callback){
 	let now = 0;
-	let listOfNodes = {};
+	let edges = {};
+	let nodes = {};
+	let edgesMessages = {};
 	update(now,"info");
 
 	//Parse the values content and create the graph
@@ -22,9 +24,9 @@ FileHandler.prototype.parsingGraph = function(values, separator, update, callbac
 	for(let i = 0; i < lines.length; i++){
 		line = lines[i].split(new RegExp(separator));
 		let nodeID = parseInt(line[0]);
-
+		nodes[nodeID] = nodeID;
 		//Test if the line is readable (at least 2 elements) and if the user try to initiate an already initiated Neighborhood
-		let alreadyDefinedNeighborhood = (listOfNodes[nodeID] != undefined && listOfNodes[nodeID].listOfNeighbours.length != 0);
+		/*let alreadyDefinedNeighborhood = (listOfNodes[nodeID] != undefined && listOfNodes[nodeID].listOfNeighbours.length != 0);
 		if(line.length < 2 || alreadyDefinedNeighborhood ){
 			if(i + 1 != lines.length && line.length < 2)
 				error = "".concat(error,"\nError at line " + (i+1) + ", there is not enough elements");
@@ -32,24 +34,18 @@ FileHandler.prototype.parsingGraph = function(values, separator, update, callbac
 				error = "".concat(error,"\nError at line " + (i+1) + ", you try to recreate a neighborhood of a node");
 			now = Math.ceil(100/(lines.length - i));
 			continue;
-		}
-
-		listOfNodes[nodeID] = {
-			listOfNeighbours: []
-		};
+		}*/
 		for(let j = 1; j < line.length; j++){
-			let neighbourID = parseInt(line[j]);
-			if(listOfNodes[neighbourID] == undefined)
-				listOfNodes[neighbourID] = {
-					listOfNeighbours: []
-				};
-			listOfNodes[nodeID].listOfNeighbours.push(neighbourID);
+				let nodeIDbis = parseInt(line[j]);
+				nodes[nodeIDbis] = nodeIDbis;
+				edges[i] = {from: nodeID, to:nodeIDbis};
+				edgesMessages[i] = '';
 		}
 		now = Math.ceil(100/(lines.length - i));
 		update(now,"info");
 	}
 	update(now,"success");
-	callback(listOfNodes);
+	callback(edges, nodes, edgesMessages);
 }
 
 /**
@@ -64,17 +60,17 @@ FileHandler.prototype.parsingValues = function(values, separator, update, callba
 	let now = 0;
 	let	lines = values.split("\n");
 	lines.pop();
-	let listOfNodes = {}
+	let nodes = {}
 	for(let i = 0; i < lines.length; i++) {
 		let line = lines[i].split(new RegExp(separator));
 		let nodeID = parseInt(line[0]);
-		listOfNodes[nodeID] = parseInt(line[1]);
+		nodes[nodeID] = parseInt(line[1]);
 		now = 100/(lines.length - i);
 		update(now,"info");
 	}
 	update(now,"success");
 	let id = 0;
-	callback(listOfNodes);
+	callback(nodes);
 }
 
 

@@ -3,7 +3,8 @@ import Helpers from '../controllers/Helpers';
 import Pregel from '../controllers/Pregel';
 import GraphHelpers from '../controllers/GraphHelpers';
 
-const nodes = (state = GraphHelpers.generateRandomGraph(), action) => {
+const nodes = (state = {}, action) => {
+  console.log('nods')
   switch (action.type) {
     case 'SET_NODES':
       return action.nodes;
@@ -14,10 +15,19 @@ const nodes = (state = GraphHelpers.generateRandomGraph(), action) => {
   }
 };
 
-const values = (state = {}, action) => {
+const edges = (state = {}, action) => {
   switch (action.type) {
-    case 'SET_VALUES':
-      return action.values;
+    case 'SET_EDGES':
+      return action.edges;
+    default:
+      return state;
+  }
+};
+
+const edgesMessages = (state = {}, action) => {
+  switch (action.type) {
+    case 'SET_EDGES_MESSAGES':
+      return action.edgesMessages;
     default:
       return state;
   }
@@ -137,7 +147,8 @@ const uploadValues = (state = {
 
 export default combineReducers({
   nodes,
-  values,
+  edges,
+  edgesMessages,
   initialize,
   aggregate,
   dispatch,

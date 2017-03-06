@@ -1,5 +1,5 @@
 import { Provider, connect } from 'react-redux';
-import { setUploadValuesSeparator, setUploadValuesFile, setUploadValuesBar, setValues, resetUploadValues } from '../actions';
+import { setUploadValuesSeparator, setUploadValuesFile, setUploadValuesBar, setNodes, resetUploadValues } from '../actions';
 import FileHandler from '../controllers/FileHandler';
 import UploadBoxComponent from '../components/UploadBox';
 
@@ -18,7 +18,7 @@ const setValuesFromFile = (e) => {
         FileHandler.parsingValues(this.result,
         getState().uploadValues.separator,
         (percent, style) => {dispatch(setUploadValuesBar(style, percent))},
-        (values) => {dispatch(setValues(values))});
+        (nodes) => {dispatch(setNodes(nodes))});
       };
       reader.readAsText(file);
     }

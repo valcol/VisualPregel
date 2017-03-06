@@ -29,17 +29,19 @@ class Graph extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (!this.fatum.isAnimating()) {
-      if (nextProps.nodes !== this.props.nodes) {
+      if (!this.fatum.isAnimating() && (nextProps.edges !== this.props.edges)) {
         this.fatum.clear();
-        this.updateGraph(nextProps.nodes);
-        this.fatum.animate();
-      } else if (nextProps.values !== this.props.values){
-        if (Object.keys(nextProps.values).length > 0)
-        this.updateNodesValues(nextProps.values);
+        this.updateEdges(nextProps.edges);
         this.fatum.animate();
       }
-    }
+      if (nextProps.nodes !== this.props.nodes){
+        this.updateNodesValues(nextProps.nodes);
+        this.fatum.refresh();
+      }
+      if (nextProps.edgesMessages !== this.props.edgesMessages){
+        this.updateEdgesValues(nextProps.edgesMessages);
+        this.fatum.refresh();
+      }
   }
 
   init() {
@@ -51,28 +53,39 @@ class Graph extends Component {
   //  Fatum.setCanvasSize(500, 500, true);
     this.fatum.layerOn(Fatum.MARKS | Fatum.TEXT | Fatum.CONNECTIONS);
     let vertices = [];
-    this.updateGraph(nodes);
+    this.updateEdges(this.props.edges);
+    this.updateNodesValues(this.props.nodes);
     this.fatum.animate();
   }
 
-  updateGraph(nodes) {
+  reset() {
+    this.fatum.clear();
     let fatumNodesLabels = {};
     let fatumNodes = {};
     let fatumEdgesLabels = {};
     let fatumEdges = {};
+    this.setState({fatumNodesLabels, fatumNodes, fatumEdgesLabels, fatumEdges});
+  }
 
-    let layout = GraphHelpers.getLayout(this.vertexSize, nodes);
+  updateEdges(edges) {
+    let fatumNodesLabels = {};
+    let fatumNodes = {};
+    let fatumEdgesLabels = {};
+    let fatumEdges = {};
+    this.layout = GraphHelpers.getLayout(this.vertexSize, edges);
 
-    for (let nodeID of layout.nodes()) {
-      fatumNodes[nodeID] = this.fatum.addMark().x(layout.node(nodeID).x).y(layout.node(nodeID).y).color(200, 100, 255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
-      fatumNodesLabels[nodeID] = this.fatum.addText().text('').x(layout.node(nodeID).x).y(layout.node(nodeID).y).textColor(0, 0, 0, 255).font(0).size(13);
-    }
-
-    for (let edge of layout.edges()) {
-      let edgeProps = layout.edge(edge);
-      let point = GraphHelpers.getMidpoint(layout.node(edge.v).x, layout.node(edge.w).x, layout.node(edge.v).y, layout.node(edge.w).y);
-      fatumEdges[edge] = this.fatum.addConnection(fatumNodes[edge.v], fatumNodes[edge.w]).sourceColor([0, 0, 0, 128]).targetColor([0, 0, 0, 128]);
-      fatumEdgesLabels[edge] = this.fatum.addText().text("2").x(edgeProps.x).y(edgeProps.y).textColor(0, 0, 0, 255).font(0).size(13);
+    for (let edge in edges) {
+      if (!(edges[edge].to in fatumNodes)) {
+        fatumNodes[edges[edge].to] = this.fatum.addMark().x(this.layout.node(edges[edge].to).x).y(this.layout.node(edges[edge].to).y).color(200, 100, 255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
+        fatumNodesLabels[edges[edge].to] = this.fatum.addText().text('').x(this.layout.node(edges[edge].to).x).y(this.layout.node(edges[edge].to).y).textColor(0, 0, 0, 255).font(0).size(13);
+      }
+      if (!(edges[edge].from in fatumNodes)) {
+        fatumNodes[edges[edge].from] = this.fatum.addMark().x(this.layout.node(edges[edge].from).x).y(this.layout.node(edges[edge].from).y).color(200, 100, 255).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
+        fatumNodesLabels[edges[edge].from] = this.fatum.addText().text('').x(this.layout.node(edges[edge].from).x).y(this.layout.node(edges[edge].from).y).textColor(0, 0, 0, 255).font(0).size(13);
+      }
+      let point = GraphHelpers.getMidpoint(this.layout.node(edges[edge].from).x, this.layout.node(edges[edge].to).x, this.layout.node(edges[edge].from).y, this.layout.node(edges[edge].to).y);
+      fatumEdges[edge] = this.fatum.addConnection(fatumNodes[edges[edge].from], fatumNodes[edges[edge].to]).sourceColor([0, 0, 0, 128]).targetColor([0, 0, 0, 128]);
+      fatumEdgesLabels[edge] = this.fatum.addText().text('').x(point.x).y(point.y).textColor(0, 0, 0, 255).font(0).size(13);
     }
 
     this.fatum.camera().zoom(1, [0, 0]);
@@ -85,19 +98,22 @@ class Graph extends Component {
     for (let node in values) {
       if (values.hasOwnProperty(node)) {
         if (fatumNodesLabels.hasOwnProperty(node))
-        fatumNodesLabels[node].text(values[node].toString());
+          fatumNodesLabels[node].text(JSON.stringify(values[node]));
       }
     }
   }
 
   updateEdgesValues(values){
     let fatumEdgesLabels = this.state.fatumEdgesLabels;
-    for (let node in values) {
-      if (values.hasOwnProperty(node)) {
-        if (fatumEdgesLabels.hasOwnProperty(node))
-        listOfGraphLabels[node].text(values[node].toString());
+    for (let edge in values) {
+      let point = GraphHelpers.getMidpoint(this.layout.node(this.props.edges[edge].from).x, this.layout.node(this.props.edges[edge].to).x,
+      this.layout.node(this.props.edges[edge].from).y, this.layout.node(this.props.edges[edge].to).y);
+      if (values.hasOwnProperty(edge)) {
+        if (fatumEdgesLabels.hasOwnProperty(edge))
+          fatumEdgesLabels[edge].text(JSON.stringify(values[edge]));
       }
     }
+    this.fatum.refresh();
   }
 
 
