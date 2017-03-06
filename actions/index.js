@@ -1,3 +1,12 @@
+export const setError = (error) => {
+  
+  return {
+    type: 'SET_ERROR',
+    error
+  };
+};
+
+
 export const setEdgesMessages = (edgesMessages) => {
   return {
     type: 'SET_EDGES_MESSAGES',

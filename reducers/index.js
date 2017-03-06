@@ -3,6 +3,15 @@ import Helpers from '../controllers/Helpers';
 import Pregel from '../controllers/Pregel';
 import GraphHelpers from '../controllers/GraphHelpers';
 
+const error = (state = "", action) => {
+  switch (action.type) {
+    case 'SET_ERROR':
+      return action.error;
+    default:
+      return state;
+  }
+};
+
 const nodes = (state = {}, action) => {
   console.log('nods')
   switch (action.type) {
@@ -146,6 +155,7 @@ const uploadValues = (state = {
 };
 
 export default combineReducers({
+  error,
   nodes,
   edges,
   edgesMessages,
