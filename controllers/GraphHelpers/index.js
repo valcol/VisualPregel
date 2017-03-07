@@ -14,7 +14,26 @@ GraphHelpers.prototype.generateRandomGraph = function() {
     }
     nodes[i] = {listOfNeighbours};
   }
-  return nodes;
+
+  let myN = {};
+
+  myN.nodes = {
+    '1': { value: 1, initialValue: -1},
+    '2': { value: 2, initialValue: -1},
+    '3': { value: 3, initialValue: -1},
+    '4': { value: 4, initialValue: -1}
+  };
+
+  myN.edges = {
+    1: {from: 1, to: 2},
+    2: { from: 2, to: 3},
+    3: { from: 3, to: 4},
+    4: { from: 4, to: 1}
+  };
+
+  myN.edgesMessages = {};
+
+  return myN;
 }
 
 
