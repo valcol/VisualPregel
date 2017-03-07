@@ -105,7 +105,7 @@ describe('parsingValues()',function(){
   });
 });
 
-//
+
 describe('dispatchBase()',function(){
     let srcId = 1 , srcAttr = 10 ;
     it('test dispatchBase function [Pregel]', function () {
@@ -115,10 +115,12 @@ describe('dispatchBase()',function(){
     });
 });
 
-/*
-describe('aggregate()',function(){
-    it('', function () {
 
+describe('aggregateBase()',function(){
+    let id=1, attr=5, messages = [1,2,3,5,6];
+    it('test aggregateBase function [Pregel]', function () {
+        let aggregate = Pregel.aggregateBase(id, attr, messages);
+        let result = 3;
+        assert.equal(aggregate,result);
     });
 });
-*/
