@@ -89,10 +89,10 @@ describe('parsingValues()',function(){
     '8': { listOfNeighbours: [ 4, 5 ], value: '' }
   };
   let nodesFinal = {
-    '1': 2,
-    '2': 5,
-    '4': 2,
-    '7': 1
+    '1': {initialValue: -1, value: 2},
+    '2': {initialValue: -1, value: 5},
+    '4': {initialValue: -1, value: 2},
+    '7': {initialValue: -1, value: 1}
     };
   it('should parse a CSV file and output a values object',function(){
     let update = function(val1, val2) {};
