@@ -1,3 +1,5 @@
+'use strict';
+
 let path = require('path');
 
 let BUILD_DIR = path.resolve(__dirname, 'public');
@@ -16,15 +18,12 @@ let config = {
       {
         test : /\.js?$/,
         include : [APP_CONTAINERS, APP_COMPONENTS],
-        loader : 'babel-loader',
-        query : {
-          presets: ["es2015", "react"],
-        }
+        loader : 'babel-loader'
       },
       {
         test : /\.js?$/,
         include : [APP_CONTROLLERS],
-        loader : 'babel-loader',
+        loader : 'babel-loader?babelrc=false',
         query : {
           plugins: ["transform-async-to-generator"]
         }
