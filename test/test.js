@@ -76,31 +76,6 @@ describe('parsingGraph()',function(){
       (n,m,x) => {assert.deepEqual(m, nodesFinal);} , callback
     );
   });
-
-// TO CONTINUE
-    /*
-    values = "8,4,7\n7,1\n1,2\n2,5\n1,8\n7,5\n";
-    nodesFinal = {
-        '1': { value: 1, initialValue: -1 },
-        '2': { value: 2, initialValue: -1 },
-        '4': { value: 4, initialValue: -1 },
-        '5': { value: 5, initialValue: -1 },
-        '7': { value: 7, initialValue: -1 },
-        '8': { value: 8, initialValue: -1 }
-    };
-    let count = 0;
-    it('should test number ',function(){
-        let update = function(val1,val2){};
-        let setError= function(val1,val2){
-            count++;
-        };
-        console.log(count);
-        FileHandler.parsingGraph(values, ',', update,
-            (n,m,x) => {assert.deepEqual(m, nodesFinal);} , setError
-        );
-    });
-*/
-
 });
 
 // parsing test of fileToGraph function.
@@ -131,10 +106,10 @@ describe('parsingValues()',function(){
 });
 
 //
-describe('dispatch()',function(){
+describe('dispatchBase()',function(){
     let srcId = 1 , srcAttr = 10 ;
-    it('test dispatch function', function () {
-        let dispatch = Pregel.dispatch(srcId,srcAttr);
+    it('test dispatchBase function [Pregel]', function () {
+        let dispatch = Pregel.dispatchBase(srcId,srcAttr);
         let result = 10;
        assert.equal(dispatch,result);
     });
