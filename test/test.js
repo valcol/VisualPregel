@@ -105,6 +105,15 @@ describe('parsingValues()',function(){
   });
 });
 
+describe('initializeBase()',function(){
+    let srcId = 1 , attr = 1, srcAttr = 10 ;
+    it('test initializeBase function [Pregel]', function () {
+      let initialize = Pregel.initializeBase(srcId,attr,srcAttr);
+      let result = [1,10];
+      assert.deepEqual(initialize,result);
+    });
+});
+
 
 describe('dispatchBase()',function(){
     let srcId = 1 , srcAttr = 10 ;
