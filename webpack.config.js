@@ -1,10 +1,11 @@
-var path = require('path');
+let path = require('path');
 
-var BUILD_DIR = path.resolve(__dirname, 'public');
-var APP_CONTAINERS = path.resolve(__dirname, 'containers');
-var APP_COMPONENTS = path.resolve(__dirname, 'components');
+let BUILD_DIR = path.resolve(__dirname, 'public');
+let APP_CONTAINERS = path.resolve(__dirname, 'containers');
+let APP_COMPONENTS = path.resolve(__dirname, 'components');
+let APP_CONTROLLERS = path.resolve(__dirname, 'controllers');
 
-var config = {
+let config = {
   entry: ["babel-polyfill", APP_CONTAINERS + '/index.js'],
   output: {
     path: BUILD_DIR,
@@ -15,7 +16,18 @@ var config = {
       {
         test : /\.js?$/,
         include : [APP_CONTAINERS, APP_COMPONENTS],
-        loader : 'babel-loader'
+        loader : 'babel-loader',
+        query : {
+          presets: ["es2015", "react"],
+        }
+      },
+      {
+        test : /\.js?$/,
+        include : [APP_CONTROLLERS],
+        loader : 'babel-loader',
+        query : {
+          plugins: ["transform-async-to-generator"]
+        }
       },
       {
         test : /\.less?/,
