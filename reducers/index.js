@@ -17,8 +17,6 @@ const nodes = (state = {}, action) => {
   switch (action.type) {
     case 'SET_NODES':
       return action.nodes;
-    case 'SET_RANDOM_NODES':
-      return GraphHelpers.generateRandomGraph();
     default:
       return state;
   }
