@@ -54,17 +54,6 @@ const initialize = (state = Helpers.functionToString(Pregel.initializeBase),
   }
 };
 
-const pregelMock = (state = {},
-  action) => {
-  switch (action.type) {
-    case 'SET_PREGEL_MOCK_FUNCTION':
-      Pregel.pregelMock();
-      return state;
-    default:
-      return state;
-  }
-};
-
 const aggregate = (state = Helpers.functionToString(Pregel.aggregateBase),
   action) => {
   switch (action.type) {
@@ -163,6 +152,5 @@ export default combineReducers({
   aggregate,
   dispatch,
   uploadGraph,
-  uploadValues,
-  pregelMock
+  uploadValues
 });

@@ -1,5 +1,5 @@
 export const setError = (error) => {
-  
+
   return {
     type: 'SET_ERROR',
     error
@@ -38,12 +38,6 @@ export const setInitializeFunction = (f) => {
   return {
     type: 'SET_INITIALIZE_FUNCTION',
     f
-  };
-};
-
-export const setPregelMockFunction = () => {
-  return {
-    type: 'SET_PREGEL_MOCK_FUNCTION'
   };
 };
 

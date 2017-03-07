@@ -7,7 +7,7 @@ const FileSelector = ({label, handleUpload, file}) => {
     <FormGroup>
       <ControlLabel>{label}</ControlLabel>
       <input ref={(input) => { fileInput = input; }} type="file" style={{display:'none'}}
-        accept='.csv,.txt' onChange={handleUpload}/>
+        accept='.csv,.txt' onChange={handleUpload} onClick={(event)=> {event.target.value = null}}/>
       <InputGroup>
         <InputGroup.Addon>Select file :</InputGroup.Addon>
         <FormControl type="text" value={file} onClick={() => { fileInput.click() }}/>
