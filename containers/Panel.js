@@ -1,5 +1,5 @@
 import PanelCommponent from '../components/Panel';
-import { setRandomNodes, setPregelMockFunction, setNodes, setEdgesMessages, setEdges } from '../actions';
+import { setRandomNodes, setPregelMockFunction, setNodes, setEdgesMessages, initGraph } from '../actions';
 import { Provider, connect } from 'react-redux';
 import Pregel from '../controllers/Pregel';
 import Helpers from '../controllers/Helpers';
@@ -20,9 +20,7 @@ const pregel = (e) => {
 const setRandomGraph = () => {
   return (dispatch) => {
     let rn = GraphHelper.generateRandomGraph();
-    dispatch(setNodes(rn.nodes));
-    dispatch(setEdges(rn.edges));
-    dispatch(setEdgesMessages(rn.edgesMessages));
+    dispatch(initGraph(rn));
   };
 };
 
