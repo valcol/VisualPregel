@@ -12,7 +12,8 @@ const pregel = (e) => {
     Pregel.dispatch = Helpers.stringToFunction(getState().dispatch);
     Pregel.start(getState().graph.edges, getState().graph.nodes,
     (nodes) => {dispatch(setNodes(nodes))},
-    (edgesMessages) => {dispatch(setEdgesMessages(edgesMessages))});
+    (edgesMessages) => {dispatch(setEdgesMessages(edgesMessages))},
+    1000);
   };
 }
 
