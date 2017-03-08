@@ -12,8 +12,6 @@ let FileHandler = function() {
 FileHandler.prototype.parsingGraph = function(values, separator, update, callback, setError){
 	let now = 0;
 	let edges = {};
-	let nodes = {};
-	let edgesMessages = {};
 	update(now,"info");
 	//Parse the values content and create the graph
 	let error = "";
@@ -22,23 +20,16 @@ FileHandler.prototype.parsingGraph = function(values, separator, update, callbac
 	lines = values.split("\n");
 	for(let i = 0; i < lines.length; i++){
 		line = lines[i].split(new RegExp(separator));
-		let nodeID = parseInt(line[0]);
-		nodes[nodeID] = {};
-		nodes[nodeID].value = nodeID;
-		nodes[nodeID].initialValue = -1;
 		//Test if the line is readable (at least 2 elements) and if the user try to initiate an already initiated Neighborhood
 		if(line.length != 2){
 			setError("".concat(error,"\nError at line " + (i+1) + ", there is not exactly two elements"));
 			now = Math.ceil(100/(lines.length - i));
 			continue;
 		}
+		let nodeID = parseInt(line[0]);
 		for(let j = 1; j < line.length; j++){
 				let nodeIDbis = parseInt(line[j]);
-				nodes[nodeIDbis] = {};
-				nodes[nodeIDbis].value = nodeIDbis;
-				nodes[nodeIDbis].initialValue = -1;
 				edges[i] = {from: nodeID, to:nodeIDbis};
-				edgesMessages[i] = '';
 		}
 		now = Math.ceil(100/(lines.length - i));
 		update(now,"info");
