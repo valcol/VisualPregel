@@ -8,8 +8,8 @@ const setValuesFromFile = (e) => {
     let file = e.target.files[0];
     if (file) {
       dispatch(setUploadValuesFile(file.name.split(/(\\|\/)/g).pop()));
-      if(Object.keys(getState().nodes).length === 0) {
-        alert("There is no graph to initiate.");
+      if(Object.keys(getState().graph.edges).length === 0) {
+        dispatch(setError(("There is no graph to initiate.")));
         dispatch(resetUploadValues());
         return;
       }
