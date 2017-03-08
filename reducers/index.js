@@ -65,39 +65,6 @@ const graph = (state = {
   }
 };
 
-const nodes = (state = {}, action) => {
-  switch (action.type) {
-    case 'SET_NODES':
-      return action.nodes;
-    case 'INIT_GRAPH':
-      return action.nodes;
-    default:
-      return state;
-  }
-};
-
-const edges = (state = {}, action) => {
-  switch (action.type) {
-    case 'SET_EDGES':
-      return action.edges;
-    case 'INIT_GRAPH':
-      return action.edges;
-    default:
-      return state;
-  }
-};
-
-const edgesMessages = (state = {}, action) => {
-  switch (action.type) {
-    case 'SET_EDGES_MESSAGES':
-      return action.edgesMessages;
-    case 'INIT_GRAPH':
-      return action.edgesMessages;
-    default:
-      return state;
-  }
-};
-
 const initialize = (state = Helpers.functionToString(Pregel.initializeBase),
   action) => {
   switch (action.type) {

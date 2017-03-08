@@ -51,8 +51,6 @@ class Graph extends Component {
           this.fatum.refresh();
         }
         if (nextProps.graph.id.edgesMessages != this.props.graph.id.edgesMessages){
-                  console.log('valuesEdge');
-                  console.log(nextProps.graph.edgesMessages);
           this.updateEdgesValues(nextProps.graph.edgesMessages);
           this.fatum.refresh();
         }
