@@ -122,6 +122,16 @@ describe('parsingValues()',function(){
   });
 });
 
+
+describe('dispatchBase()',function(){
+    let srcId = 1 , srcAttr = 10 ;
+    it('test dispatch function [Pregel]', function () {
+        let dispatch = Pregel.dispatchBase(srcId,srcAttr);
+        let result = 10;
+       assert.equal(dispatch,result);
+    });
+});
+
 describe('initializeBase()',function(){
     let srcId = 1 , attr = 1, srcAttr = 10 ;
     it('test initializeBase function [Pregel]', function () {
@@ -130,17 +140,6 @@ describe('initializeBase()',function(){
       assert.deepEqual(initialize,result);
     });
 });
-
-
-describe('dispatchBase()',function(){
-    let srcId = 1 , srcAttr = 10 ;
-    it('test dispatchBase function [Pregel]', function () {
-        let dispatch = Pregel.dispatchBase(srcId,srcAttr);
-        let result = 10;
-       assert.equal(dispatch,result);
-    });
-});
-
 
 describe('aggregateBase()',function(){
     let id=1, attr=5, messages = [1,2,3,5,6];
