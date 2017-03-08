@@ -23,8 +23,9 @@ let config = {
       {
         test : /\.js?$/,
         include : [APP_CONTROLLERS],
-        loader : 'babel-loader?babelrc=false',
+        loader : 'babel-loader',
         query : {
+          babelrc: false,
           plugins: ["transform-async-to-generator"]
         }
       },

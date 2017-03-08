@@ -131,10 +131,10 @@ describe('parsingValues()',function(){
 });
 
 //
-describe('dispatch()',function(){
+describe('dispatchBase()',function(){
     let srcId = 1 , srcAttr = 10 ;
     it('test dispatch function', function () {
-        let dispatch = Pregel.dispatch(srcId,srcAttr);
+        let dispatch = Pregel.dispatchBase(srcId,srcAttr);
         let result = 10;
        assert.equal(dispatch,result);
     });
