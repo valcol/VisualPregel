@@ -37,7 +37,8 @@ describe('parsingGraph()',function(){
 
   it('should parse a CSV file and output a graph object in the best case',function(){
     let update = function(val1,val2){};
-    let callback = function(val1,val2){};
+    let callback = function(val1,val2){
+    };
     FileHandler.parsingGraph(values, ',', update,
       (n,m,x) => {assert.deepEqual(m, nodesFinal);} , callback
     );
@@ -71,11 +72,27 @@ describe('parsingGraph()',function(){
   };
   it('should parse a CSV file and output a graph object with redefinition of a node\'s neighborhood',function(){
     let update = function(val1,val2){};
-    let callback = function(val1,val2){};
+    let callback = function(val1,val2){
+    };
     FileHandler.parsingGraph(values, ',', update,
       (n,m,x) => {assert.deepEqual(m, nodesFinal);} , callback
     );
   });
+
+    let valuesWithErrors = "8,4,8\n7,1,3\n1,2,5\n2,5\n1,8\n7,5";
+    it('test the error handler function',function(){
+        let update = function(val1,val2){};
+        var count = 0;
+        let numberOfErrors = 3;
+        let setError = function(val1,val2){
+            count ++;
+        };
+        FileHandler.parsingGraph(valuesWithErrors, ',', update,
+            (n,m,x) => {} , setError
+        );
+        assert.equal(count,numberOfErrors);
+    });
+
 });
 
 // parsing test of fileToGraph function.
