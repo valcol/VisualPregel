@@ -1,6 +1,7 @@
 import GraphCommponent from '../components/Graph';
-import { setRandomNodes } from '../actions';
+import { initGraph } from '../actions';
 import { Provider, connect } from 'react-redux';
+import GraphHelper from '../controllers/GraphHelpers';
 
 const mapStateToProps = (state) => {
   return {
@@ -8,8 +9,25 @@ const mapStateToProps = (state) => {
   };
 }
 
+const setRandomGraph = () => {
+  return (dispatch) => {
+    console.log('concon');
+    let rn = GraphHelper.generateRandomGraph();
+    dispatch(initGraph(rn));
+  };
+};
+
+const mapDispatchToProps = (dispatch, ownProps) => {
+  return {
+    setRandomNodes: () => {
+      dispatch(setRandomGraph());
+    }
+  };
+}
+
 const Graph = connect(
-  mapStateToProps
+  mapStateToProps,
+  mapDispatchToProps
 )(GraphCommponent);
 
 export default Graph;

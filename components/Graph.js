@@ -33,7 +33,7 @@ class Graph extends Component {
       if ((nextProps.graph.id.edges != this.props.graph.id.edges)) {
         //console.log(nextProps.graph.id.edges +' : '+ this.props.graph.id.edges)
       //  console.log('edges');
-        //console.log(nextProps.graph.nodes);
+        console.log(nextProps.graph.nodes);
         this.reset();
         this.updateEdges(nextProps.graph.edges).then(() => {
           this.updateNodesValues(nextProps.graph.nodes);
@@ -65,10 +65,7 @@ class Graph extends Component {
     Fatum.setMouseMoveHandler(canvas, this.fatum);
   //  Fatum.setCanvasSize(500, 500, true);
     this.fatum.layerOn(Fatum.MARKS | Fatum.TEXT | Fatum.CONNECTIONS);
-    let vertices = [];
-    this.updateEdges(this.props.edges);
-    this.updateNodesValues(this.props.nodes);
-    this.fatum.animate();
+    this.props.setRandomNodes();
   }
 
   reset() {
