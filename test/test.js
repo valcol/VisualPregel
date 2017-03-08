@@ -26,13 +26,11 @@ describe('functionToString()', function () {
 // parsing test of fileToGraph function.
 describe('parsingGraph()',function(){
   let values = "8,4\n7,1\n1,2\n2,5";
-  let nodesFinal = {
-      '1': { value: 1, initialValue: -1 },
-      '2': { value: 2, initialValue: -1 },
-      '4': { value: 4, initialValue: -1 },
-      '5': { value: 5, initialValue: -1 },
-      '7': { value: 7, initialValue: -1 },
-      '8': { value: 8, initialValue: -1 }
+  let edges = {
+    '0': { from: 8, to: 4 },
+    '1': { from: 7, to: 1 },
+    '2': { from: 1, to: 2 },
+    '3': { from: 2, to: 5 }
   };
 
   it('should parse a CSV file and output a graph object in the best case',function(){
@@ -40,42 +38,41 @@ describe('parsingGraph()',function(){
     let callback = function(val1,val2){
     };
     FileHandler.parsingGraph(values, ',', update,
-      (n,m,x) => {assert.deepEqual(m, nodesFinal);} , callback
+      (e) => {assert.deepEqual(e, edges);}, callback
     );
   });
 
   values = "8,4\n\n1\n1,2\n2,5\n\n1";
-  nodesFinal = {
-      '1': { value: 1, initialValue: -1 },
-      '2': { value: 2, initialValue: -1 },
-      '4': { value: 4, initialValue: -1 },
-      '5': { value: 5, initialValue: -1 },
-      '8': { value: 8, initialValue: -1 }
+  edges = {
+    '0': { from: 8, to: 4 },
+    '1': { from: 7, to: 1 },
+    '2': { from: 1, to: 2 },
+    '3': { from: 2, to: 5 }
   };
   it('should parse a CSV file and output a graph object with mistakes',function(){
     let update = function(val1,val2){};
     let callback = function(val1,val2){
     };
     FileHandler.parsingGraph(values, ',', update,
-      (n,m,x) => {assert.deepEqual(m, nodesFinal);} , callback
+      (e) => {assert.deepEqual(e, edges);} , callback
     );
   });
 
   values = "8,4\n7,1\n1,2\n2,5\n1,8\n7,5";
-  nodesFinal = {
-      '1': { value: 1, initialValue: -1 },
-      '2': { value: 2, initialValue: -1 },
-      '4': { value: 4, initialValue: -1 },
-      '5': { value: 5, initialValue: -1 },
-      '7': { value: 7, initialValue: -1 },
-      '8': { value: 8, initialValue: -1 }
+  edges = {
+    '0': { from: 8, to: 4 },
+    '1': { from: 7, to: 1 },
+    '2': { from: 1, to: 2 },
+    '3': { from: 2, to: 5 },
+    '4': { from: 1, to: 8 },
+    '5': { from: 7, to: 5 },
   };
   it('should parse a CSV file and output a graph object with redefinition of a node\'s neighborhood',function(){
     let update = function(val1,val2){};
     let callback = function(val1,val2){
     };
     FileHandler.parsingGraph(values, ',', update,
-      (n,m,x) => {assert.deepEqual(m, nodesFinal);} , callback
+      (e) => {assert.deepEqual(e, edges);}, callback
     );
   });
 });
