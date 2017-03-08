@@ -28,8 +28,9 @@ const graph = (state = {
       id = Object.assign({}, state.id, {
         nodes: Helpers.generateId()
       });
+      let nodes = Object.assign({}, state.nodes, action.nodes);
       return Object.assign({}, state, {
-        nodes: action.nodes,
+        nodes,
         id
       });
     case 'SET_EDGES':
