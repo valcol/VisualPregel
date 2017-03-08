@@ -12,10 +12,64 @@ const error = (state = "", action) => {
   }
 };
 
-const nodes = (state = {}, action) => {
-  console.log('nods')
+const graph = (state = {
+  nodes : {},
+  edges: {},
+  edgesMessages: {},
+  id: {
+    nodes: 0,
+    edges: 0,
+    edgesMessages: 0
+  }
+}, action) => {
+  let id;
   switch (action.type) {
     case 'SET_NODES':
+      id = Object.assign({}, state.id, {
+        nodes: Helpers.generateId()
+      });
+      return Object.assign({}, state, {
+        nodes: action.nodes,
+        id
+      });
+    case 'SET_EDGES':
+      id = Object.assign({}, state.id, {
+        edges: Helpers.generateId()
+      });
+      return Object.assign({}, state, {
+        edges: action.edges,
+        id
+      });
+    case 'SET_EDGES_MESSAGES':
+      id = Object.assign({}, state.id, {
+        edgesMessages: Helpers.generateId()
+      });
+      return Object.assign({}, state, {
+        edgesMessages: action.edgesMessages,
+        id
+      });
+    case 'INIT_GRAPH':
+      id = Object.assign({}, state.id, {
+        edges: Helpers.generateId(),
+        nodes: Helpers.generateId(),
+        edgesMessages: Helpers.generateId()
+      });
+      return {
+        nodes: action.nodes,
+        edges: action.edges,
+        edgesMessages: action.edgesMessages,
+        id
+      };
+    default:
+      return state;
+  }
+};
+
+const nodes = (state = {}, action) => {
+  switch (action.type) {
+    case 'SET_NODES':
+      return action.nodes;
+    case 'INIT_GRAPH':
       return action.nodes;
     default:
       return state;
@@ -26,6 +80,8 @@ const edges = (state = {}, action) => {
   switch (action.type) {
     case 'SET_EDGES':
       return action.edges;
+    case 'INIT_GRAPH':
+      return action.edges;
     default:
       return state;
   }
@@ -34,6 +90,8 @@ const edges = (state = {}, action) => {
 const edgesMessages = (state = {}, action) => {
   switch (action.type) {
     case 'SET_EDGES_MESSAGES':
+      return action.edgesMessages;
+    case 'INIT_GRAPH':
       return action.edgesMessages;
     default:
       return state;
@@ -145,6 +203,7 @@ export default combineReducers({
   error,
   nodes,
   edges,
+  graph,
   edgesMessages,
   initialize,
   aggregate,

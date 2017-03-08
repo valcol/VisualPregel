@@ -45,7 +45,7 @@ FileHandler.prototype.parsingGraph = function(values, separator, update, callbac
 	}
 	update(now,"success");
 
-	callback(edges, nodes, edgesMessages);
+	callback(edges);
 }
 
 /**

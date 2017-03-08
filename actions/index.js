@@ -1,11 +1,33 @@
 export const setError = (error) => {
-
   return {
     type: 'SET_ERROR',
     error
   };
 };
 
+export const initGraph = (edges) => {
+  let edgesMessages = {};
+  let nodes = {};
+  for (let edge in edges) {
+    let edgeObject = edges[edge];
+    if (!(edgeObject.from in nodes)) {
+      nodes[edgeObject.from] = {};
+      nodes[edgeObject.from].value = parseInt(edgeObject.from);
+      nodes[edgeObject.from].initialValue = -1;
+    }
+    if (!(edgeObject.to in nodes)) {
+      nodes[edgeObject.to] = {};
+      nodes[edgeObject.to].value = parseInt(edgeObject.to);
+      nodes[edgeObject.to].initialValue = -1;
+    }
+  }
+  return {
+    type: 'INIT_GRAPH',
+    edgesMessages,
+    edges,
+    nodes
+  };
+};
 
 export const setEdgesMessages = (edgesMessages) => {
   return {
