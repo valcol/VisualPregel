@@ -27,7 +27,9 @@ function sleep(ms) {
  *Each node will count his neighbour's value attribute as long as a number of iteration
  *is not reached
  */
-async function start(edges, nodes, setNodes, setEdgesMessages) {
+
+
+Pregel.prototype.start = async function(edges, nodes, setNodes, setEdgesMessages) {
   let maxIterations = 15;
   let newNodes = {};
 
