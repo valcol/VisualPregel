@@ -168,10 +168,7 @@ const uploadValues = (state = {
 
 export default combineReducers({
   error,
-  nodes,
-  edges,
   graph,
-  edgesMessages,
   initialize,
   aggregate,
   dispatch,
