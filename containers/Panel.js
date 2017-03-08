@@ -12,7 +12,8 @@ const pregel = (e) => {
     Pregel.dispatch = Helpers.stringToFunction(getState().dispatch);
     Pregel.start(getState().edges, getState().nodes,
     (nodes) => {dispatch(setNodes(nodes))},
-    (edgesMessages) => {dispatch(setEdgesMessages(edgesMessages))});
+    (edgesMessages) => {dispatch(setEdgesMessages(edgesMessages))},
+    1000);
   };
 }
 
@@ -22,7 +23,7 @@ const setRandomGraph = () => {
     dispatch(setNodes(rn.nodes));
     dispatch(setEdges(rn.edges));
     dispatch(setEdgesMessages(rn.edgesMessages));
-  }; 
+  };
 };
 
 const mapDispatchToProps = (dispatch, ownProps) => {

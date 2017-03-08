@@ -29,17 +29,18 @@ function sleep(ms) {
  */
 
 
-Pregel.prototype.start = async function(edges, nodes, setNodes, setEdgesMessages) {
+Pregel.prototype.start = async function(edges, nodes, setNodes, setEdgesMessages, waitingTime) {
   let maxIterations = 15;
   let newNodes = {};
 
 
   for (let node in nodes){
     let values = this.initialize(node, nodes[node].value, nodes[node].initialValue);
-    newNodes[node] = {value: values[0], initialValue: values[1]};
+    newNodes[node] = {initialValue: values[1], value: values[0]};
   }
   setNodes(newNodes);
-  await sleep(1000);
+  if(waitingTime != 0)
+    await sleep(waitingTime);
   while ((maxIterations !== 0)) {
     let messages = {};
     let newNodes2 = {};
@@ -56,7 +57,8 @@ Pregel.prototype.start = async function(edges, nodes, setNodes, setEdgesMessages
       }
     }
     setEdgesMessages(newEdgesMessages);
-    await sleep(1000);
+    if(waitingTime != 0)
+      await sleep(waitingTime);
     for (let node in nodes){
       if ((node in messages)) {
         newNodes2[node] = {};
@@ -70,7 +72,8 @@ Pregel.prototype.start = async function(edges, nodes, setNodes, setEdgesMessages
       }
     }
     setNodes(newNodes2);
-    await sleep(1000);
+    if(waitingTime != 0)
+      await sleep(waitingTime);
     newNodes = newNodes2;
 
     if (Object.keys(messages).length > 0)

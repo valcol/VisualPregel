@@ -99,15 +99,6 @@ describe('setError()',function(){
 // parsing test of fileToGraph function.
 describe('parsingValues()',function(){
   let values= "1,2\n7,1\n4,2\n2,5\n";
-  let nodes = {
-    '1': { listOfNeighbours: [ 2, 3 ], value: ''},
-    '2': { listOfNeighbours: [ 5, 4 ], value: '' },
-    '3': { listOfNeighbours: [], value: '' },
-    '4': { listOfNeighbours: [], value: '' },
-    '5': { listOfNeighbours: [], value: '' },
-    '7': { listOfNeighbours: [ 1, 2 ], value: '' },
-    '8': { listOfNeighbours: [ 4, 5 ], value: '' }
-  };
   let nodesFinal = {
     '1': {initialValue: -1, value: 2},
     '2': {initialValue: -1, value: 5},
@@ -148,5 +139,59 @@ describe('aggregateBase()',function(){
         let aggregate = Pregel.aggregateBase(id, attr, messages);
         let result = 3;
         assert.equal(aggregate,result);
+    });
+});
+
+describe('Pregel.start()',function(){
+
+    Pregel.initialize = Pregel.initializeBase;
+    Pregel.aggregate = Pregel.aggregateBase;
+    Pregel.dispatch = Pregel.dispatchBase;
+
+    let setNodesCalls = [];
+    let count = 0;
+    let setEMCalls = [];
+    let nodes = {
+      '1': { initialValue: -1 , value: 1 },
+      '2': { initialValue: -1 , value: 2 },
+      '3': { initialValue: -1 , value: 3 },
+      '4': { initialValue: -1 , value: 4 }
+    };
+    let edges = {
+      '1': { from: 1 , to: 2},
+      '2': { from: 2 , to: 3 },
+      '3': { from: 3 , to: 2 },
+      '4': { from: 4 , to: 1 },
+      '5': { from: 1 , to: 3 }
+    };
+    let expectedNodes = [ { '1': { initialValue: -1, value : 1 },
+                            '2': { initialValue: -1, value : 2 },
+                            '3': { initialValue: -1, value : 3 },
+                            '4': { initialValue: -1, value : 4 }},
+                          { '1': { initialValue: 1 , value : 1 },
+                            '2': { initialValue: 2 , value : 1 },
+                            '3': { initialValue: 3 , value : 1 },
+                            '4': { initialValue: 4 , value : 4 }},
+                          { '1': { initialValue: 1 , value : 1 },
+                            '2': { initialValue: 1 , value : 1 },
+                            '3': { initialValue: 1 , value : 1 },
+                            '4': { initialValue: 4 , value : 4 }},
+                          { '1': { initialValue: 1 , value : 1 },
+                            '2': { initialValue: 1 , value : 1 },
+                            '3': { initialValue: 1 , value : 1 },
+                            '4': { initialValue: 4 , value : 4 }}];
+    let expectedMessages = [{ '1' : 1, '2' : 2, 3 : 3, '4' : 4, '5' : 1},
+                            { '2' : 1, '3' : 1},
+                            {}];
+    let setNodes  = function(nodes){
+        setNodesCalls.push(nodes);
+    };
+    let setEdgesMessages  = function(messages){
+        setEMCalls.push(messages);
+    };
+    it('test start function [Pregel]', function () {
+        Pregel.start(edges, nodes, setNodes, setEdgesMessages, 0) ;
+        assert.deepEqual(setNodesCalls,expectedNodes);
+        assert.deepEqual(setEMCalls,expectedMessages);
     });
 });
