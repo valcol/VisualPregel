@@ -1,5 +1,5 @@
 import { Provider, connect } from 'react-redux';
-import { setUploadValuesSeparator, setUploadValuesFile, setUploadValuesBar, setNodes, resetUploadValues } from '../actions';
+import { setUploadValuesSeparator, setUploadValuesFile, setUploadValuesBar, setNodes, resetUploadValues, setError } from '../actions';
 import FileHandler from '../controllers/FileHandler';
 import UploadBoxComponent from '../components/UploadBox';
 
