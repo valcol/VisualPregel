@@ -5,17 +5,20 @@ Pregel.prototype.initializeBase = function(id, attr) {
 };
 
 Pregel.prototype.dispatchBase = function(srcId, srcAttr, dstId, dstAttr) {
-  if (srcAttr[0] == srcAttr[1])
+  if (srcAttr[0] == srcAttr[1]) {
     return;
-  else
+  }
+  else {
     return srcAttr[0];
+  }
 };
 
 Pregel.prototype.aggregateBase = function(id, attr, messages) {
   let current = attr[0];
   for (let message of messages) {
-    if (message < current)
+    if (message < current) {
       current = message;
+    }
   }
   return [current, attr[0]];
 };
