@@ -84,7 +84,7 @@ const aggregate = (state = Helpers.functionToString(Pregel.aggregateBase),
     case 'SET_AGGREGATE_FUNCTION':
       return action.f;
     case 'RESET_AGGREGATE_FUNCTION':
-      return Helpers.functionToString(Pregel.aggregateBaseBase);
+      return Helpers.functionToString(Pregel.aggregateBase);
     default:
       return state;
   }
