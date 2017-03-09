@@ -13,12 +13,12 @@ export const initGraph = (edges) => {
     if (!(edgeObject.from in nodes)) {
       nodes[edgeObject.from] = {};
       nodes[edgeObject.from].value = parseInt(edgeObject.from);
-      nodes[edgeObject.from].initialValue = -1;
+      nodes[edgeObject.from].isActive = true;
     }
     if (!(edgeObject.to in nodes)) {
       nodes[edgeObject.to] = {};
       nodes[edgeObject.to].value = parseInt(edgeObject.to);
-      nodes[edgeObject.to].initialValue = -1;
+      nodes[edgeObject.to].isActive = true;
     }
   }
   return {

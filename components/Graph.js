@@ -112,11 +112,10 @@ class Graph extends Component {
     for (let node in values) {
       if (values.hasOwnProperty(node)) {
         if (fatumNodesLabels.hasOwnProperty(node)) {
-          fatumNodesLabels[node].text(JSON.stringify(values[node].value)+
-          '('+JSON.stringify(values[node].initialValue)+')');
+          fatumNodesLabels[node].text(JSON.stringify(values[node].value));
         }
         if (fatumNodes.hasOwnProperty(node))
-          if ((values[node].value === values[node].initialValue))
+          if (!(values[node].isActive))
             fatumNodes[node].color(92,184,92).show();
           else
             fatumNodes[node].color(217,83,79).show();
