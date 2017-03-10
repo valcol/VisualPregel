@@ -3,7 +3,12 @@ import { Button } from 'react-bootstrap';
 import Measure from 'react-measure';
 import GraphHelpers from '../controllers/GraphHelpers';
 
+let canvas = {};
+let fatum ={};
+
 class Graph extends Component {
+
+
 
   constructor(props) {
     super(props);
@@ -57,10 +62,28 @@ class Graph extends Component {
       }
   }
 
+  zoomHandler(event) {
+    var delta = Math.sign(event.deltaY);
+    // compute mouse position on canvas
+    var rect = canvas.getBoundingClientRect();
+    var zoomX = event.pageX - (rect.left + window.scrollX);
+    var zoomY = canvas.height - (event.pageY - (rect.top + window.scrollY));
+    // perform zoom
+    fatum.camera().zoom(1.0 - 0.1*delta , [zoomX, zoomY]);
+    // swap camera to avoid animation
+    fatum.camera().swap();
+    // rerender with the zoomed camera
+    fatum.animate();
+    // prevent scrolling
+    event.preventDefault();
+}
+
+
   init() {
     let nodes = this.props.nodes;
-    let canvas = document.getElementById('fatum-canvas');
-    this.fatum = Fatum.createFatumContext(canvas);
+    canvas = document.getElementById('fatum-canvas');
+    fatum = this.fatum = Fatum.createFatumContext(canvas);
+    canvas.onmousewheel = this.zoomHandler;
     Fatum.setRenderingObserver(this.fatum);
     Fatum.setMouseMoveHandler(canvas, this.fatum);
   //  Fatum.setCanvasSize(500, 500, true);
