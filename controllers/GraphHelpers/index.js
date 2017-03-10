@@ -4,11 +4,11 @@ let GraphHelpers = function() {};
 
 GraphHelpers.prototype.generateRandomGraph = function() {
   let edges = {};
-  let numberOfNodes = Math.round(Math.random()*15) + 5;
-  for (let i=0; i<numberOfNodes; i++) {
+  let numberOfNodes = Math.round(Math.random() * 15) + 5;
+  for (let i = 0; i < numberOfNodes; i++) {
     edges[i] = {
-      from: Math.round(Math.random()*15) + 5,
-      to: Math.round(Math.random()*15) + 5
+      from: Math.round(Math.random() * 15) + 5,
+      to: Math.round(Math.random() * 15) + 5
     };
   }
   return edges;
@@ -18,11 +18,11 @@ GraphHelpers.prototype.generateRandomGraph = function() {
 GraphHelpers.prototype.getLayout = function(vertexSize, edges) {
   let g = new Dagre.graphlib.Graph();
   g.setGraph({});
-  for (let edgeID in edges) {
-    g.setNode(edges[edgeID].from, { width: vertexSize, height: vertexSize });
-    g.setNode(edges[edgeID].to, { width: vertexSize, height: vertexSize });
-    g.setEdge(edges[edgeID].from, edges[edgeID].to, { label: '', width: 10, height: 10 });
-  }
+  edges.entrySeq().forEach(([key, value]) => {
+    g.setNode(value.get('from'), { width: vertexSize, height: vertexSize });
+    g.setNode(value.get('to'), { width: vertexSize, height: vertexSize });
+    g.setEdge(value.get('from'), value.get('to'), { label: '', width: 10, height: 10 });
+  });
   Dagre.layout(g);
 
   return g;

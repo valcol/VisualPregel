@@ -5,9 +5,8 @@ import GraphHelper from '../controllers/GraphHelpers';
 
 const mapStateToProps = (state) => {
   let graph = state.graph.toJS();
-  console.log(graph);
   return {
-    graph: state.graph.toJS()
+    graph: state.graph
   };
 }
 
