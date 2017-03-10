@@ -4,6 +4,28 @@ import Helpers from '../controllers/Helpers';
 import Pregel from '../controllers/Pregel';
 import GraphHelpers from '../controllers/GraphHelpers';
 
+let graphValues = [];
+let actualIndex = 0;
+
+const index = (state = 0, action) => {
+  switch(action.type){
+    case 'SET_NODES':
+      actualIndex++;
+      return actualIndex;
+    case 'SET_EDGES':
+      actualIndex++;
+      return actualIndex;
+    case 'SET_EDGES_MESSAGES':
+      actualIndex++;
+      return actualIndex;
+    case 'INIT_GRAPH':
+      actualIndex = 0;
+      return actualIndex;
+    default:
+      return state;
+  }
+};
+
 const error = (state = "", action) => {
   switch (action.type) {
     case 'SET_ERROR':
@@ -25,13 +47,20 @@ const graph = (state = Immutable.fromJS({
 }), action) => {
   let id;
   let graph;
+  let graphToSet;
   switch (action.type) {
     case 'SET_NODES':
-      return state.mergeDeepIn([], {nodes:action.nodes, id:{nodes:Helpers.generateId()}});
+      graphToSet = state.mergeDeepIn([], {nodes:action.nodes, id:{nodes:Helpers.generateId()}});
+      graphValues.push(graphToSet);
+      return graphToSet;
     case 'SET_EDGES':
-      return state.mergeDeepIn([], {edges:action.edges, id:{edges:Helpers.generateId()}});
+      graphToSet = state.mergeDeepIn([], {edges:action.edges, id:{edges:Helpers.generateId()}});
+      graphValues.push(graphToSet);
+      return graphToSet;
     case 'SET_EDGES_MESSAGES':
-      return state.mergeDeepIn([], {edgesMessages:action.edgesMessages, id:{edgesMessages:Helpers.generateId()}});
+      graphToSet = state.mergeDeepIn([], {edgesMessages:action.edgesMessages, id:{edgesMessages:Helpers.generateId()}});
+      graphValues.push(graphToSet);
+      return graphToSet;
     case 'INIT_GRAPH':
       id = Object.assign({}, state.id, {
         edges: Helpers.generateId(),
@@ -44,7 +73,10 @@ const graph = (state = Immutable.fromJS({
         edgesMessages: action.edgesMessages,
         id
       };
-      return Immutable.fromJS(graph);
+      graphToSet = Immutable.fromJS(graph);
+      graphValues = [];
+      graphValues.push(graphToSet);
+      return graphToSet;
     default:
       return state;
   }
@@ -152,6 +184,7 @@ const uploadValues = (state = {
 };
 
 export default combineReducers({
+  index,
   error,
   graph,
   initialize,
