@@ -4,14 +4,15 @@ import { Provider, connect } from 'react-redux';
 import GraphHelper from '../controllers/GraphHelpers';
 
 const mapStateToProps = (state) => {
+  let graph = state.graph.toJS();
+  console.log(graph);
   return {
-    graph: state.graph
+    graph: state.graph.toJS()
   };
 }
 
 const setRandomGraph = () => {
   return (dispatch) => {
-    console.log('concon');
     let rn = GraphHelper.generateRandomGraph();
     dispatch(initGraph(rn));
   };

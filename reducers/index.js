@@ -1,4 +1,5 @@
 import { combineReducers } from 'redux';
+import Immutable from 'immutable';
 import Helpers from '../controllers/Helpers';
 import Pregel from '../controllers/Pregel';
 import GraphHelpers from '../controllers/GraphHelpers';
@@ -12,7 +13,7 @@ const error = (state = "", action) => {
   }
 };
 
-const graph = (state = {
+const graph = (state = Immutable.fromJS({
   nodes : {},
   edges: {},
   edgesMessages: {},
@@ -21,46 +22,29 @@ const graph = (state = {
     edges: 0,
     edgesMessages: 0
   }
-}, action) => {
+}), action) => {
   let id;
+  let graph;
   switch (action.type) {
     case 'SET_NODES':
-      id = Object.assign({}, state.id, {
-        nodes: Helpers.generateId()
-      });
-      let nodes = Object.assign({}, state.nodes, action.nodes);
-      return Object.assign({}, state, {
-        nodes,
-        id
-      });
+      return state.mergeDeepIn([], {nodes:action.nodes, id:{nodes:Helpers.generateId()}});
     case 'SET_EDGES':
-      id = Object.assign({}, state.id, {
-        edges: Helpers.generateId()
-      });
-      return Object.assign({}, state, {
-        edges: action.edges,
-        id
-      });
+      return state.mergeDeepIn([], {edges:action.edges, id:{edges:Helpers.generateId()}});
     case 'SET_EDGES_MESSAGES':
-      id = Object.assign({}, state.id, {
-        edgesMessages: Helpers.generateId()
-      });
-      return Object.assign({}, state, {
-        edgesMessages: action.edgesMessages,
-        id
-      });
+      return state.mergeDeepIn([], {edgesMessages:action.edgesMessages, id:{edgesMessages:Helpers.generateId()}});
     case 'INIT_GRAPH':
       id = Object.assign({}, state.id, {
         edges: Helpers.generateId(),
         nodes: Helpers.generateId(),
         edgesMessages: Helpers.generateId()
       });
-      return {
+      graph = {
         nodes: action.nodes,
         edges: action.edges,
         edgesMessages: action.edgesMessages,
         id
       };
+      return Immutable.fromJS(graph);
     default:
       return state;
   }
