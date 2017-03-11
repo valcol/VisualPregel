@@ -38,7 +38,7 @@ class Graph extends Component {
         this.updateEdges(nextProps.graph.get('edges')).then(() => {
           this.updateNodesValues(nextProps.graph.get('nodes'));
         }).then(() => {
-          this.updateEdgesValues(nextProps.graph.get('edgesMessages').toJS());
+          this.updateEdgesValues(nextProps.graph.get('edgesMessages'));
         }).then(() => {
           //console.log('animate');
           this.fatum.animate();
@@ -50,7 +50,7 @@ class Graph extends Component {
           this.fatum.refresh();
         }
         if (nextProps.graph.get('id').get('edgesMessages') != this.props.graph.get('id').get('edgesMessages')){
-          this.updateEdgesValues(nextProps.graph.get('edgesMessages').toJS());
+          this.updateEdgesValues(nextProps.graph.get('edgesMessages'));
           this.fatum.refresh();
         }
       }
@@ -139,17 +139,14 @@ class Graph extends Component {
     this.fatum.refresh();
   }
 
-  updateEdgesValues(values){
+  updateEdgesValues(values) {
     let fatumEdgesLabels = this.state.fatumEdgesLabels;
-    for (let edge in fatumEdgesLabels) {
-      if (values.hasOwnProperty(edge)) {
-        if (fatumEdgesLabels.hasOwnProperty(edge))
-          fatumEdgesLabels[edge].text(JSON.stringify(values[edge]));
-      }
-      else {
-        fatumEdgesLabels[edge].text('');
-      }
-    }
+    values.entrySeq().forEach(([key, value]) => {
+      if (fatumEdgesLabels.hasOwnProperty(key))
+        fatumEdgesLabels[key].text(JSON.stringify(value));
+      else
+        fatumEdgesLabels[key].text('');
+    });
     this.fatum.refresh();
   }
 
