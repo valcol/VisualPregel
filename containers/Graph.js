@@ -4,7 +4,6 @@ import { Provider, connect } from 'react-redux';
 import GraphHelper from '../controllers/GraphHelpers';
 
 const mapStateToProps = (state) => {
-  let graph = state.graph.toJS();
   return {
     graph: state.graph
   };
