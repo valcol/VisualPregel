@@ -6,7 +6,7 @@ import PregelMock from '../containers/PregelMock';
 import { FormGroup, InputGroup, FormControl } from 'react-bootstrap';
 import { ButtonToolbar, ButtonGroup, Glyphicon, span } from 'react-bootstrap';
 
-const Panel = ({setRandomNodes, setPregelMockFunction, Return, Play, Stop}) => {
+const Panel = ({setRandomNodes, setPregelMockFunction, BackFast, Back, Play, ForwardFast, Forward}) => {
   return (
     <div className='panel'>
     <UploadGraphBox idName = "graph" label = "Upload graph file :"/>
@@ -17,14 +17,20 @@ const Panel = ({setRandomNodes, setPregelMockFunction, Return, Play, Stop}) => {
     <div className='panel'>
        <ButtonToolbar>
            <ButtonGroup>
-             <Button bsSize="lg" eventKey='1' onClick={Return}>
-               <span class="glyphicon glyphicon-triangle-left" aria-label="Left Align"></span> Return
+             <Button bsSize="lg" eventKey='1' onClick={BackFast}>
+                <span class="glyphicon glyphicon-backward"></span>BackFast
              </Button>
-             <Button bsSize="lg" eventKey='2' onClick={Stop}>
-               <span class="glyphicons glyphicons-pause" aria-label="Left Align"></span> Stop
+             <Button bsSize="lg" eventKey='1' onClick={Back}>
+               <span class="glyphicon glyphicon-triangle-left" aria-label="Left Align"></span>Back
              </Button>
-             <Button bsSize="lg" eventKey='3' onClick={Play}>
-               <span class="glyphicons glyphicons-play" aria-label="Left Align"></span> Play
+             <Button bsSize="lg" eventKey='1' onClick={Play}>
+               <span class="glyphicon glyphicon-play"></span> Play
+             </Button>
+             <Button bsSize="lg" eventKey='2' onClick={Forward}>
+               <span class="glyphicon glyphicon-forward"></span> Forward
+             </Button>
+             <Button bsSize="lg" eventKey='3' onClick={ForwardFast}>
+              <span class="glyphicon glyphicon-triangle-right"></span> Forward Fast
              </Button>
            </ButtonGroup>
       </ButtonToolbar>
