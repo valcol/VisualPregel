@@ -14,6 +14,28 @@ const Panel = ({setRandomNodes, setPregelMockFunction, BackFast, Back, Play, For
     <Button bsSize="large" onClick={setRandomNodes} block>Generate random graph</Button>
     <PregelMock pregelMock = {setPregelMockFunction}/>
 
+
+  <div className="panel">
+    <FormGroup controlId="formControlsSelectValue">
+      <InputGroup>
+     <InputGroup.Addon>Select value :</InputGroup.Addon>
+      <FormControl componentClass="select" placeholder="select" >
+        <option value="0">0</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+      </FormControl>
+    </InputGroup>
+    </FormGroup>
+</div>
+
     <div className='panel'>
        <ButtonToolbar>
            <ButtonGroup>
