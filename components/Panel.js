@@ -20,7 +20,6 @@ const Panel = ({setRandomNodes, setPregelMockFunction, BackFast, Back, Play, For
       <InputGroup>
      <InputGroup.Addon>Select value :</InputGroup.Addon>
       <FormControl componentClass="select" placeholder="select" >
-        <option value="0">0</option>
         <option value="1">1</option>
         <option value="2">2</option>
         <option value="3">3</option>
