@@ -10,7 +10,7 @@ const pregel = (e) => {
     Pregel.initialize = Helpers.stringToFunction(getState().initialize);
     Pregel.aggregate = Helpers.stringToFunction(getState().aggregate);
     Pregel.dispatch = Helpers.stringToFunction(getState().dispatch);
-    Pregel.start(getState().graph.toJS().edges, getState().graph.toJS().nodes,
+    Pregel.start(getState().graph.get("edges"), getState().graph.get("nodes"),
     (nodes) => {dispatch(setNodes(nodes))},
     (edgesMessages) => {dispatch(setEdgesMessages(edgesMessages))},
     1000);

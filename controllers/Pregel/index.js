@@ -36,12 +36,14 @@ function sleep(ms) {
 
 
 Pregel.prototype.start = async function(edges, nodes, setNodes, setEdgesMessages, waitingTime) {
+
+    let newNodes = {};
+    nodes.entrySeq().forEach(([key,value]) =>{
+        let values = this.initialize(value.get('value'), value.get('value'));
+        newNodes[value.get('value')] = {value: values, isActive: true};
+    });
+
   let maxIterations = 30;
-  let newNodes = {};
-  for (let node in nodes){
-    let values = this.initialize(node, nodes[node].value);
-    newNodes[node] = {value: values, isActive: true};
-  }
   setNodes(newNodes);
   if(waitingTime != 0)
     await sleep(waitingTime);
@@ -50,8 +52,14 @@ Pregel.prototype.start = async function(edges, nodes, setNodes, setEdgesMessages
     let newNodes2 = {};
     let newEdgesMessages = {};
     let messagesFrom = {};
-      for (let edge in edges) {
-        let edgeObject = edges[edge];
+
+      let edgesBis=[];
+      edges.entrySeq().forEach(([key,value]) =>{
+        edgesBis.push({from: value.get('from'), to : value.get('to')});
+      });
+
+      for (let edge in edgesBis) {
+        let edgeObject = edgesBis[edge];
         if (newNodes[edgeObject.from].isActive) {
           let message = this.dispatch(edgeObject.from, newNodes[edgeObject.from].value, edgeObject.to, newNodes[edgeObject.to].value);
           if (message){
@@ -64,26 +72,26 @@ Pregel.prototype.start = async function(edges, nodes, setNodes, setEdgesMessages
           }
         }
       }
+
     setEdgesMessages(newEdgesMessages);
     if(waitingTime != 0)
-      await sleep(waitingTime);
-    for (let node in nodes){
-      if ((node in messages)) {
-        newNodes2[node] = {};
-        newNodes2[node].isActive = true;
-        newNodes2[node].value = this.aggregate(node, newNodes[node].value, messages[node]);
-      }
-      else {
-        newNodes2[node] = {};
-        newNodes2[node].isActive = false;
-        newNodes2[node].value = newNodes[node].value;
-      }
-    }
+      await sleep(waitingTime)
+      nodes.entrySeq().forEach(([key,value]) =>{
+          if ((value.get('value') in messages)) {
+              newNodes2[value.get('value')] = {};
+              newNodes2[value.get('value')].isActive = true;
+              newNodes2[value.get('value')].value = this.aggregate(value.get('value'), newNodes[value.get('value')].value, messages[value.get('value')]);
+          }
+          else {
+              newNodes2[value.get('value')] = {};
+              newNodes2[value.get('value')].isActive = false;
+              newNodes2[value.get('value')].value = newNodes[value.get('value')].value;
+          }
+      });
     setNodes(newNodes2);
     if(waitingTime != 0)
       await sleep(waitingTime);
     newNodes = newNodes2;
-
     if (Object.keys(messages).length > 0)
         maxIterations--;
     else
