@@ -6,6 +6,7 @@ let fs = require('fs');
 import Helpers from '../controllers/Helpers/index.js';
 import FileHandler from '../controllers/FileHandler/index.js';
 import Pregel from '../controllers/Pregel/index.js';
+import Immutable from 'Immutable';
 
 describe('stringToFunction()', function () {
   it('should convert a string into a function', function () {
@@ -149,20 +150,20 @@ describe('Pregel.start()',function(){
   let count = 0;
   let setEMCalls = [];
 
-  let nodes = {
+  let nodes = Immutable.fromJS({
     '1': { value:1, isActive:true },
     '2': { value:2, isActive:true},
     '3': { value:3, isActive:true},
     '4': { value:4, isActive:true }
-  };
+  });
 
-  let edges = {
+  let edges = Immutable.fromJS({
     '1': { from:1, to:2 },
     '2': { from:2, to:3 },
     '3': { from:3, to:2 },
     '4': { from:4, to:1 },
     '5': { from:1, to:3 }
-  };
+  });
 
   let expectedNodes = [{
    "1": {
@@ -235,16 +236,16 @@ describe('Pregel.start()',function(){
  }];
 
   let expectedMessages = [{
-   "1": 1,
-   "2": 2,
-   "3": 3,
-   "4": 4,
-   "5": 1
+   "0": 1,
+   "1": 2,
+   "2": 3,
+   "3": 4,
+   "4": 1
   }, {
-   "2": 1,
-   "3": 1
+   "1": 1,
+   "2": 1
   },
-  {}];
+      {}];
 
   let setNodes  = function(nodes){
     setNodesCalls.push(nodes);
