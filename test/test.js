@@ -6,7 +6,7 @@ let fs = require('fs');
 import Helpers from '../controllers/Helpers/index.js';
 import FileHandler from '../controllers/FileHandler/index.js';
 import Pregel from '../controllers/Pregel/index.js';
-import Immutable from 'Immutable';
+import Immutable from 'immutable';
 
 describe('stringToFunction()', function () {
   it('should convert a string into a function', function () {
