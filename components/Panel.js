@@ -5,6 +5,7 @@ import { Button } from 'react-bootstrap';
 import PregelMock from '../containers/PregelMock';
 import { FormGroup, InputGroup, FormControl } from 'react-bootstrap';
 import { ButtonToolbar, ButtonGroup, Glyphicon, span } from 'react-bootstrap';
+import RangeSlider from '../containers/RangeSlider';
 
 const Panel = ({setRandomNodes, setPregelMockFunction, BackFast, Back, Play, ForwardFast, Forward}) => {
   return (
@@ -56,7 +57,7 @@ const Panel = ({setRandomNodes, setPregelMockFunction, BackFast, Back, Play, For
            </ButtonGroup>
       </ButtonToolbar>
    </div>
-
+  <RangeSlider />
     </div>
   );
 }

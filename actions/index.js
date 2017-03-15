@@ -1,3 +1,11 @@
+export const setNodesWithIndex = (index) => {
+  return {
+    type: 'SET_NODES_WITH_INDEX',
+    index
+  };
+};
+
+
 export const setError = (error) => {
   return {
     type: 'SET_ERROR',

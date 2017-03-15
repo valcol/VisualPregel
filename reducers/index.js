@@ -4,28 +4,6 @@ import Helpers from '../controllers/Helpers';
 import Pregel from '../controllers/Pregel';
 import GraphHelpers from '../controllers/GraphHelpers';
 
-let graphValues = [];
-let actualIndex = 0;
-
-const index = (state = 0, action) => {
-  switch(action.type){
-    case 'SET_NODES':
-      actualIndex++;
-      return actualIndex;
-    case 'SET_EDGES':
-      actualIndex++;
-      return actualIndex;
-    case 'SET_EDGES_MESSAGES':
-      actualIndex++;
-      return actualIndex;
-    case 'INIT_GRAPH':
-      actualIndex = 0;
-      return actualIndex;
-    default:
-      return state;
-  }
-};
-
 const error = (state = "", action) => {
   switch (action.type) {
     case 'SET_ERROR':
@@ -35,7 +13,7 @@ const error = (state = "", action) => {
   }
 };
 
-const graph = (state = Immutable.fromJS({
+const graph = (state = { graphs: [Immutable.fromJS({
   nodes : {},
   edges: {},
   edgesMessages: {},
@@ -44,23 +22,25 @@ const graph = (state = Immutable.fromJS({
     edges: 0,
     edgesMessages: 0
   }
-}), action) => {
+})],
+  index: 0
+  }, action) => {
   let id;
   let graph;
   let graphToSet;
   switch (action.type) {
     case 'SET_NODES':
-      graphToSet = state.mergeDeepIn([], {nodes:action.nodes, id:{nodes:Helpers.generateId()}});
-      graphValues.push(graphToSet);
-      return graphToSet;
+      state.graphs.push(state.graphs[state.graphs.length - 1].mergeDeepIn([], {nodes: action.nodes, id:{nodes: Helpers.generateId()}}));
+      return {graphs: state.graphs, index: state.index};
     case 'SET_EDGES':
-      graphToSet = state.mergeDeepIn([], {edges:action.edges, id:{edges:Helpers.generateId()}});
-      graphValues.push(graphToSet);
-      return graphToSet;
+      state.graphs.push(state.graphs[state.graphs.length - 1].mergeDeepIn([], {edges: action.edges, id:{edges: Helpers.generateId()}}));
+      return {graphs: state.graphs, index: state.index};
     case 'SET_EDGES_MESSAGES':
-      graphToSet = state.mergeDeepIn([], {edgesMessages:action.edgesMessages, id:{edgesMessages:Helpers.generateId()}});
-      graphValues.push(graphToSet);
-      return graphToSet;
+      state.graphs.push(state.graphs[state.graphs.length - 1].mergeDeepIn([], {edgesMessages: action.edgesMessages, id:{edgesMessages: Helpers.generateId() }}));
+      return {graphs: state.graphs, index: state.index};
+    case 'SET_NODES_WITH_INDEX':
+      let index = Math.max(1, ((action.index * (state.graphs.length - 1)) / 100));
+      return {graphs: state.graphs, index: index};
     case 'INIT_GRAPH':
       id = Object.assign({}, state.id, {
         edges: Helpers.generateId(),
@@ -73,10 +53,19 @@ const graph = (state = Immutable.fromJS({
         edgesMessages: action.edgesMessages,
         id
       };
-      graphToSet = Immutable.fromJS(graph);
-      graphValues = [];
-      graphValues.push(graphToSet);
-      return graphToSet;
+      state.graphs = [Immutable.fromJS({
+        nodes : {},
+        edges: {},
+        edgesMessages: {},
+        id: {
+          nodes: 0,
+          edges: 0,
+          edgesMessages: 0
+        }
+      })];
+      state.index = 0;
+      state.graphs.push(Immutable.fromJS(graph));
+      return {graphs: state.graphs, index: 1};
     default:
       return state;
   }
@@ -184,7 +173,6 @@ const uploadValues = (state = {
 };
 
 export default combineReducers({
-  index,
   error,
   graph,
   initialize,
