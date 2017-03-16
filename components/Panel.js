@@ -36,27 +36,27 @@ const Panel = ({setRandomNodes, setPregelMockFunction, BackFast, Back, Play, For
     </FormGroup>
 
 
-    <div className='panel'>
+
        <ButtonToolbar>
            <ButtonGroup>
-             <Button bsSize="lg" eventKey='1' onClick={BackFast}>
+             <Button bsSize="xsmall" eventKey='1' onClick={BackFast}>
                 <span class="glyphicon glyphicon-backward"></span>BackFast
              </Button>
-             <Button bsSize="lg" eventKey='1' onClick={Back}>
+             <Button bsSize="xsmall" eventKey='2' onClick={Back}>
                <span class="glyphicon glyphicon-triangle-left" aria-label="Left Align"></span>Back
              </Button>
-             <Button bsSize="lg" eventKey='1' onClick={Play}>
+             <Button bsSize="xsmall" eventKey='3' onClick={Play}>
                <span class="glyphicon glyphicon-play"></span> Play
              </Button>
-             <Button bsSize="lg" eventKey='2' onClick={Forward}>
+             <Button bsSize="xsmall" eventKey='4' onClick={Forward}>
                <span class="glyphicon glyphicon-forward"></span> Forward
              </Button>
-             <Button bsSize="lg" eventKey='3' onClick={ForwardFast}>
+             <Button bsSize="xsmall" eventKey='5' onClick={ForwardFast}>
               <span class="glyphicon glyphicon-triangle-right"></span> Forward Fast
              </Button>
            </ButtonGroup>
       </ButtonToolbar>
-   </div>
+   
   <RangeSlider />
     </div>
   );
