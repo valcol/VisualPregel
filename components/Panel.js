@@ -16,7 +16,7 @@ const Panel = ({setRandomNodes, setPregelMockFunction, BackFast, Back, Play, For
     <PregelMock pregelMock = {setPregelMockFunction}/>
 
 
-  <div className="panel">
+
     <FormGroup controlId="formControlsSelectValue">
       <InputGroup>
      <InputGroup.Addon>Select value :</InputGroup.Addon>
@@ -34,7 +34,7 @@ const Panel = ({setRandomNodes, setPregelMockFunction, BackFast, Back, Play, For
       </FormControl>
     </InputGroup>
     </FormGroup>
-</div>
+
 
     <div className='panel'>
        <ButtonToolbar>
