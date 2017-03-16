@@ -56,8 +56,9 @@ const Panel = ({setRandomNodes, setPregelMockFunction, BackFast, Back, Play, For
              </Button>
            </ButtonGroup>
       </ButtonToolbar>
-   
+
   <RangeSlider />
+
     </div>
   );
 }
