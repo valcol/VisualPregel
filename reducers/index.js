@@ -39,7 +39,11 @@ const graph = (state = { graphs: [Immutable.fromJS({
       state.graphs.push(state.graphs[state.graphs.length - 1].mergeDeepIn([], {edgesMessages: action.edgesMessages, id:{edgesMessages: Helpers.generateId() }}));
       return {graphs: state.graphs, index: state.index};
     case 'SET_NODES_WITH_INDEX':
-      let index = Math.max(1, ((action.index * (state.graphs.length - 1)) / 100));
+      let index = action.index;
+      if(action.normalize)
+        index = (index * (state.graphs.length - 1)) / 100;
+      index = Math.max(1, index);
+      index = Math.min(state.graphs.length - 1, index);
       return {graphs: state.graphs, index: index};
     case 'INIT_GRAPH':
       id = Object.assign({}, state.id, {

@@ -3,32 +3,35 @@ import { FormGroup, InputGroup, FormControl } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { ButtonToolbar, ButtonGroup, Glyphicon, span } from 'react-bootstrap';
 
-const ButtonControl = ({ BackFast, Back, Play, ForwardFast, Forward }) => {
+class ButtonControl extends Component {
 
-  return (
-    <div className='panel'>
-       <ButtonToolbar>
-           <ButtonGroup>
-             <Button bsSize="lg" eventKey='1' onClick={BackFast}>
-                <span class="glyphicon glyphicon-backward"></span>Back Fast
-             </Button>
-             <Button bsSize="lg" eventKey='2' onClick={Back}>
-               <span class="glyphicon glyphicon-triangle-left" aria-label="Left Align"></span> Back
-             </Button>
-             <Button bsSize="lg" eventKey='3' onClick={Play}>
-               <span class="glyphicon glyphicon-play"></span> Play
-             </Button>
-             <Button bsSize="lg" eventKey='4' onClick={Forward}>
-               <span class="glyphicon glyphicon-triangle-right"></span> Forward
-             </Button>
-             <Button bsSize="lg" eventKey='5' onClick={ForwardFast}>
-               <span class="glyphicon glyphicon-forward"> </span>  value="Forward Fast"
-             </Button>
-
-           </ButtonGroup>
-      </ButtonToolbar>
-   </div>
-  );
-};
+  render() {
+    let setNodesWithIndex = this.props.setNodesWithIndex.bind(this);
+    let graph = this.props.graph;
+    return (
+      <div>
+        <ButtonToolbar>
+            <ButtonGroup>
+              <Button bsSize="xsmall" onClick={function(){setNodesWithIndex(1);}}>
+                Back Fast
+              </Button>
+              <Button bsSize="xsmall" onClick={function(){setNodesWithIndex(graph.index - 1);}}>
+                 Back
+               </Button>
+              <Button bsSize="xsmall">
+              Play
+               </Button>
+               <Button bsSize="xsmall" onClick={function(){setNodesWithIndex(graph.index + 1);}}>
+              Forward
+               </Button>
+              <Button bsSize="xsmall" onClick={function(){setNodesWithIndex(graph.graphs.length - 1);}}>
+              Forward Fast
+               </Button>
+             </ButtonGroup>
+           </ButtonToolbar>
+      </div>
+    );
+  }
+}
 
 export default ButtonControl;

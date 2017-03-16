@@ -1,7 +1,8 @@
-export const setNodesWithIndex = (index) => {
+export const setNodesWithIndex = (index, normalize) => {
   return {
     type: 'SET_NODES_WITH_INDEX',
-    index
+    index,
+    normalize
   };
 };
 

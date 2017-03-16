@@ -6,6 +6,7 @@ import PregelMock from '../containers/PregelMock';
 import { FormGroup, InputGroup, FormControl } from 'react-bootstrap';
 import { ButtonToolbar, ButtonGroup, Glyphicon, span } from 'react-bootstrap';
 import RangeSlider from '../containers/RangeSlider';
+import ButtonControl from '../containers/ButtonControl';
 
 const Panel = ({setRandomNodes, setPregelMockFunction, BackFast, Back, Play, ForwardFast, Forward}) => {
   return (
@@ -35,29 +36,8 @@ const Panel = ({setRandomNodes, setPregelMockFunction, BackFast, Back, Play, For
     </InputGroup>
     </FormGroup>
 
-
-
-       <ButtonToolbar>
-           <ButtonGroup>
-             <Button bsSize="xsmall" eventKey='1' onClick={BackFast}>
-                <span class="glyphicon glyphicon-backward"></span>BackFast
-             </Button>
-             <Button bsSize="xsmall" eventKey='2' onClick={Back}>
-               <span class="glyphicon glyphicon-triangle-left" aria-label="Left Align"></span>Back
-             </Button>
-             <Button bsSize="xsmall" eventKey='3' onClick={Play}>
-               <span class="glyphicon glyphicon-play"></span> Play
-             </Button>
-             <Button bsSize="xsmall" eventKey='4' onClick={Forward}>
-               <span class="glyphicon glyphicon-forward"></span> Forward
-             </Button>
-             <Button bsSize="xsmall" eventKey='5' onClick={ForwardFast}>
-              <span class="glyphicon glyphicon-triangle-right"></span> Forward Fast
-             </Button>
-           </ButtonGroup>
-      </ButtonToolbar>
-
-  <RangeSlider />
+    <ButtonControl/>
+    <RangeSlider/>
 
     </div>
   );
