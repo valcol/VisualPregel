@@ -176,6 +176,16 @@ const uploadValues = (state = {
   }
 };
 
+
+const refreshValue = (state = "", action) => {
+  switch (action.type) {
+    case 'SET_REFRESH_VALUE':
+      return action.value;
+    default:
+      return state;
+  }
+};
+
 export default combineReducers({
   error,
   graph,
@@ -183,5 +193,6 @@ export default combineReducers({
   aggregate,
   dispatch,
   uploadGraph,
-  uploadValues
+  uploadValues,
+  refreshValue
 });

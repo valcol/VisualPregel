@@ -1,5 +1,5 @@
-import PanelCommponent from '../components/Panel';
-import { setRandomNodes, setPregelMockFunction, setNodes, setEdgesMessages, initGraph } from '../actions';
+import PanelComponent from '../components/Panel';
+import { setRandomNodes, setPregelMockFunction, setNodes, setEdgesMessages, initGraph, setRefreshValue } from '../actions';
 import { Provider, connect } from 'react-redux';
 import Pregel from '../controllers/Pregel';
 import Helpers from '../controllers/Helpers';
@@ -24,6 +24,13 @@ const setRandomGraph = () => {
   };
 };
 
+const mapStateToProps = (state) => {
+  return {
+    refreshValue: state.refreshValue
+  };
+}
+
+
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     setRandomNodes: () => {
@@ -31,13 +38,16 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     setPregelMockFunction: () => {
       dispatch(pregel());
+    },
+    setRefreshValue: (value) => {
+      dispatch(setRefreshValue(value));
     }
   };
 }
 
 const Panel = connect(
-  null,
+  mapStateToProps,
   mapDispatchToProps
-)(PanelCommponent);
+)(PanelComponent);
 
 export default Panel;

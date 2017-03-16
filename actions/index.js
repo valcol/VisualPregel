@@ -159,3 +159,10 @@ export const resetUploadValues = () => {
     type: 'RESET_UPLOADVALUES_FIELDS'
   };
 };
+
+export const setRefreshValue = (value) => {
+  return {
+    type: 'SET_REFRESH_VALUE',
+    value
+  };
+};
