@@ -10,7 +10,7 @@ import ButtonControl from '../containers/ButtonControl';
 import ValueDropDown from './ValueDropDown';
 import DropdownPreset from './DropdownPreset';
 
-const Panel = ({setRandomNodes, setPregelMockFunction, setRefreshValue, refreshValue, setNeighboringSummits}) => {
+const Panel = ({setRandomNodes, setPregelMockFunction, setRefreshValue, refreshValue, setNeighboringSummits, setDefault}) => {
   return (
     <div className='panel'>
     <UploadGraphBox idName = "graph" label = "Upload graph file :"/>
@@ -18,7 +18,7 @@ const Panel = ({setRandomNodes, setPregelMockFunction, setRefreshValue, refreshV
     <Button bsSize="large" onClick={setRandomNodes} block>Generate random graph</Button>
     <PregelMock pregelMock = {setPregelMockFunction}/>
     <ValueDropDown setValue={setRefreshValue} value={refreshValue}/>
-    <DropdownPreset setNeighboringSummits={setNeighboringSummits}/>
+    <DropdownPreset setNeighboringSummits={setNeighboringSummits} setDefault={setDefault}/>
     <ButtonControl/>
     <RangeSlider/>
 

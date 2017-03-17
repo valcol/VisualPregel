@@ -47,6 +47,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(setInitializeFunction(Helpers.functionToString(Pregel.initializeNeighboringSummits)));
       dispatch(setDispatchFunction(Helpers.functionToString(Pregel.dispatchNeighboringSummits)));
       dispatch(setAggregateFunction(Helpers.functionToString(Pregel.aggregateNeighboringSummits)));
+    },
+    setDefault: () => {
+      dispatch(setInitializeFunction(Helpers.functionToString(Pregel.initializeBase)));
+      dispatch(setDispatchFunction(Helpers.functionToString(Pregel.dispatchBase)));
+      dispatch(setAggregateFunction(Helpers.functionToString(Pregel.aggregateBase)));
     }
   };
 }

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { FormGroup, InputGroup, FormControl } from 'react-bootstrap';
 
-const DropdownPreset = ({setNeighboringSummits}) => {
+const DropdownPreset = ({setNeighboringSummits, setDefault}) => {
   return (
     <FormGroup controlId="formControlsSelect">
       <InputGroup>
@@ -16,7 +16,7 @@ const DropdownPreset = ({setNeighboringSummits}) => {
             console.log('SHORT PATH NOT IMPLEMENTED !');
             return;
           default:
-            console.log('DEFAULT NOT IMPLEMENTED !');
+            setDefault();
           }
         }}>
           <option value="Defalut">Default Algo</option>
