@@ -4,6 +4,18 @@ import { Button } from 'react-bootstrap';
 import { ButtonToolbar, ButtonGroup, Glyphicon, span } from 'react-bootstrap';
 
 class ButtonControl extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {isPlayOn: true};
+    this.playButton = this.playButton.bind(this);
+  }
+
+  playButton() {
+    this.setState(prevState => ({
+      isPlayOn: !prevState.isPlayOn
+    }));
+  }
+
 
   render() {
     let setNodesWithIndex = this.props.setNodesWithIndex.bind(this);
@@ -18,8 +30,8 @@ class ButtonControl extends Component {
               <Button bsSize="xsmall" onClick={function(){setNodesWithIndex(graph.index - 1);}}>
                  Back
                </Button>
-              <Button bsSize="xsmall">
-              Play
+              <Button bsSize="xsmall" onClick={this.playButton}>
+               {this.state.isPlayOn ? 'Play' : 'Stop'}
                </Button>
                <Button bsSize="xsmall" onClick={function(){setNodesWithIndex(graph.index + 1);}}>
               Forward
