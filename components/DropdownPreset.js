@@ -7,7 +7,9 @@ const DropdownPreset = ({ setPreset, Preset }) => {
       <InputGroup>
       <InputGroup.Addon>Select Preset :</InputGroup.Addon>
       <FormControl componentClass="select" placeholder="select" value={Preset}
-        onChange={(e) => {setPreset(e.target.value)}}>
+        onChange={(e) => {
+          console.log(e.target.value);
+        }}>
           <option value="Defalut">Default Algo</option>
         <option value="ShortPath">Short Path</option>
         <option value="NeighboringSummits">Neighboring Summits</option>
