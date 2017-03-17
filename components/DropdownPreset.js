@@ -1,14 +1,23 @@
 import React, {Component} from 'react';
 import { FormGroup, InputGroup, FormControl } from 'react-bootstrap';
 
-const DropdownPreset = ({ setPreset, Preset }) => {
+const DropdownPreset = ({setNeighboringSummits}) => {
   return (
     <FormGroup controlId="formControlsSelect">
       <InputGroup>
       <InputGroup.Addon>Select Preset :</InputGroup.Addon>
-      <FormControl componentClass="select" placeholder="select" value={Preset}
+      <FormControl componentClass="select" placeholder="select"
         onChange={(e) => {
-          console.log(e.target.value);
+          switch (e.target.value) {
+          case 'NeighboringSummits':
+            setNeighboringSummits();
+            return;
+          case 'ShortPath':
+            console.log('SHORT PATH NOT IMPLEMENTED !');
+            return;
+          default:
+            console.log('DEFAULT NOT IMPLEMENTED !');
+          }
         }}>
           <option value="Defalut">Default Algo</option>
         <option value="ShortPath">Short Path</option>

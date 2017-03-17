@@ -27,14 +27,6 @@ function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
 }
 
-/*
- *The pregelMock function aim is to give us a Pregel minimal skeleton
- *with a simple example : a counter.
- *Each node will count his neighbour's value attribute as long as a number of iteration
- *is not reached
- */
-
-
 Pregel.prototype.start = async function(edges, nodes, setNodes, setEdgesMessages, waitingTime) {
 
     let newNodes = {};
@@ -98,6 +90,39 @@ Pregel.prototype.start = async function(edges, nodes, setNodes, setEdgesMessages
       maxIterations = 0;
   }
 };
+
+
+Pregel.prototype.initializeNeighboringSummits = function(id, attr) {
+  /* In the data structure below, obj.count is the current iteration number
+    obj.tab will contain every incoming nodes (nodes we can receive messages from)
+  */
+  let obj = {
+  count: 0,
+  tab: []
+  };
+  return [attr, obj];
+};
+
+Pregel.prototype.dispatchNeighboringSummits = function(srcId, srcAttr, dstId, dstAttr) {  
+  if (srcAttr[1].count == 1) {
+    return;
+  } else {
+    return srcAttr[0];
+  }
+};
+
+Pregel.prototype.aggregateNeighboringSummits = function(id, attr, messages) {
+  let current = attr[0];
+  attr[1].count += 1;
+  
+  for (let message of messages) {
+    // push node in incoming array ("tab")
+    attr[1].tab.push(message);
+  }
+
+  return [current, attr[1]];    
+};
+
 
 Pregel = new Pregel();
 export default Pregel;

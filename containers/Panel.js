@@ -4,6 +4,7 @@ import { Provider, connect } from 'react-redux';
 import Pregel from '../controllers/Pregel';
 import Helpers from '../controllers/Helpers';
 import GraphHelper from '../controllers/GraphHelpers';
+import { setInitializeFunction, setAggregateFunction, setDispatchFunction } from '../actions';
 
 const pregel = (e) => {
   return (dispatch, getState) => {
@@ -41,6 +42,11 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     setRefreshValue: (value) => {
       dispatch(setRefreshValue(value));
+    },
+    setNeighboringSummits: () => {
+      dispatch(setInitializeFunction(Helpers.functionToString(Pregel.initializeNeighboringSummits)));
+      dispatch(setDispatchFunction(Helpers.functionToString(Pregel.dispatchNeighboringSummits)));
+      dispatch(setAggregateFunction(Helpers.functionToString(Pregel.aggregateNeighboringSummits)));
     }
   };
 }
