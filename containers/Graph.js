@@ -5,7 +5,7 @@ import GraphHelper from '../controllers/GraphHelpers';
 
 const mapStateToProps = (state) => {
   return {
-    graph: state.graph
+    graph: state.graph.graphs.get(state.graph.index)
   };
 }
 

@@ -32,14 +32,13 @@ class Graph extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    let graph = nextProps.graph.graphs[nextProps.graph.index];
     if (!this.fatum.isAnimating())
-      if ((graph.get('id').get('edges') != this.props.graph.graphs[0].get('id').get('edges'))) {
+      if ((nextProps.graph.get('id').get('edges') != this.props.graph.get('id').get('edges'))) {
         this.reset();
-        this.updateEdges(graph.get('edges')).then(() => {
-          this.updateNodesValues(graph.get('nodes'));
+        this.updateEdges(nextProps.graph.get('edges')).then(() => {
+          this.updateNodesValues(nextProps.graph.get('nodes'));
         }).then(() => {
-          this.updateEdgesValues(graph.get('edgesMessages'));
+          this.updateEdgesValues(nextProps.graph.get('edgesMessages'));
         }).then(() => {
           //console.log('animate');
           this.fatum.animate();
