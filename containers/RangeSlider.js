@@ -4,15 +4,15 @@ import { Provider, connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
   return {
-    graph: state.graph
+    size: state.graph.graphs.size-1,
+    value: state.graph.index
   };
 }
 
-
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
-    setNodesWithIndex: (index) => {
-      dispatch(setNodesWithIndex(index, true));
+    setIndex: (index) => {
+      dispatch(setNodesWithIndex(index));
     }
   };
 }
