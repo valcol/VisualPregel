@@ -194,3 +194,10 @@ export const switchIsPlaying = () => {
   type: 'SWITCH_ISPLAYING'
   };
 };
+
+export const setIsPlaying = (value) => {
+  return {
+  type: 'SET_ISPLAYING',
+  value
+  };
+};

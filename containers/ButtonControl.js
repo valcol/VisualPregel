@@ -1,5 +1,5 @@
 import ButtonControlComponent from '../components/ButtonControl';
-import { switchIsPlaying, goToFirstIndex, goToPreviousIndex, goToNextIndex, goToLastIndex } from '../actions';
+import { setIsPlaying, switchIsPlaying, goToFirstIndex, goToPreviousIndex, goToNextIndex, goToLastIndex } from '../actions';
 import { Provider, connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
@@ -15,14 +15,14 @@ const play = () => {
       if (getState().isPlaying) {
         if (getState().graph.index < getState().graph.graphs.size - 1){
           dispatch(goToNextIndex());
-          window.setTimeout(internalCallback, 5000/getState().refreshValue);
+          window.setTimeout(internalCallback, 3000/getState().refreshValue);
         }
         else {
-          dispatch(switchIsPlaying());
+          dispatch(setIsPlaying(false));
         }
       }
     };
-    window.setTimeout(internalCallback, 5000/getState().refreshValue);
+    window.setTimeout(internalCallback, 3000/getState().refreshValue);
   }
 }
 
@@ -30,15 +30,19 @@ const play = () => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     goToFirstIndex: () => {
+      dispatch(setIsPlaying(false));
       dispatch(goToFirstIndex());
     },
     goToPreviousIndex: () => {
+      dispatch(setIsPlaying(false));
       dispatch(goToPreviousIndex());
     },
     goToNextIndex: () => {
+      dispatch(setIsPlaying(false));
       dispatch(goToNextIndex());
     },
     goToLastIndex: () => {
+      dispatch(setIsPlaying(false));
       dispatch(goToLastIndex());
     },
     play: () => {

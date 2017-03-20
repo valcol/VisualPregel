@@ -195,8 +195,9 @@ const refreshValue = (state = 1, action) => {
 const isPlaying = (state = false, action) => {
   switch (action.type) {
     case 'SWITCH_ISPLAYING':
-    console.log('yayay'+!state);
     return !state;
+    case 'SET_ISPLAYING':
+    return action.value;
     default:
     return state;
   }
