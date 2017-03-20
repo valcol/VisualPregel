@@ -9,7 +9,18 @@ const mapStateToProps = (state) => {
 }
 
 const play = () => {
-  console.log('play');
+  return (dispatch, getState) => {
+    console.log('play');
+    dispatch(switchIsPlaying());
+    let internalCallback = () => {
+      console.log('calllll '+getState().isPlaying)
+      if (getState().isPlaying) {
+          window.setTimeout(internalCallback, 1000);
+          dispatch(goToNextIndex());
+      }
+    };
+    window.setTimeout(internalCallback, 1000);
+  }
 }
 
 
@@ -28,7 +39,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(goToLastIndex());
     },
     play: () => {
-      dispatch(switchIsPlaying());
+      dispatch(play());
     }
   };
 }

@@ -24,7 +24,7 @@ Pregel.prototype.aggregateBase = function(id, attr, messages) {
 };
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise(resolve => setTimeout(resolve, 10));
 }
 
 Pregel.prototype.start = async function(edges, nodes, setNodes, setEdgesMessages, waitingTime) {
@@ -103,7 +103,7 @@ Pregel.prototype.initializeNeighboringSummits = function(id, attr) {
   return [attr, obj];
 };
 
-Pregel.prototype.dispatchNeighboringSummits = function(srcId, srcAttr, dstId, dstAttr) {  
+Pregel.prototype.dispatchNeighboringSummits = function(srcId, srcAttr, dstId, dstAttr) {
   if (srcAttr[1].count == 1) {
     return;
   } else {
@@ -114,13 +114,13 @@ Pregel.prototype.dispatchNeighboringSummits = function(srcId, srcAttr, dstId, ds
 Pregel.prototype.aggregateNeighboringSummits = function(id, attr, messages) {
   let current = attr[0];
   attr[1].count += 1;
-  
+
   for (let message of messages) {
     // push node in incoming array ("tab")
     attr[1].tab.push(message);
   }
 
-  return [current, attr[1]];    
+  return [current, attr[1]];
 };
 
 
@@ -132,8 +132,8 @@ Pregel.prototype.initializeTriangleCounting = function(id, attr) {
    */
   let obj = {
     count: 0,
-    tab: { 
-      to: [], 
+    tab: {
+      to: [],
       from: [],
       id: 0
     },
@@ -142,7 +142,7 @@ Pregel.prototype.initializeTriangleCounting = function(id, attr) {
   return [attr, obj];
 };
 
-Pregel.prototype.dispatchTriangleCounting = function(srcId, srcAttr, dstId, dstAttr) {  
+Pregel.prototype.dispatchTriangleCounting = function(srcId, srcAttr, dstId, dstAttr) {
   if(srcAttr[1].count == 0){
     // fill "to" and "id" for first step
     srcAttr[1].tab.to.push(dstId);
@@ -175,7 +175,7 @@ Pregel.prototype.aggregateTriangleCounting = function(id, attr, messages) {
     return [attr[0], attr[1]];
   }
   if(attr[1].count == 1){
-    // get "tab" object from neighbours 
+    // get "tab" object from neighbours
     attr[1].count +=1;
     let tab2 = [];
     for(let message of messages){
@@ -197,7 +197,7 @@ Pregel.prototype.aggregateTriangleCounting = function(id, attr, messages) {
     // and also if my_i, my_j and my_k can be 3 nodes of a triangle
     let x = 0;
     let y = 0;
-    
+
     // loop over data structure to find 3 nodes that are in a triangle
     for(let i in attr[1].tab.to){
       my_j = attr[1].tab.to[i];
@@ -205,7 +205,7 @@ Pregel.prototype.aggregateTriangleCounting = function(id, attr, messages) {
         my_k = attr[1].tab2[j].id;
         x = attr[1].tab2[j].from.indexOf(my_j);
         y = attr[1].tab2[j].to.indexOf(my_i);
-        if(x > -1 && y > -1){ 
+        if(x > -1 && y > -1){
           // a triangle is found, so its nodes are pushed in "triangles" ( an array)
           triangles.push(my_i, my_j, my_k);
           triangles.sort(function(a, b) {
@@ -223,7 +223,7 @@ Pregel.prototype.aggregateTriangleCounting = function(id, attr, messages) {
    if(attr[1].count == 3){
      attr[1].count +=1;
      return [attr[0], attr[1]];
-   }    
+   }
 };
 
 
