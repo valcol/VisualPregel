@@ -1,20 +1,46 @@
 import React, { Component } from 'react';
-import { FormGroup, ControlLabel, FormControl, Button } from 'react-bootstrap';
+import { FormGroup, ControlLabel, FormControl, Button,Modal } from 'react-bootstrap';
 import CodeMirror from 'react-codemirror';
 import 'codemirror/mode/javascript/javascript';
 
 
-const CodeArea = ({ title, code, resetCode, setCode,open}) => {
+const CodeArea = React.createClass({
+  getInitialState() {
+    return { showModal: false };
+  },
+
+  close() {
+    this.setState({ showModal: false });
+  },
+
+  open() {
+    this.setState({ showModal: true });
+  },
+  render(){
+    const { title, code, resetCode, setCode } = this.props;
   return (
     <div className="code-container">
       <div className='code-area-header'>
         {title}
         <Button bsSize="xsmall" onClick={resetCode} block>Reset</Button>
-		  <Button class="btn-block" bsSize="xsmall" onClick={open} >About</Button>
+        <Button class="btn-block" bsSize="xsmall" onClick={this.open} >About</Button>
+        <Modal show={this.state.showModal} onHide={this.close}>
+         <Modal.Header closeButton>
+           <Modal.Title>Documentation</Modal.Title>
+         </Modal.Header>
+         <Modal.Body>
+           <h4>Function : </h4>
+           <p>TO DO.</p>
+         </Modal.Body>
+         <Modal.Footer>
+           <Button onClick={this.close}>Close</Button>
+         </Modal.Footer>
+       </Modal>
       </div>
       <CodeMirror value={code} onChange={setCode} options={{lineNumbers: true, mode: 'javascript'}} />
     </div>
   );
 }
+});
 
 export default CodeArea;
