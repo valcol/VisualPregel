@@ -2,8 +2,9 @@ import React, {Component} from 'react';
 import { FormGroup, InputGroup, FormControl } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { ButtonToolbar, ButtonGroup, Glyphicon, span } from 'react-bootstrap';
+import Slider from 'rc-slider';
 
-const ButtonControl = ({isPlaying, play, goToFirstIndex, goToPreviousIndex, goToNextIndex,
+const ButtonControl = ({size, value, isPlaying, play, setIndex, goToFirstIndex, goToPreviousIndex, goToNextIndex,
   goToLastIndex, canGoForward, canGoBack}) => {
   return (
       <div>
@@ -26,6 +27,7 @@ const ButtonControl = ({isPlaying, play, goToFirstIndex, goToPreviousIndex, goTo
                </Button>
              </ButtonGroup>
            </ButtonToolbar>
+           <Slider dots step={1} min={0} max={size} value={value} onChange={setIndex}/>
       </div>
     );
   }

@@ -14,7 +14,6 @@ GraphHelpers.prototype.generateRandomGraph = function() {
   return edges;
 }
 
-
 GraphHelpers.prototype.getLayout = function(vertexSize, edges) {
   let g = new Dagre.graphlib.Graph();
   g.setGraph({});

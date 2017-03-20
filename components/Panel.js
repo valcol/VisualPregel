@@ -5,7 +5,6 @@ import { Button } from 'react-bootstrap';
 import PregelMock from '../containers/PregelMock';
 import { FormGroup, InputGroup, FormControl } from 'react-bootstrap';
 import { ButtonToolbar, ButtonGroup, Glyphicon, span } from 'react-bootstrap';
-import RangeSlider from '../containers/RangeSlider';
 import ButtonControl from '../containers/ButtonControl';
 import ValueDropDown from './ValueDropDown';
 import DropdownPreset from './DropdownPreset';
@@ -20,9 +19,6 @@ const Panel = ({setRandomNodes, setPregelMockFunction, setRefreshValue, refreshV
     <ValueDropDown setValue={setRefreshValue} value={refreshValue}/>
     <DropdownPreset setNeighboringSummits={setNeighboringSummits} setTriangleCounting={setTriangleCounting} setDefault={setDefault}/>
     <ButtonControl/>
-    <RangeSlider/>
-
-
     </div>
   );
 }
