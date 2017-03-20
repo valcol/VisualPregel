@@ -49,7 +49,7 @@ index: 0
     case 'NEXT_INDEX':
     return {
       graphs: state.graphs,
-      index: (state.index < state.graphs.size - 1) ? state.index + 1 : state.graphs.size
+      index: (state.index < state.graphs.size - 1) ? state.index + 1 : state.graphs.size - 1
     };
     case 'FIRST_INDEX':
     return {
