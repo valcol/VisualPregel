@@ -31,13 +31,10 @@ index: 0
   let graphToSet;
   switch (action.type) {
     case 'SET_NODES':
-    graphs = state.graphs.push(state.graphs.get(state.graphs.size - 1).mergeDeepIn([], {nodes: action.nodes, id:{nodes: Helpers.generateId()}}));
-    return {graphs, index: state.index};
-    case 'SET_EDGES':
-    graphs = state.graphs.push(state.graphs.get(state.graphs.size - 1).mergeDeepIn([], {edges: action.edges, id:{edges: Helpers.generateId()}}));
+    graphs = state.graphs.push(state.graphs.get(state.graphs.size - 1).set('nodes', Immutable.fromJS(action.nodes)).setIn(['id', 'nodes'], Helpers.generateId()));
     return {graphs, index: state.index};
     case 'SET_EDGES_MESSAGES':
-    graphs = state.graphs.push(state.graphs.get(state.graphs.size - 1).mergeDeepIn([], {edgesMessages: action.edgesMessages, id:{edgesMessages: Helpers.generateId() }}));
+    graphs = state.graphs.push(state.graphs.get(state.graphs.size - 1).set('edgesMessages', Immutable.fromJS(action.edgesMessages)).setIn(['id', 'edgesMessages'], Helpers.generateId()));
     return {graphs, index: state.index};
     case 'SET_INDEX':
     return {graphs: state.graphs, index: action.index};
