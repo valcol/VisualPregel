@@ -4,12 +4,13 @@ import CodeMirror from 'react-codemirror';
 import 'codemirror/mode/javascript/javascript';
 
 
-const CodeArea = ({ title, code, resetCode, setCode}) => {
+const CodeArea = ({ title, code, resetCode, setCode,open}) => {
   return (
     <div className="code-container">
       <div className='code-area-header'>
         {title}
         <Button bsSize="xsmall" onClick={resetCode} block>Reset</Button>
+		  <Button class="btn-block" bsSize="xsmall" onClick={open} >About</Button>
       </div>
       <CodeMirror value={code} onChange={setCode} options={{lineNumbers: true, mode: 'javascript'}} />
     </div>
