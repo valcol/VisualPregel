@@ -24,7 +24,6 @@ Pregel.prototype.aggregateBase = function(id, attr, messages) {
 };
 
 Pregel.prototype.start = function(edges, nodes, setNodes, setEdgesMessages) {
-
     let newNodes = {};
     nodes.entrySeq().forEach(([key,value]) =>{
         let values = this.initialize(value.get('value'), value.get('value'));

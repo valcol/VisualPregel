@@ -64,9 +64,9 @@ index: 0
     case 'INIT_GRAPH':
     return { graphs: List.of(
       Map({
-            nodes : Immutable.fromJS(action.nodes),
+            nodes : action.nodes,
             edges: Immutable.fromJS(action.edges),
-            edgesMessages: Immutable.fromJS(action.edgesMessages),
+            edgesMessages: action.edgesMessages,
             id: Map({
               nodes: Helpers.generateId(),
               edges: Helpers.generateId(),
