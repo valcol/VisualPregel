@@ -3,8 +3,12 @@ import { setIsPlaying, switchIsPlaying, goToFirstIndex, goToPreviousIndex, goToN
 import { Provider, connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
+  let canGoBack = state.graph.index > 0;
+  let canGoForward = state.graph.index < state.graph.graphs.size - 1;
   return {
-    isPlaying: state.isPlaying
+    isPlaying: state.isPlaying,
+    canGoBack,
+    canGoForward
   };
 }
 
