@@ -55,6 +55,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(play());
     },
     setIndex: (index) => {
+      dispatch(setIsPlaying(false));
       dispatch(setIndex(index));
     }
   };
