@@ -10,16 +10,19 @@ const mapStateToProps = (state) => {
 
 const play = () => {
   return (dispatch, getState) => {
-    console.log('play');
     dispatch(switchIsPlaying());
     let internalCallback = () => {
-      console.log('calllll '+getState().isPlaying)
       if (getState().isPlaying) {
-          window.setTimeout(internalCallback, 1000);
+        if (getState().graph.index < getState().graph.graphs.size - 1){
           dispatch(goToNextIndex());
+          window.setTimeout(internalCallback, 5000/getState().refreshValue);
+        }
+        else {
+          dispatch(switchIsPlaying());
+        }
       }
     };
-    window.setTimeout(internalCallback, 1000);
+    window.setTimeout(internalCallback, 5000/getState().refreshValue);
   }
 }
 

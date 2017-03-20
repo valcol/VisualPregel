@@ -183,7 +183,7 @@ const uploadValues = (state = {
 };
 
 
-const refreshValue = (state = "", action) => {
+const refreshValue = (state = 1, action) => {
   switch (action.type) {
     case 'SET_REFRESH_VALUE':
     return action.value;
