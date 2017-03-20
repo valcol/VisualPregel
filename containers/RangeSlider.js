@@ -1,5 +1,5 @@
 import RangeSliderComponent from '../components/RangeSlider';
-import { setNodesWithIndex } from '../actions';
+import { setIndex } from '../actions';
 import { Provider, connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
@@ -12,7 +12,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     setIndex: (index) => {
-      dispatch(setNodesWithIndex(index));
+      dispatch(setIndex(index));
     }
   };
 }

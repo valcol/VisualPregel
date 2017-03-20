@@ -32,15 +32,35 @@ index: 0
   switch (action.type) {
     case 'SET_NODES':
     graphs = state.graphs.push(state.graphs.get(state.graphs.size - 1).mergeDeepIn([], {nodes: action.nodes, id:{nodes: Helpers.generateId()}}));
-    return {graphs, index: state.graphs.size};
+    return {graphs, index: state.index};
     case 'SET_EDGES':
     graphs = state.graphs.push(state.graphs.get(state.graphs.size - 1).mergeDeepIn([], {edges: action.edges, id:{edges: Helpers.generateId()}}));
-    return {graphs, index: state.graphs.size};
+    return {graphs, index: state.index};
     case 'SET_EDGES_MESSAGES':
     graphs = state.graphs.push(state.graphs.get(state.graphs.size - 1).mergeDeepIn([], {edgesMessages: action.edgesMessages, id:{edgesMessages: Helpers.generateId() }}));
-    return {graphs, index: state.graphs.size};
-    case 'SET_NODES_WITH_INDEX':
+    return {graphs, index: state.index};
+    case 'SET_INDEX':
     return {graphs: state.graphs, index: action.index};
+    case 'PREVIOUS_INDEX':
+    return {
+      graphs: state.graphs,
+      index: (state.index > 0) ? state.index - 1 : 0
+    };
+    case 'NEXT_INDEX':
+    return {
+      graphs: state.graphs,
+      index: (state.index < state.graphs.size - 1) ? state.index + 1 : state.graphs.size
+    };
+    case 'FIRST_INDEX':
+    return {
+      graphs: state.graphs,
+      index: 0
+    };
+    case 'LAST_INDEX':
+    return {
+      graphs: state.graphs,
+      index: state.graphs.size - 1
+    };
     case 'INIT_GRAPH':
     return { graphs: List.of(
       Map({
@@ -172,6 +192,16 @@ const refreshValue = (state = "", action) => {
   }
 };
 
+const isPlaying = (state = false, action) => {
+  switch (action.type) {
+    case 'SWITCH_ISPLAYING':
+    console.log('yayay'+!state);
+    return !state;
+    default:
+    return state;
+  }
+};
+
 export default combineReducers({
   error,
   graph,
@@ -180,5 +210,6 @@ export default combineReducers({
   dispatch,
   uploadGraph,
   uploadValues,
-  refreshValue
+  refreshValue,
+  isPlaying
 });

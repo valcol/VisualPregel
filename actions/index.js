@@ -1,11 +1,33 @@
-export const setNodesWithIndex = (index, normalize) => {
+export const setIndex = (index) => {
   return {
-    type: 'SET_NODES_WITH_INDEX',
-    index,
-    normalize
+    type: 'SET_INDEX',
+    index
   };
 };
 
+export const goToFirstIndex = () => {
+  return {
+    type: 'FIRST_INDEX'
+  };
+};
+
+export const goToPreviousIndex = () => {
+  return {
+    type: 'PREVIOUS_INDEX'
+  };
+};
+
+export const goToNextIndex = () => {
+  return {
+    type: 'NEXT_INDEX'
+  };
+};
+
+export const goToLastIndex = () => {
+  return {
+    type: 'LAST_INDEX'
+  };
+};
 
 export const setError = (error) => {
   return {
@@ -164,5 +186,11 @@ export const setRefreshValue = (value) => {
   return {
     type: 'SET_REFRESH_VALUE',
     value
+  };
+};
+
+export const switchIsPlaying = () => {
+  return {
+  type: 'SWITCH_ISPLAYING'
   };
 };

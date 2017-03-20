@@ -3,47 +3,30 @@ import { FormGroup, InputGroup, FormControl } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
 import { ButtonToolbar, ButtonGroup, Glyphicon, span } from 'react-bootstrap';
 
-class ButtonControl extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {isPlayOn: true};
-    this.playButton = this.playButton.bind(this);
-  }
-
-  playButton() {
-    this.setState(prevState => ({
-      isPlayOn: !prevState.isPlayOn
-    }));
-  }
-
-
-  render() {
-    let setNodesWithIndex = this.props.setNodesWithIndex.bind(this);
-    let graph = this.props.graph;
-    return (
+const ButtonControl = ({isPlaying, play, goToFirstIndex, goToPreviousIndex, goToNextIndex, goToLastIndex}) => {
+  return (
       <div>
         <ButtonToolbar>
             <ButtonGroup>
-              <Button bsSize="xsmall" onClick={function(){setNodesWithIndex(1);}}>
-                Back Fast
+              <Button bsSize="xsmall" onClick={goToFirstIndex}>
+                Fast Backwards
               </Button>
-              <Button bsSize="xsmall" onClick={function(){setNodesWithIndex(graph.index - 1);}}>
-                 Back
+              <Button bsSize="xsmall" onClick={goToPreviousIndex}>
+              Previous step
                </Button>
-              <Button bsSize="xsmall" onClick={this.playButton}>
-               {this.state.isPlayOn ? 'Play' : 'Stop'}
+              <Button bsSize="xsmall" onClick={play}>
+               {!isPlaying ? 'Play' : 'Stop'}
                </Button>
-               <Button bsSize="xsmall" onClick={function(){setNodesWithIndex(graph.index + 1);}}>
-              Forward
+               <Button bsSize="xsmall" onClick={goToNextIndex}>
+              Next step
                </Button>
-              <Button bsSize="xsmall" onClick={function(){setNodesWithIndex(graph.graphs.length - 1);}}>
-              Forward Fast
+              <Button bsSize="xsmall" onClick={goToLastIndex}>
+              Fast forward
                </Button>
              </ButtonGroup>
            </ButtonToolbar>
       </div>
     );
   }
-}
 
 export default ButtonControl;
