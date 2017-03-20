@@ -1,4 +1,4 @@
-import Immutable from 'immutable';
+import Immutable,{Map} from 'immutable';
 
 export const setIndex = (index) => {
   return {
@@ -39,8 +39,8 @@ export const setError = (error) => {
 };
 
 export const initGraph = (edges) => {
-  let edgesMessages = Immutable.Map({});
-  let nodes = Immutable.Map({});
+  let edgesMessages = Map({});
+  let nodes = Map({});
   for (let edge in edges) {
     let edgeObject = edges[edge];
     if (!(edgeObject.from in nodes)) {
@@ -48,13 +48,13 @@ export const initGraph = (edges) => {
      let node = {};
      node.value = parseInt(edgeObject.from);
      node.isActive = true;
-     nodes=nodes.set(edgeObject.from,Immutable.Map(node));
+     nodes=nodes.set(edgeObject.from,Map(node));
     }
     if (!(edgeObject.to in nodes)) {
       let node = {};
       node.value = parseInt(edgeObject.to);
       node.isActive = true;
-      nodes=nodes.set(edgeObject.to,Immutable.Map(node));
+      nodes=nodes.set(edgeObject.to,Map(node));
     }
   }
   return {
