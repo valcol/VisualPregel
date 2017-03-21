@@ -24,13 +24,6 @@ const setRandomGraph = () => {
   };
 };
 
-const mapStateToProps = (state) => {
-  return {
-    refreshValue: state.refreshValue
-  };
-}
-
-
 const mapDispatchToProps = (dispatch, ownProps) => {
   return {
     setRandomNodes: () => {
@@ -38,9 +31,6 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     },
     setPregelMockFunction: () => {
       dispatch(pregel());
-    },
-    setRefreshValue: (value) => {
-      dispatch(setRefreshValue(value));
     },
     setNeighboringSummits: () => {
       dispatch(setInitializeFunction(Helpers.functionToString(Pregel.initializeNeighboringSummits)));
@@ -61,7 +51,7 @@ const mapDispatchToProps = (dispatch, ownProps) => {
 }
 
 const Panel = connect(
-  mapStateToProps,
+  null,
   mapDispatchToProps
 )(PanelComponent);
 

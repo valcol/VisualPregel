@@ -44,17 +44,23 @@ export const initGraph = (edges) => {
   for (let edge in edges) {
     let edgeObject = edges[edge];
     if (!(edgeObject.from in nodes)) {
-
-     let node = {};
-     node.value = parseInt(edgeObject.from);
-     node.isActive = true;
-     nodes=nodes.set(edgeObject.from,Map(node));
+     nodes=nodes.set(edgeObject.from, Map(
+       {
+         isActive: true,
+         value:edgeObject.from
+       }
+     ));
     }
     if (!(edgeObject.to in nodes)) {
       let node = {};
       node.value = parseInt(edgeObject.to);
       node.isActive = true;
-      nodes=nodes.set(edgeObject.to,Map(node));
+      nodes=nodes.set(edgeObject.to, Map(
+        {
+          isActive: true,
+          value:edgeObject.to
+        }
+      ));
     }
   }
   return {

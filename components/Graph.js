@@ -108,7 +108,7 @@ class Graph extends Component {
         }
         if (!(value.get('from') in fatumNodes)) {
           fatumNodes[value.get('from')] = this.fatum.addMark().x(this.layout.node(value.get('from')).x).y(this.layout.node(value.get('from')).y).color(217, 83, 79).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
-          fatumNodesLabels[value.get('from')] = this.fatum.addText().text('').x(this.layout.node(value.get('from')).x).y(this.layout.node(value.get('from')).y).textColor(0, 255, 255, 255).font(0).size(13);
+          fatumNodesLabels[value.get('from')] = this.fatum.addText().text('').x(this.layout.node(value.get('from')).x).y(this.layout.node(value.get('from')).y).textColor(0, 0, 0, 255).font(0).size(13);
         }
         let point = GraphHelpers.getMidpoint(this.layout.node(value.get('from')).x, this.layout.node(value.get('to')).x, this.layout.node(value.get('from')).y, this.layout.node(value.get('to')).y);
         fatumEdges[key] = this.fatum.addConnection(fatumNodes[value.get('from')], fatumNodes[value.get('to')]).sourceColor([0, 0, 0, 128]).targetColor([0, 0, 0, 128]);
@@ -141,12 +141,12 @@ class Graph extends Component {
 
   updateEdgesValues(values) {
     let fatumEdgesLabels = this.state.fatumEdgesLabels;
-    values.entrySeq().forEach(([key, value]) => {
-      if (fatumEdgesLabels.hasOwnProperty(key))
-        fatumEdgesLabels[key].text(JSON.stringify(value));
+    for (let key in fatumEdgesLabels){
+      if (values.has(key))
+        fatumEdgesLabels[key].text(JSON.stringify(values.get(key)));
       else
         fatumEdgesLabels[key].text('');
-    });
+    }
     this.fatum.refresh();
   }
 
@@ -164,7 +164,7 @@ class Graph extends Component {
         <div className='graph-area-header'>
           Graph
         </div>
-          <canvas id='fatum-canvas' width={'500px'} height={'500px'}></canvas>
+          <canvas id='fatum-canvas' width={'900px'} height={'500px'}></canvas>
       </div>
     </Measure>
     );
