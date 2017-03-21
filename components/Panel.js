@@ -13,9 +13,10 @@ const Panel = ({setRandomNodes, setPregelMockFunction, setNeighboringSummits, se
     <div className='panel'>
     <UploadGraphBox idName = "graph" label = "Upload graph file :"/>
     <UploadValuesBox idName="values" label="Upload values file :"/>
+    <DropdownPreset setNeighboringSummits={setNeighboringSummits} setTriangleCounting={setTriangleCounting} setDefault={setDefault}/>
     <Button bsSize="large" onClick={setRandomNodes} block>Generate random graph</Button>
     <PregelMock pregelMock = {setPregelMockFunction}/>
-    <DropdownPreset setNeighboringSummits={setNeighboringSummits} setTriangleCounting={setTriangleCounting} setDefault={setDefault}/>
+    <br></br>
     <ButtonControl/>
     </div>
   );

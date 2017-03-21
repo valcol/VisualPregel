@@ -108,7 +108,7 @@ class Graph extends Component {
         }
         if (!(value.get('from') in fatumNodes)) {
           fatumNodes[value.get('from')] = this.fatum.addMark().x(this.layout.node(value.get('from')).x).y(this.layout.node(value.get('from')).y).color(217, 83, 79).show().alpha(255).width(this.vertexSize).height(this.vertexSize);
-          fatumNodesLabels[value.get('from')] = this.fatum.addText().text('').x(this.layout.node(value.get('from')).x).y(this.layout.node(value.get('from')).y).textColor(0, 255, 255, 255).font(0).size(13);
+          fatumNodesLabels[value.get('from')] = this.fatum.addText().text('').x(this.layout.node(value.get('from')).x).y(this.layout.node(value.get('from')).y).textColor(0, 0, 0, 255).font(0).size(13);
         }
         let point = GraphHelpers.getMidpoint(this.layout.node(value.get('from')).x, this.layout.node(value.get('to')).x, this.layout.node(value.get('from')).y, this.layout.node(value.get('to')).y);
         fatumEdges[key] = this.fatum.addConnection(fatumNodes[value.get('from')], fatumNodes[value.get('to')]).sourceColor([0, 0, 0, 128]).targetColor([0, 0, 0, 128]);
