@@ -82,34 +82,34 @@ Pregel.prototype.start = function(edges, nodes, setNodes, setEdgesMessages) {
 
 
 Pregel.prototype.initializeNeighboringSummits = function(id, attr) {
-  /* In the data structure below, obj.count is the current iteration number
-    obj.tab will contain every incoming nodes (nodes we can receive messages from)
+  /* In the array below, the boolean is used to detect if a node has other neighbours
+   and id is the node identifier. Numbers after that indentifier are
+   the node's neighbours (nodes the identifier can receive messages from)
   */
-  let obj = {
-  count: 0,
-  tab: []
-  };
-  return [attr, obj];
+  return [false, id];
 };
 
 Pregel.prototype.dispatchNeighboringSummits = function(srcId, srcAttr, dstId, dstAttr) {
-  if (srcAttr[1].count == 1) {
+  if (srcAttr[0] == true) {
+    srcAttr[0] = false;
     return;
   } else {
-    return srcAttr[0];
+    return srcAttr;
   }
 };
 
 Pregel.prototype.aggregateNeighboringSummits = function(id, attr, messages) {
-  let current = attr[0];
-  attr[1].count += 1;
-
-  for (let message of messages) {
-    // push node in incoming array ("tab")
-    attr[1].tab.push(message);
+  attr[0] = true;
+  for (let tab in messages) {
+    for (let i = 1; i<messages[tab].length; i++) {
+      if (attr.indexOf(messages[tab][i]) == -1) {
+        // new neighbour found
+        attr.push(messages[tab][i]);
+        attr[0] = false;
+      }
+    }
   }
-
-  return [current, attr[1]];
+  return attr;
 };
 
 
