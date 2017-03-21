@@ -1,10 +1,13 @@
 let Pregel = function() {};
 
 Pregel.prototype.initializeBase = function(id, attr) {
+  /* id represent the id of the vertex
+  attr : the vertex's current property */
   return [attr, -1];
 };
 
 Pregel.prototype.dispatchBase = function(srcId, srcAttr, dstId, dstAttr) {
+  /* The parameters of this function represent the source and destination of the id of the vertex as well as its property*/
   if (srcAttr[0] == srcAttr[1]) {
     return;
   }
@@ -14,6 +17,9 @@ Pregel.prototype.dispatchBase = function(srcId, srcAttr, dstId, dstAttr) {
 };
 
 Pregel.prototype.aggregateBase = function(id, attr, messages) {
+  /*
+  The parameters of this function are the same as the Initialize function but with a pair of messages on top
+  */
   let current = attr[0];
   for (let message of messages) {
     if (message < current) {
