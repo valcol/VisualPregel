@@ -17,7 +17,7 @@ const App = () => {
     <Grid fluid>
       <ModuleError/>
       <Row className="app-container no-padding no-margin">
-          <SplitPane split="vertical" defaultSize="20%">
+          <SplitPane split="vertical" defaultSize="23%">
             <Panel/>
             <SplitPane split="horizontal" defaultSize="40%">
               <SplitPane split="vertical" defaultSize="50%">

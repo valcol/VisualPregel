@@ -1,5 +1,5 @@
 import ButtonControlComponent from '../components/ButtonControl';
-import { setIndex, setIsPlaying, switchIsPlaying, goToFirstIndex, goToPreviousIndex, goToNextIndex, goToLastIndex } from '../actions';
+import { setIndex, setIsPlaying, switchIsPlaying, goToFirstIndex, goToPreviousIndex, goToNextIndex, goToLastIndex, setRefreshValue } from '../actions';
 import { Provider, connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
@@ -10,7 +10,8 @@ const mapStateToProps = (state) => {
     canGoBack,
     canGoForward,
     size: state.graph.graphs.size-1,
-    value: state.graph.index
+    value: state.graph.index,
+    speed: state.refreshValue
   };
 }
 
@@ -57,6 +58,9 @@ const mapDispatchToProps = (dispatch, ownProps) => {
     setIndex: (index) => {
       dispatch(setIsPlaying(false));
       dispatch(setIndex(index));
+    },
+    setSpeed: (value) => {
+      dispatch(setRefreshValue(value));
     }
   };
 }
