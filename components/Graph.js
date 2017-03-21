@@ -141,12 +141,12 @@ class Graph extends Component {
 
   updateEdgesValues(values) {
     let fatumEdgesLabels = this.state.fatumEdgesLabels;
-    values.entrySeq().forEach(([key, value]) => {
-      if (fatumEdgesLabels.hasOwnProperty(key))
-        fatumEdgesLabels[key].text(JSON.stringify(value));
+    for (let key in fatumEdgesLabels){
+      if (values.has(key))
+        fatumEdgesLabels[key].text(JSON.stringify(values.get(key)));
       else
         fatumEdgesLabels[key].text('');
-    });
+    }
     this.fatum.refresh();
   }
 
@@ -164,7 +164,7 @@ class Graph extends Component {
         <div className='graph-area-header'>
           Graph
         </div>
-          <canvas id='fatum-canvas' width={'500px'} height={'500px'}></canvas>
+          <canvas id='fatum-canvas' width={'900px'} height={'500px'}></canvas>
       </div>
     </Measure>
     );
