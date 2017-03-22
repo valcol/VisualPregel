@@ -19,7 +19,7 @@ const DropdownPreset = ({setNeighboringSummits, setTriangleCounting, setDefault}
             setDefault();
           }
         }}>
-        <option value="Defalut">Default Algo</option>
+        <option value="Minimum">Minimum</option>
         <option value="NeighboringSummits">Neighboring Summits</option>
         <option value="TriangleCounting">Triangle Counting</option>
       </FormControl>
