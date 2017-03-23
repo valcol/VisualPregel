@@ -8,7 +8,9 @@ const UploadBox = ({label, file, handleUpload, separator, setSeparator, percent,
     <div>
       <FileSelector label={label} file={file} handleUpload={handleUpload}/>
       <Dropdown setSeparator={setSeparator} separator={separator}/>
-      <ProgressBar percent={percent} bsStyle={style}/>
+      {
+        (percent>0) ? <ProgressBar percent={percent} bsStyle={style}/> : <div></div>
+      }
     </div>
   );
 }
