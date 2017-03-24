@@ -45,9 +45,8 @@ Pregel.prototype.start = function(edges, nodes, setNodes, setEdgesMessages) {
 
       for (let edge in edgesBis) {
         let edgeObject = edgesBis[edge];
-        if (newNodes[edgeObject.from].isActive) {
           let message = this.dispatch(edgeObject.from, newNodes[edgeObject.from].value, edgeObject.to, newNodes[edgeObject.to].value);
-          if (message){
+          if (typeof message !== 'undefined') {
             newEdgesMessages[edge] = message;
             messagesFrom[edgeObject.from] = true;
             if (!(edgeObject.to in messages))
@@ -55,21 +54,13 @@ Pregel.prototype.start = function(edges, nodes, setNodes, setEdgesMessages) {
             else
               messages[edgeObject.to].push(message);
           }
-        }
       }
 
     setEdgesMessages(newEdgesMessages);
-      nodes.entrySeq().forEach(([key,value]) =>{
-          if ((value.get('value') in messages)) {
-              newNodes2[value.get('value')] = {};
-              newNodes2[value.get('value')].isActive = true;
-              newNodes2[value.get('value')].value = this.aggregate(value.get('value'), newNodes[value.get('value')].value, messages[value.get('value')]);
-          }
-          else {
-              newNodes2[value.get('value')] = {};
-              newNodes2[value.get('value')].isActive = false;
-              newNodes2[value.get('value')].value = newNodes[value.get('value')].value;
-          }
+      nodes.entrySeq().forEach(([key,value]) => {
+          newNodes2[key] = {};
+          newNodes2[key].isActive = messagesFrom[key] ? true : false;
+          newNodes2[key].value = this.aggregate(key, newNodes[key].value, messages[key] ? messages[key] : []);
       });
     setNodes(newNodes2);
     newNodes = newNodes2;
