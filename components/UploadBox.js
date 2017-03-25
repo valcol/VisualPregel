@@ -5,7 +5,7 @@ import FileSelector from './FileSelector';
 
 const UploadBox = ({label, file, handleUpload, separator, setSeparator, percent, style }) => {
   return (
-    <div>
+    <div className='uploadBox'>
       <FileSelector label={label} file={file} handleUpload={handleUpload}/>
       <Dropdown setSeparator={setSeparator} separator={separator}/>
       {
