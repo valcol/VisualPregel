@@ -6,9 +6,9 @@ Pregel.prototype.initializeBase = function(id, attr) {
   return [attr, -1];
 };
 
-Pregel.prototype.dispatchBase = function(srcId, srcAttr, dstId, dstAttr) {
+Pregel.prototype.dispatchBase = function(srcId, srcAttr, dstId, dstAttr, isANeighbour) {
   /* The parameters of this function represent the source and destination of the id of the vertex as well as its property*/
-  if (srcAttr[0] == srcAttr[1]) {
+  if (srcAttr[0] == srcAttr[1] || !isANeighbour) {
     return;
   }
   else {
@@ -95,13 +95,15 @@ Pregel.prototype.initializeNeighboringSummits = function(id, attr) {
   return [false, id];
 };
 
-Pregel.prototype.dispatchNeighboringSummits = function(srcId, srcAttr, dstId, dstAttr) {
-  if (srcAttr[0] == true) {
-    srcAttr[0] = false;
-    return;
-  } else {
-    return srcAttr;
-  }
+Pregel.prototype.dispatchNeighboringSummits = function(srcId, srcAttr, dstId, dstAttr, isANeighbour) {
+  if (isANeighbour)
+    if (srcAttr[0] == true) {
+      srcAttr[0] = false;
+      return;
+    } else {
+      return srcAttr;
+    }
+  else return;
 };
 
 Pregel.prototype.aggregateNeighboringSummits = function(id, attr, messages) {
@@ -138,23 +140,25 @@ Pregel.prototype.initializeTriangleCounting = function(id, attr) {
   return obj;
 };
 
-Pregel.prototype.dispatchTriangleCounting = function(srcId, srcAttr, dstId, dstAttr) {
-  if (srcAttr.n == 0) {
-    if(! srcAttr.tab.to.includes(dstId)){
-      // fill "to" and "id" for first step
-      srcAttr.tab.to.push(dstId);
-      srcAttr.tab.id = srcId;
+Pregel.prototype.dispatchTriangleCounting = function(srcId, srcAttr, dstId, dstAttr, isANeighbour) {
+  if (isANeighbour) {
+    if (srcAttr.n == 0) {
+      if(! srcAttr.tab.to.includes(dstId)){
+        // fill "to" and "id" for first step
+        srcAttr.tab.to.push(dstId);
+        srcAttr.tab.id = srcId;
+      }
+      return srcId;
+    } else if (srcAttr.n == 1) {
+      // send "tab" object to neighbours
+      return srcAttr;
+    } else if (srcAttr.n == 2) {
+      // send "Tr" object to neighbours
+      return srcAttr.Tr;
+    } else {
+      return;
     }
-    return srcId;
-  } else if (srcAttr.n == 1) {
-    // send "tab" object to neighbours
-    return srcAttr;
-  } else if (srcAttr.n == 2) {
-    // send "Tr" object to neighbours
-    return srcAttr.Tr;
-  } else {
-    return;
-  }
+  } else return;
 };
 
 Pregel.prototype.aggregateTriangleCounting = function(id, attr, messages) {
