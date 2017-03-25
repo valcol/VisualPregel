@@ -24,8 +24,8 @@ const CodeArea = React.createClass({
       <div className='code-area-header'>
         {title}
         <div className='toolbox'>
-          <FontAwesome name='refresh' onClick={resetCode}/>
-          <FontAwesome name='question-circle' onClick={this.open}/>
+          <FontAwesome name='refresh' title='Reset code' onClick={resetCode}/>
+          <FontAwesome name='question-circle' title='Help' onClick={this.open}/>
         </div>
         <Modal show={this.state.showModal} onHide={this.close}>
          <Modal.Header closeButton>
