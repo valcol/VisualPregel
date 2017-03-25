@@ -18,14 +18,14 @@ const App = () => {
     <Grid fluid>
       <ModuleError/>
       <Row className="app-container no-padding no-margin">
-          <SplitPane split="vertical" defaultSize="15%">
+          <SplitPane split="vertical" defaultSize="300" minSize="300" allowResize={false}>
             <Panel/>
-            <SplitPane split="horizontal" defaultSize="30%">
-              <SplitPane split="vertical" defaultSize="30%">
+            <SplitPane split="horizontal" defaultSize="30%" minSize="200">
+              <SplitPane split="vertical" defaultSize="40%" minSize="300" allowResize={false}>
                 <CodeAreaInitialize />
                 <CodeAreaDispatch/>
               </SplitPane>
-              <SplitPane split="vertical" defaultSize="30%">
+              <SplitPane split="vertical" defaultSize="40%" minSize="300" allowResize={false}>
                 <CodeAreaAggregate/>
                 <div>
                   <Graph/>

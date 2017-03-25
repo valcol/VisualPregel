@@ -14,7 +14,7 @@ class PregelMock extends Component {
   }
 
   render() {
-    return (<Button bsSize = "large" onClick = { this.handleClick } block > Apply Pregel algorithm </Button>
+    return (<Button className='pregel_button' bsSize = "large" onClick = { this.handleClick } block > Apply Pregel algorithm </Button>
     );
   }
 }

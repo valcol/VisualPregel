@@ -83,6 +83,7 @@ class Graph extends Component {
     this.fatum.layerOn(Fatum.MARKS | Fatum.TEXT | Fatum.CONNECTIONS);
     this.fatum.background([243,245,246,255]);
     this.props.setRandomNodes();
+
   }
 
   reset() {
@@ -117,6 +118,7 @@ class Graph extends Component {
       });
 
       this.fatum.camera().zoom(1, [0, 0]);
+    //  this.fatum.center();
       this.fatum.camera().swap();
       this.setState({ fatumNodesLabels, fatumNodes, fatumEdgesLabels, fatumEdges });
       resolve();
@@ -158,6 +160,10 @@ class Graph extends Component {
       <Measure
         onMeasure={(dimensions) => {
           this.setState({dimensions})
+          if (this.fatum){
+            this.fatum.camera().setViewport([0,0,dimensions.width,dimensions.height]);
+            this.fatum.refresh();
+          }
         }
       }
       >
@@ -165,7 +171,7 @@ class Graph extends Component {
         <div className='graph-area-header'>
           Graph
         </div>
-          <canvas id='fatum-canvas' width={'1100px'} height={'500px'}></canvas>
+          <canvas id='fatum-canvas' width={width+'px'} height={height-50+'px'}></canvas>
       </div>
     </Measure>
     );
