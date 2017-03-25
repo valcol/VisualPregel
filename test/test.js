@@ -116,7 +116,7 @@ describe('parsingValues()',function(){
 describe('dispatchBase()',function(){
   let srcId = 1, srcAttr = [10, -1];
   it('test dispatch function [Pregel]', function() {
-    let dispatch = Pregel.dispatchBase(srcId, srcAttr);
+    let dispatch = Pregel.dispatchBase(srcId, srcAttr, null, null, true);
     let result = 10;
     assert.equal(dispatch, result);
   });
@@ -255,17 +255,19 @@ describe('Pregel.start()',function(){
     }
 }];
 
-  let expectedMessages = [{
-   "0": 1,
-   "1": 2,
-   "2": 3,
-   "3": 4,
-   "4": 1
-  }, {
-   "1": 1,
-   "2": 1
-  },
-      {}];
+  let expectedMessages = [
+{
+    "1": 1,
+    "2": 2,
+    "3": 3,
+    "4": 4,
+    "5": 1
+},
+{
+    "2": 1,
+    "3": 1
+},
+{}];
 
   let setNodes  = function(nodes){
     setNodesCalls.push(nodes);
@@ -275,7 +277,7 @@ describe('Pregel.start()',function(){
   };
   it('test start function [Pregel]', function () {
     Pregel.start(edges, nodes, setNodes, setEdgesMessages, 0);
-    console.log(JSON.stringify(setNodesCalls));
+    console.log(JSON.stringify(setEMCalls));
     assert.deepEqual(setNodesCalls,expectedNodes);
     assert.deepEqual(setEMCalls,expectedMessages);
   });
