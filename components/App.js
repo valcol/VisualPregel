@@ -19,12 +19,12 @@ const App = () => {
       <Row className="app-container no-padding no-margin">
           <SplitPane split="vertical" defaultSize="23%">
             <Panel/>
-            <SplitPane split="horizontal" defaultSize="40%">
+            <SplitPane split="horizontal" defaultSize="30%">
               <SplitPane split="vertical" defaultSize="50%">
                 <CodeAreaInitialize />
                 <CodeAreaDispatch/>
               </SplitPane>
-              <SplitPane split="vertical" defaultSize="45%">
+              <SplitPane split="vertical" defaultSize="25%">
                 <CodeAreaAggregate/>
                 <Graph/>
               </SplitPane>
