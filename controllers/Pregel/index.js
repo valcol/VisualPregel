@@ -38,32 +38,41 @@ Pregel.prototype.start = function(edges, nodes, setNodes, setEdgesMessages) {
 
   let maxIterations = 30;
   setNodes(newNodes);
+
+  let isANeighbourg = {};
+  edges.entrySeq().forEach(([key,value]) =>{
+    isANeighbourg[value.get('from')+"to"+value.get('to')] = key;
+  });
+
   while ((maxIterations !== 0)) {
     let messages = {};
     let newNodes2 = {};
     let newEdgesMessages = {};
     let messagesFrom = {};
+    let destNodes = {};
 
-      let edgesBis=[];
-      edges.entrySeq().forEach(([key,value]) =>{
-        edgesBis.push({from: value.get('from'), to : value.get('to')});
-      });
-
-      for (let edge in edgesBis) {
-        let edgeObject = edgesBis[edge];
-          let message = this.dispatch(edgeObject.from, newNodes[edgeObject.from].value, edgeObject.to, newNodes[edgeObject.to].value);
-          if (typeof message !== 'undefined') {
-            newEdgesMessages[edge] = message;
-            messagesFrom[edgeObject.from] = true;
-            if (!(edgeObject.to in messages))
-              messages[edgeObject.to] = [message];
-            else
-              messages[edgeObject.to].push(message);
-          }
+    for (let keyFrom in newNodes) {
+      let valueFrom = newNodes[keyFrom].value;
+      for (let keyTo in newNodes) {
+        let valueTo = newNodes[keyTo].value;
+        let message = this.dispatch(keyFrom, valueFrom, keyTo, valueTo,
+          isANeighbourg[keyFrom+'to'+keyTo] ? true : false);
+        console.log(valueFrom);
+        if (typeof message !== 'undefined') {
+          if (typeof isANeighbourg[keyFrom+'to'+keyTo] !== 'undefined')
+            newEdgesMessages[isANeighbourg[keyFrom+'to'+keyTo]] = message;
+          messagesFrom[keyFrom] = true;
+          destNodes[keyTo] = true;
+          if (!(keyTo in messages))
+            messages[keyTo] = [message];
+          else
+            messages[keyTo].push(message);
+        }
       }
+    }
 
-    setEdgesMessages(newEdgesMessages);
-      nodes.entrySeq().forEach(([key,value]) => {
+     setEdgesMessages(newEdgesMessages);
+    nodes.entrySeq().forEach(([key,value]) => {
           newNodes2[key] = {};
           newNodes2[key].isActive = messagesFrom[key] ? true : false;
           newNodes2[key].value = this.aggregate(key, newNodes[key].value, messages[key] ? messages[key] : []);
