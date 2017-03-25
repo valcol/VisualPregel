@@ -165,75 +165,95 @@ describe('Pregel.start()',function(){
     '5': { from:1, to:3 }
   });
 
-  let expectedNodes = [{
-   "1": {
-    "value": [1, -1],
-    "isActive": true
-   },
-   "2": {
-    "value": [2, -1],
-    "isActive": true
-   },
-   "3": {
-    "value": [3, -1],
-    "isActive": true
-   },
-   "4": {
-    "value": [4, -1],
-    "isActive": true
-   }
-  }, {
-   "1": {
-    "isActive": true,
-    "value": [1, 1]
-   },
-   "2": {
-    "isActive": true,
-    "value": [1, 2]
-   },
-   "3": {
-    "isActive": true,
-    "value": [1, 3]
-   },
-   "4": {
-    "isActive": false,
-    "value": [4, -1]
-   }
-  }, {
-   "1": {
-    "isActive": false,
-    "value": [1, 1]
-   },
-   "2": {
-    "isActive": true,
-    "value": [1, 1]
-   },
-   "3": {
-    "isActive": true,
-    "value": [1, 1]
-   },
-   "4": {
-    "isActive": false,
-    "value": [4, -1]
-   }
-  }, {
-   "1": {
-    "isActive": false,
-    "value": [1, 1]
-   },
-   "2": {
-    "isActive": false,
-    "value": [1, 1]
-   },
-   "3": {
-    "isActive": false,
-    "value": [1, 1]
-   },
-   "4": {
-    "isActive": false,
-    "value": [4, -1]
-   }
- }];
+  let expectedNodes = [
+{
+    "1":
+    {
+        "value": [1, -1],
+        "isActive": true
+    },
+    "2":
+    {
+        "value": [2, -1],
+        "isActive": true
+    },
+    "3":
+    {
+        "value": [3, -1],
+        "isActive": true
+    },
+    "4":
+    {
+        "value": [4, -1],
+        "isActive": true
+    }
+},
+{
+    "1":
+    {
+        "isActive": true,
+        "value": [1, 1]
+    },
+    "2":
+    {
+        "isActive": true,
+        "value": [1, 2]
+    },
+    "3":
+    {
+        "isActive": true,
+        "value": [1, 3]
+    },
+    "4":
+    {
+        "isActive": true,
+        "value": [4, 4]
+    }
+},
+{
+    "1":
+    {
+        "isActive": false,
+        "value": [1, 1]
+    },
+    "2":
+    {
+        "isActive": true,
+        "value": [1, 1]
+    },
+    "3":
+    {
+        "isActive": true,
+        "value": [1, 1]
+    },
+    "4":
+    {
+        "isActive": false,
+        "value": [4, 4]
+    }
+},
+{
+    "1":
+    {
+        "isActive": false,
+        "value": [1, 1]
+    },
+    "2":
+    {
+        "isActive": false,
+        "value": [1, 1]
+    },
+    "3":
+    {
+        "isActive": false,
+        "value": [1, 1]
+    },
+    "4":
+    {
+        "isActive": false,
+        "value": [4, 4]
+    }
+}];
 
   let expectedMessages = [{
    "0": 1,
@@ -255,6 +275,7 @@ describe('Pregel.start()',function(){
   };
   it('test start function [Pregel]', function () {
     Pregel.start(edges, nodes, setNodes, setEdgesMessages, 0);
+    console.log(JSON.stringify(setNodesCalls));
     assert.deepEqual(setNodesCalls,expectedNodes);
     assert.deepEqual(setEMCalls,expectedMessages);
   });
