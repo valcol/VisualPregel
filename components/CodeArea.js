@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FormGroup, ControlLabel, FormControl, Button,Modal } from 'react-bootstrap';
 import CodeMirror from 'react-codemirror';
 import 'codemirror/mode/javascript/javascript';
+import FontAwesome from 'react-fontawesome';
 
 
 const CodeArea = React.createClass({
@@ -22,8 +23,10 @@ const CodeArea = React.createClass({
     <div className="code-container">
       <div className='code-area-header'>
         {title}
-        <Button bsSize="xsmall" onClick={resetCode} block>Reset</Button>
-        <Button class="btn-block" bsSize="xsmall" onClick={this.open} >About</Button>
+        <div className='toolbox'>
+          <FontAwesome name='refresh' onClick={resetCode}/>
+          <FontAwesome name='question-circle' onClick={this.open}/>
+        </div>
         <Modal show={this.state.showModal} onHide={this.close}>
          <Modal.Header closeButton>
            <Modal.Title>Documentation</Modal.Title>

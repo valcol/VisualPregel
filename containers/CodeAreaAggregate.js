@@ -4,7 +4,7 @@ import { Provider, connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
   return {
-    title: '1. Aggregate',
+    title: 'Aggregate',
     code: state.aggregate
   };
 }

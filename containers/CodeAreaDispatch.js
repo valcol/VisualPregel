@@ -4,7 +4,7 @@ import { Provider, connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
   return {
-    title: '2. Dispatch',
+    title: 'Dispatch',
     code: state.dispatch
   };
 }

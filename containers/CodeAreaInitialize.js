@@ -4,7 +4,7 @@ import { Provider, connect } from 'react-redux';
 
 const mapStateToProps = (state) => {
   return {
-    title: '1. Initialize',
+    title: 'Initialize',
     code: state.initialize
   };
 }
