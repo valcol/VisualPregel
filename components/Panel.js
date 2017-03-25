@@ -17,7 +17,6 @@ const Panel = ({setRandomNodes, setPregelMockFunction, setNeighboringSummits, se
     <Button bsSize="large" onClick={setRandomNodes} block>Generate random graph</Button>
     <PregelMock pregelMock = {setPregelMockFunction}/>
     <br></br>
-    <ButtonControl/>
     </div>
   );
 }

@@ -11,22 +11,26 @@ import CodeAreaAggregate from '../containers/CodeAreaAggregate';
 import Graph from '../containers/Graph';
 import Panel from '../containers/Panel';
 import ModuleError from '../containers/ModuleError';
+import ButtonControl from '../containers/ButtonControl';
 
 const App = () => {
   return (
     <Grid fluid>
       <ModuleError/>
       <Row className="app-container no-padding no-margin">
-          <SplitPane split="vertical" defaultSize="23%">
+          <SplitPane split="vertical" defaultSize="15%">
             <Panel/>
             <SplitPane split="horizontal" defaultSize="30%">
-              <SplitPane split="vertical" defaultSize="50%">
+              <SplitPane split="vertical" defaultSize="30%">
                 <CodeAreaInitialize />
                 <CodeAreaDispatch/>
               </SplitPane>
-              <SplitPane split="vertical" defaultSize="25%">
+              <SplitPane split="vertical" defaultSize="30%">
                 <CodeAreaAggregate/>
-                <Graph/>
+                <div>
+                  <Graph/>
+                  <ButtonControl/>
+                </div>
               </SplitPane>
             </SplitPane>
           </SplitPane>

@@ -3,29 +3,38 @@ import { FormGroup, InputGroup, FormControl, DropdownButton, MenuItem } from 're
 import { Button } from 'react-bootstrap';
 import { ButtonToolbar, ButtonGroup, Glyphicon, span } from 'react-bootstrap';
 import Slider from 'rc-slider';
+import FontAwesome from 'react-fontawesome';
 
 const ButtonControl = ({size, value, isPlaying, play, setIndex, goToFirstIndex, goToPreviousIndex, goToNextIndex,
   goToLastIndex, canGoForward, canGoBack, setSpeed, speed}) => {
   return (
-      <div>
-        <ButtonToolbar>
+      <div className='controls'>
+          <div className='controls_buttons_left' >
+            <ButtonToolbar>
             <ButtonGroup>
               <Button bsSize="xsmall" onClick={goToFirstIndex} disabled={!canGoBack}>
-                Fast Backwards
+              <FontAwesome name='fast-backward' />
               </Button>
               <Button bsSize="xsmall" onClick={goToPreviousIndex} disabled={!canGoBack}>
-              Previous step
+                <FontAwesome name='step-backward' />
                </Button>
               <Button bsSize="xsmall" onClick={play} disabled={!canGoForward}>
-               {!isPlaying ? 'Play' : 'Stop'}
+               {!isPlaying ? <FontAwesome name='play' /> : <FontAwesome name='pause' />}
                </Button>
                <Button bsSize="xsmall" onClick={goToNextIndex} disabled={!canGoForward}>
-              Next step
+                <FontAwesome name='step-forward' />
                </Button>
               <Button bsSize="xsmall" onClick={goToLastIndex} disabled={!canGoForward}>
-              Fast forward
+                <FontAwesome name='fast-forward' />
                </Button>
-               <DropdownButton bsSize="xsmall" title={'x'+speed} id="bg-nested-dropdown">
+             </ButtonGroup>
+           </ButtonToolbar>
+          </div>
+          <div className='controls_slider'>
+           <Slider dots step={1} min={0} max={size} value={value} onChange={setIndex}/>
+          </div>
+          <div className='controls_buttons_right' >
+               <DropdownButton dropup={true} bsSize="xsmall" title={'x'+speed} id="bg-nested-dropdown">
                  <MenuItem eventKey="0.25" onClick={()=>{setSpeed(0.25)}}>
                    x0.25
                  </MenuItem>
@@ -48,9 +57,7 @@ const ButtonControl = ({size, value, isPlaying, play, setIndex, goToFirstIndex, 
                   x16
                 </MenuItem>
               </DropdownButton>
-             </ButtonGroup>
-           </ButtonToolbar>
-           <Slider dots step={1} min={0} max={size} value={value} onChange={setIndex}/>
+          </div>
       </div>
     );
   }

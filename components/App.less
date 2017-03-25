@@ -1,6 +1,6 @@
 @import (inline) "../node_modules/codemirror/lib/codemirror.css";
 
-@color1:#2c2c2c;
+@color1:#ffffff;
 @color2:#f3f5f6;
 @color3: #7f94a1;
 @color4: #43a3f5;
@@ -125,9 +125,9 @@ Resizer.disabled:hover {
 .code-container{
   height: 100%;
   width: 100%;
-  font-family: 'Inconsolata','Monaco',"Andale Mono","Lucida Console","Bitstream Vera Sans Mono","Courier New",'Courier','monospace';
+  font-family: 'BlinkMacSystemFont',"Segoe UI",'Roboto','Oxygen','Ubuntu','Cantarell',"Fira Sans","Droid Sans","Helvetica Neue",'Arial',"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+  font-size: 12px;
   background-color: @color2;
-  font-size: 13px;
 }
 
 .CodeMirror-scroll {
@@ -147,7 +147,7 @@ Resizer.disabled:hover {
 .graph-container{
   height: 100%;
   width: 100%;
-  font-family: 'Inconsolata','Monaco',"Andale Mono","Lucida Console","Bitstream Vera Sans Mono","Courier New",'Courier','monospace';
+  font-family: 'BlinkMacSystemFont',"Segoe UI",'Roboto','Oxygen','Ubuntu','Cantarell',"Fira Sans","Droid Sans","Helvetica Neue",'Arial',"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
   background-color: @color2;
 }
 
@@ -157,7 +157,7 @@ Resizer.disabled:hover {
   text-transform: uppercase;
   background-color: @color2;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
-  font-size: 13px;
+  font-size: 12px;
 }
 
 
@@ -166,4 +166,48 @@ Resizer.disabled:hover {
   padding: 10px;
   background-color: @color1;
   height: 100%;
+}
+
+//Controls
+.controls {
+  position: absolute;
+  bottom: 0;
+  height: 60px;
+  width: 100%;
+  background-color: @color1;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.controls_buttons_left {
+  height: 60px;
+  width: 300px;
+  float:left;
+}
+
+.controls_buttons_right {
+  height: 60px;
+  width: 60px;
+  float:right;
+  margin-top: 0px;
+}
+
+.controls_buttons_right button {
+  height: 60px;
+  width: 60px;
+  float:left;
+  margin-top: -63px;
+  border: none;
+}
+
+.controls_buttons_left button {
+  height: 60px;
+  width: 60px;
+  float: right;
+  border: none;
+}
+
+.controls_slider {
+  overflow: hidden;
+  padding: 25px;
+  padding-right: 80px;
 }

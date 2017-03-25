@@ -81,6 +81,7 @@ class Graph extends Component {
     Fatum.setMouseMoveHandler(canvas, this.fatum);
   //  Fatum.setCanvasSize(500, 500, true);
     this.fatum.layerOn(Fatum.MARKS | Fatum.TEXT | Fatum.CONNECTIONS);
+    this.fatum.background([243,245,246,255]);
     this.props.setRandomNodes();
   }
 
@@ -164,7 +165,7 @@ class Graph extends Component {
         <div className='graph-area-header'>
           Graph
         </div>
-          <canvas id='fatum-canvas' width={'900px'} height={'500px'}></canvas>
+          <canvas id='fatum-canvas' width={'1100px'} height={'500px'}></canvas>
       </div>
     </Measure>
     );
