@@ -12,9 +12,6 @@ const DropdownPreset = ({setNeighboringSummits, setTriangleCounting, setDefault}
           case 'NeighboringSummits':
             setNeighboringSummits();
             return;
-          case 'ShortPath':
-            console.log('SHORT PATH NOT IMPLEMENTED !');
-            return;
           case 'TriangleCounting':
             setTriangleCounting();
             return;
@@ -22,8 +19,7 @@ const DropdownPreset = ({setNeighboringSummits, setTriangleCounting, setDefault}
             setDefault();
           }
         }}>
-        <option value="Defalut">Default Algo</option>
-        <option value="ShortPath">Short Path</option>
+        <option value="Minimum">Minimum</option>
         <option value="NeighboringSummits">Neighboring Summits</option>
         <option value="TriangleCounting">Triangle Counting</option>
       </FormControl>
