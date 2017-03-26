@@ -37,10 +37,10 @@ const mapDispatchToProps = (dispatch, ownProps) => {
       dispatch(setDispatchFunction(Helpers.functionToString(Pregel.dispatchNeighboringSummits)));
       dispatch(setAggregateFunction(Helpers.functionToString(Pregel.aggregateNeighboringSummits)));
     },
-    setTriangleCounting: () => {
-      dispatch(setInitializeFunction(Helpers.functionToString(Pregel.initializeTriangleCounting)));
-      dispatch(setDispatchFunction(Helpers.functionToString(Pregel.dispatchTriangleCounting)));
-      dispatch(setAggregateFunction(Helpers.functionToString(Pregel.aggregateTriangleCounting)));
+    setDirectedTriangleCounting: () => {
+      dispatch(setInitializeFunction(Helpers.functionToString(Pregel.initializeDirectedTriangleCounting)));
+      dispatch(setDispatchFunction(Helpers.functionToString(Pregel.dispatchDirectedTriangleCounting)));
+      dispatch(setAggregateFunction(Helpers.functionToString(Pregel.aggregateDirectedTriangleCounting)));
     },
     setDefault: () => {
       dispatch(setInitializeFunction(Helpers.functionToString(Pregel.initializeBase)));
