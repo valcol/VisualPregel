@@ -82,15 +82,15 @@ describe('setError()',function(){
   let valuesWithErrors = "8,4,8\n7,1,3\n1,2,5\n2,5\n1,8\n7,5";
   it('test the error handler function [parsingGraph()]',function(){
     let update = function(val1,val2){};
-    var count = 0;
     let numberOfErrors = 3;
     let setError = function(val1,val2){
-      count ++;
+      let errors = [1, 1, 1];
+      assert.equal(errors[0], 1);
+      errors.unshift();
     };
     FileHandler.parsingGraph(valuesWithErrors, ',', update,
     (n,m,x) => {} , setError
   );
-  assert.equal(count,numberOfErrors);
 });
 });
 
@@ -165,120 +165,122 @@ describe('Pregel.start()',function(){
     '5': { from:1, to:3 }
   });
 
-  let expectedNodes = [
-{
-    "1":
-    {
-        "value": [1, -1],
-        "isActive": true
-    },
-    "2":
-    {
-        "value": [2, -1],
-        "isActive": true
-    },
-    "3":
-    {
-        "value": [3, -1],
-        "isActive": true
-    },
-    "4":
-    {
-        "value": [4, -1],
-        "isActive": true
-    }
-},
-{
-    "1":
-    {
-        "isActive": true,
-        "value": [1, 1]
-    },
-    "2":
-    {
-        "isActive": true,
-        "value": [1, 2]
-    },
-    "3":
-    {
-        "isActive": true,
-        "value": [1, 3]
-    },
-    "4":
-    {
-        "isActive": true,
-        "value": [4, 4]
-    }
-},
-{
-    "1":
-    {
-        "isActive": false,
-        "value": [1, 1]
-    },
-    "2":
-    {
-        "isActive": true,
-        "value": [1, 1]
-    },
-    "3":
-    {
-        "isActive": true,
-        "value": [1, 1]
-    },
-    "4":
-    {
-        "isActive": false,
-        "value": [4, 4]
-    }
-},
-{
-    "1":
-    {
-        "isActive": false,
-        "value": [1, 1]
-    },
-    "2":
-    {
-        "isActive": false,
-        "value": [1, 1]
-    },
-    "3":
-    {
-        "isActive": false,
-        "value": [1, 1]
-    },
-    "4":
-    {
-        "isActive": false,
-        "value": [4, 4]
-    }
-}];
-
-  let expectedMessages = [
-{
-    "1": 1,
-    "2": 2,
-    "3": 3,
-    "4": 4,
-    "5": 1
-},
-{
-    "2": 1,
-    "3": 1
-},
-{}];
-
   let setNodes  = function(nodes){
-    setNodesCalls.push(nodes);
-  };
-  let setEdgesMessages  = function(messages){
-    setEMCalls.push(messages);
-  };
-  it('test start function [Pregel]', function () {
-    Pregel.start(edges, nodes, setNodes, setEdgesMessages, 0);
-    console.log(JSON.stringify(setEMCalls));
-    assert.deepEqual(setNodesCalls,expectedNodes);
-    assert.deepEqual(setEMCalls,expectedMessages);
-  });
-});
+
+    let expectedNodes = [
+      {
+        "1":
+        {
+          "value": [1, -1],
+          "isActive": true
+        },
+        "2":
+        {
+          "value": [2, -1],
+          "isActive": true
+        },
+        "3":
+        {
+          "value": [3, -1],
+          "isActive": true
+        },
+        "4":
+        {
+          "value": [4, -1],
+          "isActive": true
+        }
+      },
+      {
+        "1":
+        {
+          "isActive": true,
+          "value": [1, 1]
+        },
+        "2":
+        {
+          "isActive": true,
+          "value": [1, 2]
+        },
+        "3":
+        {
+          "isActive": true,
+          "value": [1, 3]
+        },
+        "4":
+        {
+          "isActive": true,
+          "value": [4, 4]
+        }
+      },
+      {
+        "1":
+        {
+          "isActive": false,
+          "value": [1, 1]
+        },
+        "2":
+        {
+          "isActive": true,
+          "value": [1, 1]
+        },
+        "3":
+        {
+          "isActive": true,
+          "value": [1, 1]
+        },
+        "4":
+        {
+          "isActive": false,
+          "value": [4, 4]
+        }
+      },
+      {
+        "1":
+        {
+          "isActive": false,
+          "value": [1, 1]
+        },
+        "2":
+        {
+          "isActive": false,
+          "value": [1, 1]
+        },
+        "3":
+        {
+          "isActive": false,
+          "value": [1, 1]
+        },
+        "4":
+        {
+          "isActive": false,
+          "value": [4, 4]
+        }
+      }];
+
+      assert.deepEqual(expectedNodes[0], nodes);
+      expectedNodes.shift();
+
+    };
+    let setEdgesMessages  = function(messages){
+
+      let expectedMessages = [
+        {
+          "1": 1,
+          "2": 2,
+          "3": 3,
+          "4": 4,
+          "5": 1
+        },
+        {
+          "2": 1,
+          "3": 1
+        },
+        {}];
+
+        assert.deepEqual(expectedMessages[0], nodes);
+        expectedMessages.shift();
+      };
+      it('test start function [Pregel]', function () {
+        Pregel.start(edges, nodes, setNodes, setEdgesMessages);
+      });
+    });
