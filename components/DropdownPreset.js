@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { FormGroup, InputGroup, FormControl } from 'react-bootstrap';
 
-const DropdownPreset = ({setNeighboringSummits, setTriangleCounting, setDefault}) => {
+const DropdownPreset = ({setNeighboringSummits, setDirectedTriangleCounting, setDefault}) => {
   return (
     <FormGroup controlId="formControlsSelect">
       <InputGroup>
@@ -12,8 +12,8 @@ const DropdownPreset = ({setNeighboringSummits, setTriangleCounting, setDefault}
           case 'NeighboringSummits':
             setNeighboringSummits();
             return;
-          case 'TriangleCounting':
-            setTriangleCounting();
+          case 'DirectedTriangleCounting':
+            setDirectedTriangleCounting();
             return;
           default:
             setDefault();
@@ -21,7 +21,7 @@ const DropdownPreset = ({setNeighboringSummits, setTriangleCounting, setDefault}
         }}>
         <option value="Minimum">Minimum</option>
         <option value="NeighboringSummits">Neighboring Summits</option>
-        <option value="TriangleCounting">Triangle Counting</option>
+        <option value="DirectedTriangleCounting">Directed Triangle Counting</option>
       </FormControl>
     </InputGroup>
     </FormGroup>

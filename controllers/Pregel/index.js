@@ -127,9 +127,10 @@ Pregel.prototype.aggregateNeighboringSummits = function(id, attr, messages) {
 };
 
 
-Pregel.prototype.initializeTriangleCounting = function(id, attr) {
+Pregel.prototype.initializeDirectedTriangleCounting = function(id, attr) {
  /* In the structure below, n is the current iteration number.
-    Tr will contain set of nodes that are in a triangle
+    Tr will contain set of nodes that are in a directed triangle
+    of type A --> B, B --> C, C --> A  
     tab.id is a node's id
     tab.to are outgoing nodes (nodes we send messages to)
     tab.from are incoming nodes (nodes we receive messages from)
@@ -146,7 +147,7 @@ Pregel.prototype.initializeTriangleCounting = function(id, attr) {
   return obj;
 };
 
-Pregel.prototype.dispatchTriangleCounting = function(srcId, srcAttr, dstId, dstAttr, isANeighbour) {
+Pregel.prototype.dispatchDirectedTriangleCounting = function(srcId, srcAttr, dstId, dstAttr, isANeighbour) {
   if (isANeighbour) {
     if (srcAttr.n == 0) {
       if(! srcAttr.tab.to.includes(dstId)){
@@ -167,7 +168,7 @@ Pregel.prototype.dispatchTriangleCounting = function(srcId, srcAttr, dstId, dstA
   } else return;
 };
 
-Pregel.prototype.aggregateTriangleCounting = function(id, attr, messages) {
+Pregel.prototype.aggregateDirectedTriangleCounting = function(id, attr, messages) {
   if (attr.n == 0) {
     // fill "from" object for first step
     attr.n += 1;
