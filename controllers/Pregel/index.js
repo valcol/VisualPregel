@@ -29,7 +29,11 @@ Pregel.prototype.aggregateBase = function(id, attr, messages) {
   return [current, attr[0]];
 };
 
-Pregel.prototype.start = function(edges, nodes, setNodes, setEdgesMessages) {
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, 10));
+}
+
+Pregel.prototype.start = async function(edges, nodes, setNodes, setEdgesMessages) {
     let newNodes = {};
     nodes.entrySeq().forEach(([key,value]) =>{
         let values = this.initialize(key, value.get('value'));
@@ -38,7 +42,7 @@ Pregel.prototype.start = function(edges, nodes, setNodes, setEdgesMessages) {
 
   let maxIterations = 30;
   setNodes(newNodes);
-
+  await sleep(10);
   let isANeighbourg = {};
   edges.entrySeq().forEach(([key,value]) =>{
     isANeighbourg[value.get('from')+"to"+value.get('to')] = key;
@@ -72,12 +76,14 @@ Pregel.prototype.start = function(edges, nodes, setNodes, setEdgesMessages) {
     }
 
      setEdgesMessages(newEdgesMessages);
+     await sleep(10);
     nodes.entrySeq().forEach(([key,value]) => {
           newNodes2[key] = {};
           newNodes2[key].isActive = messagesFrom[key] ? true : false;
           newNodes2[key].value = this.aggregate(key, newNodes[key].value, messages[key] ? messages[key] : []);
       });
     setNodes(newNodes2);
+    await sleep(10);
     newNodes = newNodes2;
     if (Object.keys(messages).length > 0)
         maxIterations--;
