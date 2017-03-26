@@ -57,6 +57,7 @@ class Graph extends Component {
   }
 
   zoomHandler(event) {
+    console.log('zooooooom');
     var delta = Math.sign(event.deltaY);
     // compute mouse position on canvas
     var rect = canvas.getBoundingClientRect();
@@ -76,8 +77,8 @@ class Graph extends Component {
   init() {
     canvas = document.getElementById('fatum-canvas');
     fatum = this.fatum = Fatum.createFatumContext(canvas);
-    canvas.onmousewheel = this.zoomHandler;
     Fatum.setRenderingObserver(this.fatum);
+    canvas.onwheel = this.zoomHandler;
     Fatum.setMouseMoveHandler(canvas, this.fatum);
   //  Fatum.setCanvasSize(500, 500, true);
     this.fatum.layerOn(Fatum.MARKS | Fatum.TEXT | Fatum.CONNECTIONS);
