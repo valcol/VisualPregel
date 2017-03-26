@@ -41,7 +41,7 @@ FileHandler.prototype.parsingGraph =  async function(values, separator, update, 
 		update(now,"info");
 		await sleep(10);
 	}
-	update(now,"success");
+	update(100,"success");
 	await sleep(10);
 
 	callback(edges);
@@ -65,12 +65,12 @@ FileHandler.prototype.parsingValues = async function(values, separator, update, 
 		let nodeID = parseInt(line[0]);
 		nodes[nodeID] = {};
 		nodes[nodeID].value = parseInt(line[1]);
-		nodes[nodeID].initialValue = -1;
-		now = 100/(lines.length - i);
+		nodes[nodeID].isActive = true;
+		now = Math.ceil((100*i)/lines.length);
 		update(now,"info");
 		await sleep(10);
 	}
-	update(now,"success");
+	update(100,"success");
 	await sleep(10);
 	let id = 0;
 	callback(nodes);
