@@ -1,4 +1,4 @@
-# PDP_PDFJS
+# VisualPregel
 [University Project] A project to allows to simulate in a visual and interactive way the application of a Pregel algorithm on a graph
 
 ## Features
